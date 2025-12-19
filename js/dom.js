@@ -23,19 +23,19 @@ export function hikayeYaz(metin) {
   });
 }
 
-export function kelimeEventiEkle(dil = 'tr') {
+export function kelimeEventiEkle(hedefDil = 'tr') {
   document.querySelectorAll('.kelime').forEach(kelime => {
     kelime.onclick = async () => {
       const original = kelime.textContent.trim();
-      ceviriIcerik.textContent = dil === 'tr' ? 'Çeviriliyor...' : 'Translating...';
+      ceviriIcerik.textContent = 'Çeviriliyor...';
       popup.classList.remove('hidden');
       overlay.classList.remove('hidden');
 
       try {
-        const translation = await kelimeyiCevir(original, dil);
-        ceviriIcerik.innerHTML = `<strong>${original}</strong><br>${translation}`;
+        const translation = await kelimeyiCevir(original, hedefDil);
+        ceviriIcerik.innerHTML = `<strong>${original}</strong> (Fince)<br>${translation} (${hedefDil === 'tr' ? 'Türkçe' : 'English'})`;
       } catch (err) {
-        ceviriIcerik.textContent = dil === 'tr' ? 'Hata oluştu' : 'Error occurred';
+        ceviriIcerik.textContent = 'Hata oluştu';
       }
     };
   });

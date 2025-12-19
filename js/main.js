@@ -1,41 +1,17 @@
 import { hikayeUret } from './api.js';
 import { hikayeYaz, kelimeEventiEkle } from './dom.js';
 
-let currentLang = 'tr';
-
-const texts = {
-  tr: {
-    title: 'FincaLearn',
-    desc: 'Kısa bir hikaye üretip kelimelerin anlamını öğren!',
-    button: 'Yeni Hikaye Üret',
-    generating: 'Hikaye üretiliyor...',
-    placeholder: 'Hikaye konusu (isteğe bağlı)',
-    error: 'Hata: '
-  },
-  en: {
-    title: 'FincaLearn',
-    desc: 'Generate a short story and learn word meanings with a tap!',
-    button: 'Generate New Story',
-    generating: 'Generating story...',
-    placeholder: 'Story topic (optional)',
-    error: 'Error: '
-  }
-};
+let hedefDil = 'tr'; // Varsayılan Türkçe çeviri
 
 function updateUI() {
-  document.querySelector('h1').textContent = texts[currentLang].title;
-  document.querySelector('.description').textContent = texts[currentLang].desc;
-  document.getElementById('uret-hikaye').textContent = texts[currentLang].button;
-  document.getElementById('konu').placeholder = texts[currentLang].placeholder;
-
   document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    btn.classList.toggle('active', btn.dataset.lang === hedefDil);
   });
 }
 
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    currentLang = btn.dataset.lang;
+    hedefDil = btn.dataset.lang;
     updateUI();
   });
 });
@@ -45,19 +21,19 @@ const konuInput = document.getElementById('konu');
 
 buton.addEventListener('click', async () => {
   buton.disabled = true;
-  buton.textContent = texts[currentLang].generating;
+  buton.textContent = 'Hikaye üretiliyor...';
 
   try {
     const konu = konuInput.value.trim();
-    const hikaye = await hikayeUret(konu, currentLang);
+    const hikaye = await hikayeUret(konu);
     hikayeYaz(hikaye);
-    kelimeEventiEkle(currentLang);
+    kelimeEventiEkle(hedefDil); // Hedef dil parametresi
   } catch (err) {
-    alert(texts[currentLang].error + err.message);
+    alert('Hata: ' + err.message);
   }
 
   buton.disabled = false;
-  buton.textContent = texts[currentLang].button;
+  buton.textContent = 'Yeni Hikaye Üret';
 });
 
 updateUI();

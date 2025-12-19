@@ -1,11 +1,9 @@
 const LIBRETRANSLATE_URL = 'https://libretranslate.de/translate';
 
-export async function hikayeUret(konu = '', dil = 'tr') {
-  const hikayeDili = dil === 'tr' ? 'Türkçe' : 'İngilizce';
-
+export async function hikayeUret(konu = '') {
   const prompt = konu
-    ? `Konu: "${konu}". Bu konu hakkında 80-120 kelime uzunluğunda, basit ve eğlenceli bir ${hikayeDili} çocuk hikâyesi yaz. Sadece hikâyeyi yaz, başka hiçbir şey ekleme.`
-    : `80-120 kelime uzunluğunda, basit ve eğlenceli bir ${hikayeDili} çocuk hikâyesi yaz. Sadece hikâyeyi yaz, başka hiçbir şey ekleme.`;
+    ? `Konu: "${konu}". Bu konu hakkında 80-120 kelime uzunluğunda, basit ve eğlenceli bir Fince (Suomi) çocuk hikâyesi yaz. Sadece hikâyeyi yaz, başka hiçbir şey ekleme.`
+    : `80-120 kelime uzunluğunda, basit ve eğlenceli bir Fince (Suomi) çocuk hikâyesi yaz. Sadece hikâyeyi yaz, başka hiçbir şey ekleme.`;
 
   const response = await fetch('/api/hikaye', {
     method: 'POST',
@@ -22,20 +20,20 @@ export async function hikayeUret(konu = '', dil = 'tr') {
   return data.hikaye.trim();
 }
 
-export async function kelimeyiCevir(kelime, kaynakDil = 'tr') {
-  const target = kaynakDil === 'tr' ? 'en' : 'tr';
+export async function kelimeyiCevir(kelime, hedefDil = 'tr') {
+  const source = 'fi'; // Hikaye Fince olduğu için kaynak her zaman fi
 
   const response = await fetch(LIBRETRANSLATE_URL, {
     method: 'POST',
     body: JSON.stringify({
       q: kelime,
-      source: kaynakDil,
-      target: target,
+      source: source,
+      target: hedefDil, // tr veya en
       format: 'text'
     }),
     headers: { 'Content-Type': 'application/json' }
   });
 
   const data = await response.json();
-  return data.translatedText || (kaynakDil === 'tr' ? 'Translation not found' : 'Çeviri bulunamadı');
+  return data.translatedText || 'Çeviri bulunamadı';
 }
