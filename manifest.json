@@ -1,0 +1,22 @@
+{
+  "name": "FincaLearn",
+  "short_name": "Finca",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f7f9",
+  "theme_color": "#006064",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/006064/ffffff?text=F",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/006064/ffffff?text=F",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
