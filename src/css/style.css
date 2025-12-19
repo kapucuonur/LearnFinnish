@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f7f9;
+  color: #333;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+h1 {
+  color: #006064;
+}
+
+.language-switcher {
+  display: flex;
+  gap: 8px;
+}
+
+.lang-btn {
+  padding: 8px 16px;
+  background: #eee;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.lang-btn.active {
+  background: #006064;
+  color: white;
+}
+
+.description {
+  text-align: center;
+  color: #555;
+  margin-bottom: 30px;
+  font-size: 1.1em;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+#uret-hikaye {
+  padding: 12px 24px;
+  background: #006064;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+#konu {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+}
+
+.hikaye {
+  font-size: 1.3em;
+  line-height: 2;
+  text-align: justify;
+}
+
+.kelime {
+  cursor: pointer;
+  padding: 2px 4px;
+  border-bottom: 1px dotted #006064;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.kelime:hover {
+  background: #e0f7fa;
+  color: #006064;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  max-width: 80%;
+  z-index: 1000;
+  text-align: center;
+  font-size: 1.4em;
+}
+
+.popup button {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1.6em;
+  cursor: pointer;
+  color: #999;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 20px; }
+  .hikaye { font-size: 1.1em; line-height: 1.8; }
+  .controls { flex-direction: column; }
+  .header { flex-direction: column; text-align: center; }
+  #konu { min-width: auto; }
+}
