@@ -1,6 +1,44 @@
+```markdown
+# FincaLearn
+
+A Progressive Web App (PWA) for language learning. Generate short, engaging stories in **Turkish** or **English**, then tap any word to instantly see its translation in the other language.
+
+Perfect for immersive language practice – read fun stories and learn vocabulary in context!
+
+## Features
+
+- Bilingual interface (Turkish ↔ English)
+- Generate random or topic-based stories using Google Gemini
+- Tap any word in the story to see its translation (TR → EN or EN → TR)
+- Fully responsive – works great on mobile and desktop
+- Progressive Web App – installable on phone home screen (feels like a native app)
+- Offline support for cached assets
+- No backend required for personal use; secure serverless proxy for public deployment
+
+## Project Structure
+```
+
+fincalaarn/
+├── src/
+│ ├── index.html # Main HTML file
+│ ├── manifest.json # PWA manifest
+│ ├── css/
+│ │ └── style.css # All styles (responsive + mobile-friendly)
+│ └── js/
+│ ├── main.js # App logic, language switching, UI updates
+│ ├── api.js # API calls (story generation + translation)
+│ ├── dom.js # DOM manipulation (render story, word clicks, popup)
+├── api/
+│ └── hikaye.js # Vercel serverless function (secure Gemini proxy)
+├── vercel.json # Optional: Vercel configuration (if needed)
+├── .gitignore # Protects your API key
+└── README.md # This file
+
+```
+
 ## Live Demo
 
-(After deployment)  
+(After deployment)
 https://your-project-name.vercel.app
 
 You can add it to your phone's home screen for instant access!
@@ -16,7 +54,6 @@ You can add it to your phone's home screen for instant access!
 ## Setup & Deployment (Public Online Version)
 
 ### Prerequisites
-
 - GitHub account
 - Vercel account (free)
 - Google Gemini API key (get it free from [Google AI Studio](https://aistudio.google.com/app/apikey))
@@ -26,7 +63,6 @@ You can add it to your phone's home screen for instant access!
 1. **Fork or clone** this repository
 2. Get your Gemini API key from Google AI Studio
 3. Deploy to Vercel:
-
    - Go to [vercel.com](https://vercel.com)
    - Click "New Project"
    - Import your GitHub repo
@@ -59,7 +95,6 @@ If you only want to use it yourself (no sharing):
 ## Contributing
 
 Feel free to fork and improve! Ideas:
-
 - Save favorite words
 - Text-to-speech for pronunciation
 - Difficulty levels
@@ -72,3 +107,4 @@ MIT License – free to use, modify, and share.
 ---
 
 Made with ❤️ for language learners everywhere.
+```
