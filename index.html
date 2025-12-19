@@ -3,34 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FincaLearn - Fince Öğren</title>
+  <title data-tr="FincaLearn - Fince Öğren" data-en="FincaLearn - Learn Finnish">FincaLearn - Fince Öğren</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#006064">
-  <!-- İkon hatasını önlemek için base64 placeholder -->
   <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>FincaLearn</h1>
-      <p class="description">Fince kısa hikâyeler okuyarak kelime öğren!</p>
+      <h1 data-tr="FincaLearn" data-en="FincaLearn">FincaLearn</h1>
+      <p class="description" data-tr="Fince kısa hikâyeler okuyarak kelime öğren!" data-en="Learn Finnish words by reading short stories!">
+        Fince kısa hikâyeler okuyarak kelime öğren!
+      </p>
 
       <div class="language-switcher">
-        <button class="lang-btn active" data-lang="tr">Türkçe Çeviri</button>
-        <button class="lang-btn" data-lang="en">English Translation</button>
+        <button class="lang-btn active" data-lang="tr">Türkçe</button>
+        <button class="lang-btn" data-lang="en">English</button>
       </div>
     </div>
 
     <div class="controls">
-      <input type="text" id="konu" placeholder="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" />
-      <button id="uret-hikaye">Yeni Fince Hikâye Üret</button>
+      <input type="text" id="konu" data-placeholder-tr="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" data-placeholder-en="Story topic (optional, in Turkish or Finnish)" placeholder="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" />
+      <button id="uret-hikaye" data-tr="Yeni Fince Hikâye Üret" data-en="Generate New Finnish Story">
+        Yeni Fince Hikâye Üret
+      </button>
     </div>
 
     <div id="hikaye-alani" class="hikaye"></div>
 
     <div id="ceviri-popup" class="popup hidden">
-      <span id="ceviri-icerik">Çeviriliyor...</span>
+      <span id="ceviri-icerik" data-tr="Çeviriliyor..." data-en="Translating...">Çeviriliyor...</span>
       <button id="kapat-popup">✕</button>
     </div>
   </div>
