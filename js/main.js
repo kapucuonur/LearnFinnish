@@ -6,6 +6,7 @@ import { auth, provider, signInWithPopup, signOut, onAuthStateChanged } from './
 let currentLang = 'tr';
 let deferredPrompt;
 
+// Update UI for language change
 function updateUI() {
   const titleEl = document.querySelector('title');
   titleEl.textContent = titleEl.dataset[currentLang === 'tr' ? 'tr' : 'en'];
@@ -30,7 +31,7 @@ function updateUI() {
   defterSayisiniGuncelle();
 }
 
-// Dil değiştirici
+// Language switcher
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     currentLang = btn.dataset.lang;
@@ -38,7 +39,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   });
 });
 
-// Hikaye üret butonu
+// Story generation button
 const buton = document.getElementById('uret-hikaye');
 const konuInput = document.getElementById('konu');
 
@@ -59,7 +60,7 @@ buton.addEventListener('click', async () => {
   updateUI();
 });
 
-// Tab değiştirme
+// Tab switching
 document.getElementById('tab-hikaye').addEventListener('click', () => {
   document.getElementById('tab-hikaye').classList.add('active');
   document.getElementById('tab-defter').classList.remove('active');
@@ -75,7 +76,7 @@ document.getElementById('tab-defter').addEventListener('click', () => {
   defteriListele();
 });
 
-// Defteri temizle
+// Clear notebook
 document.getElementById('defter-temizle').addEventListener('click', () => {
   const confirmMsg = currentLang === 'tr' 
     ? 'Defterdeki tüm kelimeleri silmek istediğine emin misin?' 
@@ -92,9 +93,39 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  // Giriş sistemi
+  const installBtn = document.createElement('button');
+  installBtn.textContent = currentLang === 'tr' ? 'Uygulamayı Yükle' : 'Install App';
+  installBtn.id = 'pwa-install-btn';
+  installBtn.style.position = 'fixed';
+  installBtn.style.bottom = '20px';
+  installBtn.style.left = '50%';
+  installBtn.style.transform = 'translateX(-50%)';
+  installBtn.style.padding = '14px 28px';
+  installBtn.style.background = '#006064';
+  installBtn.style.color = 'white';
+  installBtn.style.border = 'none';
+  installBtn.style.borderRadius = '50px';
+  installBtn.style.fontSize = '1em';
+  installBtn.style.zIndex = '1000';
+  installBtn.style.boxShadow = '0 6px 20px rgba(0,0,0,0.2)';
+  installBtn.style.cursor = 'pointer';
+
+  installBtn.onclick = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User installed the app');
+      }
+      installBtn.style.display = 'none';
+    });
+  };
+
+  document.body.appendChild(installBtn);
+});
+
+// Firebase Auth - Google Sign-In
 const loginBtn = document.createElement('button');
-loginBtn.textContent = 'Google ile Giriş Yap';
+loginBtn.textContent = currentLang === 'tr' ? 'Google ile Giriş Yap' : 'Sign in with Google';
 loginBtn.style.margin = '20px auto';
 loginBtn.style.display = 'block';
 loginBtn.style.padding = '14px 28px';
@@ -118,7 +149,7 @@ const userName = document.createElement('span');
 userName.style.fontWeight = 'bold';
 userName.style.fontSize = '1.1em';
 const logoutBtn = document.createElement('button');
-logoutBtn.textContent = 'Çıkış Yap';
+logoutBtn.textContent = currentLang === 'tr' ? 'Çıkış Yap' : 'Sign Out';
 logoutBtn.style.marginLeft = '15px';
 logoutBtn.style.padding = '8px 16px';
 logoutBtn.style.background = '#d32f2f';
@@ -147,6 +178,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// Sayfa yüklendiğinde
+// Initial load
 updateUI();
 defterSayisiniGuncelle();
