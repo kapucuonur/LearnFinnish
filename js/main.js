@@ -7,6 +7,7 @@ let currentLang = 'tr';
 // Variable for PWA install prompt
 let deferredPrompt;
 
+// Update UI for language change
 function updateUI() {
   // Update page title
   const titleEl = document.querySelector('title');
@@ -35,7 +36,7 @@ function updateUI() {
     btn.classList.toggle('active', btn.dataset.lang === currentLang);
   });
 
-  // Update word notebook count when language changes
+  // Update word notebook count
   defterSayisiniGuncelle();
 }
 
@@ -47,6 +48,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   });
 });
 
+// Story generation button
 const buton = document.getElementById('uret-hikaye');
 const konuInput = document.getElementById('konu');
 
@@ -64,7 +66,7 @@ buton.addEventListener('click', async () => {
   }
 
   buton.disabled = false;
-  updateUI(); // Restore button text and update UI
+  updateUI();
 });
 
 // Tab switching: Story vs Word Notebook
