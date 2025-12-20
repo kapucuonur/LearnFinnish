@@ -27,21 +27,19 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
   document.querySelectorAll('.kelime').forEach(kelime => {
     kelime.onclick = async () => {
       const original = kelime.textContent.trim();
-      ceviriIcerik.textContent = currentLang === 'tr' ? 'Çeviriliyor...' : 'Translating...';
+      ceviriIcerik.textContent = hedefDil === 'tr' ? 'Çeviriliyor...' : 'Translating...';
       popup.classList.remove('hidden');
       overlay.classList.remove('hidden');
 
       try {
         const translation = await kelimeyiCevir(original, hedefDil);
-        ceviriIcerik.innerHTML = `<strong>${original}</strong> (Finnish)<br>${translation}<br><small>(${currentLang === 'tr' ? 'Türkçe' : 'English'})</small>`;
+        ceviriIcerik.innerHTML = `<strong>${original}</strong> (Finnish)<br>${translation}<br><small>(${hedefDil === 'tr' ? 'Türkçe' : 'English'})</small>`;
       } catch (err) {
-        ceviriIcerik.textContent = 'Hata oluştu';
+        ceviriIcerik.textContent = hedefDil === 'tr' ? 'Hata oluştu' : 'Error occurred';
       }
     };
   });
 }
-
-
 
 kapatBtn.onclick = () => {
   popup.classList.add('hidden');

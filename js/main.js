@@ -1,28 +1,30 @@
 import { hikayeUret } from './api.js';
 import { hikayeYaz, kelimeEventiEkle } from './dom.js';
 
-let currentLang = 'tr'; // tr veya en
+let currentLang = 'tr';
 
 function updateUI() {
-  // Title güncelle
-  document.querySelector('title').textContent = 
-    document.querySelector('title').dataset[currentLang === 'tr' ? 'tr' : 'en'];
+  // Title
+  const titleEl = document.querySelector('title');
+  titleEl.textContent = titleEl.dataset[currentLang === 'tr' ? 'tr' : 'en'];
 
-  // Tüm data-tr / data-en olanları güncelle
+  // Text content
   document.querySelectorAll('[data-tr]').forEach(el => {
-    el.textContent = el.dataset[currentLang === 'tr' ? 'tr' : 'en'];
+    const key = currentLang === 'tr' ? 'tr' : 'en';
+    if (el.dataset[key]) el.textContent = el.dataset[key];
   });
 
-  // Placeholder'lar
+  // Placeholder
   document.querySelectorAll('[data-placeholder-tr]').forEach(el => {
-    el.placeholder = el.dataset[currentLang === 'tr' ? 'placeholderTr' : 'placeholderEn'];
+    const key = currentLang === 'tr' ? 'placeholderTr' : 'placeholderEn';
+    el.placeholder = el.dataset[key];
   });
 
-  // Popup loading text
-  document.getElementById('ceviri-icerik').textContent = 
-    document.getElementById('ceviri-icerik').dataset[currentLang === 'tr' ? 'tr' : 'en'];
+  // Loading text
+  const loadingEl = document.getElementById('ceviri-icerik');
+  loadingEl.textContent = loadingEl.dataset[currentLang === 'tr' ? 'tr' : 'en'];
 
-  // Aktif dil butonu
+  // Active button
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === currentLang);
   });
@@ -46,13 +48,13 @@ buton.addEventListener('click', async () => {
     const konu = konuInput.value.trim();
     const hikaye = await hikayeUret(konu);
     hikayeYaz(hikaye);
-    kelimeEventiEkle(currentLang); // currentLang = tr veya en
+    kelimeEventiEkle(currentLang);
   } catch (err) {
     alert(currentLang === 'tr' ? 'Hata: ' + err.message : 'Error: ' + err.message);
   }
 
   buton.disabled = false;
-  updateUI(); // Buton textini geri yükle
+  updateUI();
 });
 
-updateUI(); // Sayfa yüklendiğinde
+updateUI();

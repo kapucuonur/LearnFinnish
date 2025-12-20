@@ -1,4 +1,3 @@
-// api/hikaye.js - gemini-2.5-flash ile (ücretsiz tier'da çalışıyor - 2025 Aralık)
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
