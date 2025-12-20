@@ -6,7 +6,6 @@ import { auth, provider, signInWithPopup, signOut, onAuthStateChanged } from './
 let currentLang = 'tr';
 let deferredPrompt;
 
-// Update UI for language change
 function updateUI() {
   const titleEl = document.querySelector('title');
   titleEl.textContent = titleEl.dataset[currentLang === 'tr' ? 'tr' : 'en'];
@@ -31,7 +30,7 @@ function updateUI() {
   defterSayisiniGuncelle();
 }
 
-// Language switcher
+// Dil değiştirici
 document.querySelectorAll('.lang-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     currentLang = btn.dataset.lang;
@@ -39,7 +38,7 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   });
 });
 
-// Story generation button
+// Hikaye üret butonu
 const buton = document.getElementById('uret-hikaye');
 const konuInput = document.getElementById('konu');
 
@@ -60,7 +59,7 @@ buton.addEventListener('click', async () => {
   updateUI();
 });
 
-// Tab switching
+// Tab değiştirme
 document.getElementById('tab-hikaye').addEventListener('click', () => {
   document.getElementById('tab-hikaye').classList.add('active');
   document.getElementById('tab-defter').classList.remove('active');
@@ -76,7 +75,7 @@ document.getElementById('tab-defter').addEventListener('click', () => {
   defteriListele();
 });
 
-// Clear notebook
+// Defteri temizle
 document.getElementById('defter-temizle').addEventListener('click', () => {
   const confirmMsg = currentLang === 'tr' 
     ? 'Defterdeki tüm kelimeleri silmek istediğine emin misin?' 
@@ -123,61 +122,33 @@ window.addEventListener('beforeinstallprompt', (e) => {
   document.body.appendChild(installBtn);
 });
 
-// Firebase Auth - Google Sign-In
-const loginBtn = document.createElement('button');
-loginBtn.textContent = currentLang === 'tr' ? 'Google ile Giriş Yap' : 'Sign in with Google';
-loginBtn.style.margin = '20px auto';
-loginBtn.style.display = 'block';
-loginBtn.style.padding = '14px 28px';
-loginBtn.style.background = '#4285F4';
-loginBtn.style.color = 'white';
-loginBtn.style.border = 'none';
-loginBtn.style.borderRadius = '8px';
-loginBtn.style.fontSize = '1.1em';
-loginBtn.style.cursor = 'pointer';
-loginBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
-
-const userInfo = document.createElement('div');
-userInfo.style.margin = '20px auto';
-userInfo.style.textAlign = 'center';
-userInfo.style.display = 'none';
-userInfo.style.background = '#e8f5e8';
-userInfo.style.padding = '15px';
-userInfo.style.borderRadius = '8px';
-
-const userName = document.createElement('span');
-userName.style.fontWeight = 'bold';
-userName.style.fontSize = '1.1em';
-const logoutBtn = document.createElement('button');
-logoutBtn.textContent = currentLang === 'tr' ? 'Çıkış Yap' : 'Sign Out';
-logoutBtn.style.marginLeft = '15px';
-logoutBtn.style.padding = '8px 16px';
-logoutBtn.style.background = '#d32f2f';
-logoutBtn.style.color = 'white';
-logoutBtn.style.border = 'none';
-logoutBtn.style.borderRadius = '6px';
-
-userInfo.appendChild(userName);
-userInfo.appendChild(logoutBtn);
-
-document.querySelector('.header').appendChild(loginBtn);
-document.querySelector('.header').appendChild(userInfo);
+// Firebase Auth - Mevcut HTML elementlerini kullan
+const loginBtn = document.getElementById('login-btn');
+const userInfo = document.getElementById('user-info');
+const userName = document.getElementById('user-name');
+const logoutBtn = document.getElementById('logout-btn');
+const premiumBtn = document.getElementById('premium-btn');
 
 loginBtn.onclick = () => signInWithPopup(auth, provider);
 
 logoutBtn.onclick = () => signOut(auth);
+
+premiumBtn.onclick = () => {
+  alert('Ödeme sistemi yakında aktif olacak! Giriş yapan kullanıcılar premium özelliklere erişiyor.');
+};
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     loginBtn.style.display = 'none';
     userInfo.style.display = 'block';
     userName.textContent = `Hoş geldin, ${user.displayName || user.email}!`;
+    // Premium özellikleri aktif et
   } else {
     loginBtn.style.display = 'block';
     userInfo.style.display = 'none';
   }
 });
 
-// Initial load
+// Sayfa yüklendiğinde
 updateUI();
 defterSayisiniGuncelle();
