@@ -5,7 +5,7 @@ Hemen düzeltiyoruz! Aşağıdaki **yeni README.md** içeriğini tamamen kopyala
 ### Yeni README.md (Güncel, Temiz Yapıya Uygun – İngilizce)
 
 ```markdown
-# FincaLearn
+# FinceLearn
 
 A Progressive Web App (PWA) for language learning. Generate short, engaging stories in **Turkish** or **English**, then tap any word to instantly see its translation in the other language.
 
@@ -24,7 +24,7 @@ Perfect for immersive language practice – read fun stories and learn vocabular
 ## Project Structure
 ```
 
-fincalaarn/ ← Project root (clean & Vercel-ready)
+Fincelaarn/ ← Project root (clean & Vercel-ready)
 │
 ├── index.html ← Main HTML page
 ├── manifest.json ← PWA manifest (for "Add to Home Screen")

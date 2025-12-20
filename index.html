@@ -4,44 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-tr="FincaLearn - Fince Öğren" data-en="FincaLearn - Learn Finnish">FincaLearn - Fince Öğren</title>
+  <title data-tr="FinceLearn - Fince Öğren" data-en="FinceLearn - Learn Finnish">FinceLearn - Fince Öğren</title>
   <link rel="stylesheet" href="/css/style.css">
-  <script>
-  if ('serviceWorker' in navigator) {
-    // PWA manifest inline olarak tanımla (dosya yüklenmez, 401 hatası kalkar)
-    const manifest = {
-      "name": "FincaLearn - Fince Öğren",
-      "short_name": "Finca",
-      "start_url": "/",
-      "display": "standalone",
-      "background_color": "#f0f7f9",
-      "theme_color": "#006064",
-      "icons": [
-        {
-          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-          "sizes": "192x192",
-          "type": "image/gif"
-        },
-        {
-          "src": "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
-          "sizes": "512x512",
-          "type": "image/gif"
-        }
-      ]
-    };
-    const stringManifest = JSON.stringify(manifest);
-    const blob = new Blob([stringManifest], {type: 'application/json'});
-    const manifestURL = URL.createObjectURL(blob);
-    document.querySelector('link[rel="manifest"]').href = manifestURL;
-  }
-</script>
+  <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#006064">
   <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1 data-tr="FincaLearn" data-en="FincaLearn">FincaLearn</h1>
+      <h1 data-tr="FinceLearn" data-en="FinceLearn">FinceLearn</h1>
       <p class="description" data-tr="Fince kısa hikâyeler okuyarak kelime öğren!" data-en="Learn Finnish words by reading short stories!">
         Fince kısa hikâyeler okuyarak kelime öğren!
       </p>

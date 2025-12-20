@@ -1,5 +1,5 @@
 ```markdown
-# FincaLearn
+# FinceLearn
 
 A Progressive Web App (PWA) for language learning. Generate short, engaging stories in **Turkish** or **English**, then tap any word to instantly see its translation in the other language.
 
@@ -18,7 +18,7 @@ Perfect for immersive language practice – read fun stories and learn vocabular
 ## Project Structure
 ```
 
-fincalaarn/
+Fincelaarn/
 ├── src/
 │ ├── index.html # Main HTML file
 │ ├── manifest.json # PWA manifest
