@@ -66,14 +66,17 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
         // Deftere Ekle butonu (küçük ve güzel)
         const defterBtn = document.createElement('button');
         defterBtn.textContent = hedefDil === 'tr' ? 'Deftere Ekle' : 'Add to Notebook';
-        defterBtn.style.marginTop = '15px';
-        defterBtn.style.padding = '8px 16px';
-        defterBtn.style.background = '#006064';
-        defterBtn.style.color = 'white';
-        defterBtn.style.border = 'none';
-        defterBtn.style.borderRadius = '6px';
-        defterBtn.style.fontSize = '0.9em';
-        defterBtn.style.cursor = 'pointer';
+defterBtn.style.marginTop = '15px';
+defterBtn.style.padding = '10px 20px';
+defterBtn.style.background = '#006064';
+defterBtn.style.color = 'white';
+defterBtn.style.border = 'none';
+defterBtn.style.borderRadius = '8px';
+defterBtn.style.fontSize = '1em';
+defterBtn.style.cursor = 'pointer';
+defterBtn.style.display = 'block';
+defterBtn.style.marginLeft = 'auto';
+defterBtn.style.marginRight = 'auto';
 
         defterBtn.onclick = (e) => {
           e.stopPropagation();
@@ -82,11 +85,13 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
         };
 
         ceviriIcerik.innerHTML = `
-          <strong style="font-size:1.2em;">${original}</strong><br>
-          <span style="font-size:1em;">${translation}</span><br>
-          <small>(${hedefDil === 'tr' ? 'Türkçe' : 'English'})</small>
-        `;
-        ceviriIcerik.appendChild(defterBtn);
+  <div style="margin-bottom: 15px;">
+    <strong style="font-size:1.4em; display:block;">${original}</strong>
+    <span style="font-size:1.2em; display:block; margin:10px 0;">${translation}</span>
+    <small style="display:block; color:#666;">(${hedefDil === 'tr' ? 'Türkçe' : 'English'})</small>
+  </div>
+`;
+ceviriIcerik.appendChild(defterBtn);
 
         sesliOku(original);
       } catch (err) {

@@ -21,15 +21,31 @@
         <button class="lang-btn active" data-lang="tr">Türkçe</button>
         <button class="lang-btn" data-lang="en">English</button>
       </div>
-      <div id="auth-area" style="margin-top: 20px; text-align: center;">
-  <button id="login-btn">Giriş Yap (Google ile)</button>
-  <div id="user-info" class="hidden" style="margin-top: 10px;">
-    <span id="user-email"></span>
-    <button id="logout-btn" style="margin-left: 10px;">Çıkış Yap</button>
+      <div id="auth-section" style="text-align: center; margin: 30px 0;">
+  <div id="user-info" class="hidden" style="background: #e8f5e8; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+    <span id="user-name" style="font-weight: bold; font-size: 1.1em;"></span>
+    <button id="logout-btn" style="margin-left: 15px; padding: 8px 16px; background: #d32f2f; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      Çıkış Yap
+    </button>
   </div>
-  <button id="premium-btn" style="margin-top: 10px; background: #ff9800; color: white;">Premium Ol (Aylık 49 TL)</button>
+
+  <button id="login-btn" style="padding: 14px 28px; background: #4285F4; color: white; border: none; border-radius: 12px; font-size: 1.1em; cursor: pointer; margin-bottom: 15px;">
+    Google ile Giriş Yap
+  </button>
+
+  <div style="background: #fff3e0; padding: 20px; border-radius: 12px; margin-top: 20px;">
+    <p style="font-size: 1.2em; margin-bottom: 15px;">Premium Özellikler:</p>
+    <ul style="text-align: left; max-width: 500px; margin: 0 auto 20px; line-height: 1.8; font-size: 1.1em;">
+      <li>✓ Sesli okuma (hikaye ve kelimeler Fince okunur)</li>
+      <li>✓ Sınırsız kelime defteri</li>
+      <li>✓ Daha uzun ve karmaşık hikayeler</li>
+      <li>✓ Reklamsız kullanım</li>
+    </ul>
+    <button id="premium-btn" style="padding: 16px 32px; background: #ff9800; color: white; border: none; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer;">
+      Premium Ol (Aylık 49 TL)
+    </button>
+  </div>
 </div>
-    </div>
 
     <div class="controls">
       <input type="text" id="konu" 
