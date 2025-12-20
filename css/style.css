@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,45 +6,53 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f7f9;
+  background: linear-gradient(to bottom, #f0f7f9, #e0f0f5);
   color: #333;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 10px;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 10px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 h1 {
   color: #006064;
+  font-size: 2.2em;
+  margin-bottom: 10px;
+}
+
+.description {
+  color: #555;
+  font-size: 1.2em;
+  margin-bottom: 20px;
 }
 
 .language-switcher {
   display: flex;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
 }
 
 .lang-btn {
-  padding: 8px 16px;
-  background: #eee;
+  padding: 10px 24px;
+  background: #e0e0e0;
   border: none;
-  border-radius: 8px;
+  border-radius: 30px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-weight: bold;
+  transition: all 0.3s;
 }
 
 .lang-btn.active {
@@ -53,49 +60,79 @@ h1 {
   color: white;
 }
 
-.description {
-  text-align: center;
-  color: #555;
-  margin-bottom: 30px;
-  font-size: 1.1em;
-}
-
 .controls {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 15px;
   margin-bottom: 30px;
-  flex-wrap: wrap;
-}
-
-#uret-hikaye {
-  padding: 12px 24px;
-  background: #006064;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1em;
 }
 
 #konu {
-  flex: 1;
-  min-width: 200px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1em;
+  padding: 16px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  font-size: 1.1em;
+  transition: border 0.3s;
+}
+
+#konu:focus {
+  outline: none;
+  border-color: #006064;
+}
+
+#uret-hikaye {
+  padding: 16px;
+  background: #006064;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+#uret-hikaye:hover {
+  background: #004d4d;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.tab-btn.active {
+  background: #006064;
+  color: white;
 }
 
 .hikaye {
-  font-size: 1.3em;
-  line-height: 2;
+  font-size: 1.4em;
+  line-height: 2.2;
   text-align: justify;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8fdff;
+  border-radius: 12px;
+  border-left: 5px solid #006064;
 }
 
 .kelime {
   cursor: pointer;
-  padding: 2px 4px;
-  border-bottom: 1px dotted #006064;
+  padding: 2px 6px;
+  border-bottom: 2px dotted #006064;
   border-radius: 4px;
   transition: all 0.2s;
 }
@@ -111,30 +148,33 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
-  padding: 20px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-  max-width: 80%;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  max-width: 90%;
+  width: 400px;
   z-index: 1000;
   text-align: center;
-  font-size: 1.4em;
 }
 
 .popup button {
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 10px;
+  right: 15px;
   background: none;
   border: none;
-  font-size: 1.6em;
+  font-size: 1.8em;
   cursor: pointer;
   color: #999;
 }
 
 .overlay {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
   z-index: 999;
 }
 
@@ -142,61 +182,110 @@ h1 {
   display: none;
 }
 
-.tabs {
-  margin: 20px 0;
-  display: flex;
-  gap: 10px;
+/* Auth & Premium Section */
+#auth-section {
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+  background: #f0f7fa;
+  border-radius: 12px;
 }
 
-.tab-btn {
-  padding: 10px 20px;
-  background: #eee;
+#login-btn, #premium-btn {
+  padding: 14px 28px;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: bold;
   cursor: pointer;
+  margin: 10px;
+  transition: all 0.3s;
 }
 
-.tab-btn.active {
-  background: #006064;
+#login-btn {
+  background: #4285F4;
   color: white;
 }
 
-#defter-alani {
-  margin-top: 20px;
+#premium-btn {
+  background: #ff9800;
+  color: white;
 }
 
-#kelime-listesi {
-  list-style: none;
-  padding: 0;
-}
-
-#kelime-listesi li {
+#user-info {
+  background: #e8f5e8;
   padding: 15px;
-  margin: 10px 0;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+/* Kelime Defteri */
+#defter-alani ul {
+  list-style: none;
+}
+
+#defter-alani li {
+  padding: 18px;
+  margin: 15px 0;
   background: #f0f7f9;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.kelime-defter-item strong {
-  font-size: 1.2em;
+#defter-alani button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ses-oku-btn {
+  background: #006064;
+  color: white;
 }
 
 .kelime-sil {
   background: #d32f2f;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
-@media (max-width: 600px) {
-  .container { padding: 20px; }
-  .hikaye { font-size: 1.1em; line-height: 1.8; }
-  .controls { flex-direction: column; }
-  .header { flex-direction: column; text-align: center; }
-  #konu { min-width: auto; }
+/* Responsive */
+@media (min-width: 768px) {
+  .controls {
+    flex-direction: row;
+  }
+
+  #konu {
+    flex: 1;
+  }
+
+  .hikaye {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8em;
+  }
+
+  .description {
+    font-size: 1em;
+  }
+
+  .hikaye {
+    font-size: 1.2em;
+    line-height: 2;
+  }
+
+  .popup {
+    width: 95%;
+    padding: 20px;
+  }
 }

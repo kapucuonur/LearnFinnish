@@ -1,4 +1,4 @@
-// js/auth.js - Firebase Auth Modular SDK (2025 güncel, v12.x)
+// js/auth.js - Firebase Auth (2025 güncel modular SDK)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import { 
   getAuth, 
@@ -21,5 +21,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
+
+// Hata yakalama için
+auth.onAuthStateChanged(() => {}, (error) => {
+  console.error('Firebase Auth Error:', error);
+});
 
 export { auth, provider, signInWithPopup, signOut, onAuthStateChanged };

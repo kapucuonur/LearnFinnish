@@ -92,70 +92,45 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  const installBtn = document.createElement('button');
-  installBtn.textContent = currentLang === 'tr' ? 'Uygulamayı Yükle' : 'Install App';
-  installBtn.id = 'pwa-install-btn';
-  installBtn.style.position = 'fixed';
-  installBtn.style.bottom = '20px';
-  installBtn.style.left = '50%';
-  installBtn.style.transform = 'translateX(-50%)';
-  installBtn.style.padding = '14px 28px';
-  installBtn.style.background = '#006064';
-  installBtn.style.color = 'white';
-  installBtn.style.border = 'none';
-  installBtn.style.borderRadius = '50px';
-  installBtn.style.fontSize = '1em';
-  installBtn.style.zIndex = '1000';
-  installBtn.style.boxShadow = '0 6px 20px rgba(0,0,0,0.2)';
-  installBtn.style.cursor = 'pointer';
-
-  installBtn.onclick = () => {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User installed the app');
-      }
-      installBtn.style.display = 'none';
-    });
-  };
-
-  document.body.appendChild(installBtn);
-});
-
-// Firebase Auth - Giriş Sistemi
+  // Giriş sistemi
 const loginBtn = document.createElement('button');
-loginBtn.textContent = currentLang === 'tr' ? 'Google ile Giriş Yap' : 'Sign in with Google';
+loginBtn.textContent = 'Google ile Giriş Yap';
 loginBtn.style.margin = '20px auto';
 loginBtn.style.display = 'block';
-loginBtn.style.padding = '12px 24px';
+loginBtn.style.padding = '14px 28px';
 loginBtn.style.background = '#4285F4';
 loginBtn.style.color = 'white';
 loginBtn.style.border = 'none';
 loginBtn.style.borderRadius = '8px';
+loginBtn.style.fontSize = '1.1em';
 loginBtn.style.cursor = 'pointer';
+loginBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
 
 const userInfo = document.createElement('div');
 userInfo.style.margin = '20px auto';
 userInfo.style.textAlign = 'center';
 userInfo.style.display = 'none';
+userInfo.style.background = '#e8f5e8';
+userInfo.style.padding = '15px';
+userInfo.style.borderRadius = '8px';
 
-const userEmail = document.createElement('span');
-userEmail.style.marginRight = '10px';
+const userName = document.createElement('span');
+userName.style.fontWeight = 'bold';
+userName.style.fontSize = '1.1em';
 const logoutBtn = document.createElement('button');
-logoutBtn.textContent = currentLang === 'tr' ? 'Çıkış Yap' : 'Sign Out';
+logoutBtn.textContent = 'Çıkış Yap';
+logoutBtn.style.marginLeft = '15px';
 logoutBtn.style.padding = '8px 16px';
 logoutBtn.style.background = '#d32f2f';
 logoutBtn.style.color = 'white';
 logoutBtn.style.border = 'none';
 logoutBtn.style.borderRadius = '6px';
 
-userInfo.appendChild(userEmail);
+userInfo.appendChild(userName);
 userInfo.appendChild(logoutBtn);
 
-// Butonları header'a ekle
-const header = document.querySelector('.header');
-header.appendChild(loginBtn);
-header.appendChild(userInfo);
+document.querySelector('.header').appendChild(loginBtn);
+document.querySelector('.header').appendChild(userInfo);
 
 loginBtn.onclick = () => signInWithPopup(auth, provider);
 
@@ -165,9 +140,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     loginBtn.style.display = 'none';
     userInfo.style.display = 'block';
-    userEmail.textContent = `Hoş geldin, ${user.displayName || user.email}!`;
-    console.log('Giriş yapan kullanıcı:', user.uid);
-    // Premium özellikleri aktif et (ileride Firestore'dan kontrol ederiz)
+    userName.textContent = `Hoş geldin, ${user.displayName || user.email}!`;
   } else {
     loginBtn.style.display = 'block';
     userInfo.style.display = 'none';
