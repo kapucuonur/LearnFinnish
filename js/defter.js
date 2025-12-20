@@ -1,4 +1,4 @@
-const DEFTER_KEY = 'fincalearn_kelimeler';
+const DEFTER_KEY = 'Fincelearn_kelimeler';
 
 export function deftereEkle(kelime, ceviri, hedefDil) {
   const defter = JSON.parse(localStorage.getItem(DEFTER_KEY) || '[]');

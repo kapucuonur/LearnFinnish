@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-tr="FincaLearn - Fince Öğren" data-en="FincaLearn - Learn Finnish">FincaLearn - Fince Öğren</title>
+  <title data-tr="FinceLearn - Fince Öğren" data-en="FinceLearn - Learn Finnish">FinceLearn - Fince Öğren</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#006064">
@@ -12,7 +12,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1 data-tr="FincaLearn" data-en="FincaLearn">FincaLearn</h1>
+      <h1 data-tr="FinceLearn" data-en="FinceLearn">FinceLearn</h1>
       <p class="description" data-tr="Fince kısa hikâyeler okuyarak kelime öğren!" data-en="Learn Finnish words by reading short stories!">
         Fince kısa hikâyeler okuyarak kelime öğren!
       </p>
@@ -21,6 +21,14 @@
         <button class="lang-btn active" data-lang="tr">Türkçe</button>
         <button class="lang-btn" data-lang="en">English</button>
       </div>
+      <div id="auth-area" style="margin-top: 20px; text-align: center;">
+  <button id="login-btn">Giriş Yap (Google ile)</button>
+  <div id="user-info" class="hidden" style="margin-top: 10px;">
+    <span id="user-email"></span>
+    <button id="logout-btn" style="margin-left: 10px;">Çıkış Yap</button>
+  </div>
+  <button id="premium-btn" style="margin-top: 10px; background: #ff9800; color: white;">Premium Ol (Aylık 49 TL)</button>
+</div>
     </div>
 
     <div class="controls">
@@ -58,6 +66,10 @@
 
   <div class="overlay hidden"></div>
 
+  <script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe('pk_test_51RPSymGBPXxMTpubh4D982BiRPiBOXBxOGBLoBiSeWhrkAv2Ou9a2HAmkchbKktJXkpWYtcL307gdgT4PXWxRAc500tdraauMa'); // pk_test_... ile değiştir
+</script>
   <!-- Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {

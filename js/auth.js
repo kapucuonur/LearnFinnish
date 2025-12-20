@@ -1,19 +1,25 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+// js/auth.js - Firebase Auth Modular SDK (2025 güncel, v12.x)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  signOut, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "BURAYA_FIREBASE_API_KEY",
-  authDomain: "projen.firebaseapp.com",
-  projectId: "projen",
-  storageBucket: "projen.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
+  apiKey: "AIzaSyABTl3pLxVHJKa3RCOz1ZgheKbNs-NbjfM",
+  authDomain: "learnfinnish-2e11e.firebaseapp.com",
+  projectId: "learnfinnish-2e11e",
+  storageBucket: "learnfinnish-2e11e.firebasestorage.app",
+  messagingSenderId: "810288081740",
+  appId: "1:810288081740:web:332c685fb4c4512224bde9",
+  measurementId: "G-RXBL077KET"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-export { auth, db, provider, signInWithPopup, signOut, onAuthStateChanged };
+export { auth, provider, signInWithPopup, signOut, onAuthStateChanged };

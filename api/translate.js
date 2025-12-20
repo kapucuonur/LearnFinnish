@@ -1,4 +1,4 @@
-// api/translate.js
+// api/translate.js - Google Translate proxy (API key gerekmez, ücretsiz, Fince desteği mükemmel)
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
@@ -6,11 +6,11 @@ export default async function handler(req, res) {
 
   const { kelime, hedefDil } = req.body;
 
-  const langPair = hedefDil === 'tr' ? 'fi|tr' : 'fi|en';
+  const target = hedefDil === 'tr' ? 'tr' : 'en';
 
   try {
     const response = await fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(kelime)}&langpair=${langPair}`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fi&tl=${target}&dt=t&q=${encodeURIComponent(kelime)}`
     );
 
     if (!response.ok) {
@@ -18,12 +18,7 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-
-    let translation = data.responseData?.translatedText || (hedefDil === 'tr' ? 'Çeviri bulunamadı' : 'No translation found');
-
-    if (kelime.charAt(0).toUpperCase() === kelime.charAt(0) && translation) {
-      translation = translation.charAt(0).toUpperCase() + translation.slice(1);
-    }
+    const translation = data[0][0][0] || (hedefDil === 'tr' ? 'Çeviri bulunamadı' : 'No translation found');
 
     res.status(200).json({ translation });
   } catch (err) {

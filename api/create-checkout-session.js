@@ -9,8 +9,8 @@ export default async function handler(req, res) {
       quantity: 1,
     }],
     mode: 'subscription',
-    success_url: 'https://learnfinnish.vercel.app/success',
-    cancel_url: 'https://learnfinnish.vercel.app/',
+    success_url: 'https://learnfinnish-qtut72hr8-kapucuonurs-projects.vercel.app//success',
+    cancel_url: 'https://learnfinnish-qtut72hr8-kapucuonurs-projects.vercel.app//',
   });
 
   res.status(200).json({ id: session.id });

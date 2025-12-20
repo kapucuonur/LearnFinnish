@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fincalearn-v1';
+const CACHE_NAME = 'Fincelearn-v1';
 
 const urlsToCache = [
   '/',
