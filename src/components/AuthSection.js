@@ -1,4 +1,4 @@
-// Auth Section Component
+// Auth Section Component - v2.0 (Premium visibility fix)
 import { auth, signInWithGoogle, signOutUser, onAuthStateChanged } from '../services/auth.js';
 import { getCurrentLang } from './LanguageSwitcher.js';
 import { updateTranslations } from '../utils/i18n.js';
