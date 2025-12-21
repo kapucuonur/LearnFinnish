@@ -1,0 +1,19 @@
+/* Container Layout */
+.container {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-xl);
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: var(--space-8);
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: var(--space-10);
+    }
+}

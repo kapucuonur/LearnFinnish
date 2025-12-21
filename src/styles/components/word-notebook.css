@@ -1,0 +1,117 @@
+/* Word Notebook Component */
+#defter-alani {
+    animation: fadeIn var(--transition-base);
+}
+
+#defter-alani h2 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-6);
+    font-size: var(--font-size-2xl);
+}
+
+#defter-alani ul {
+    list-style: none;
+}
+
+#defter-alani li {
+    padding: var(--space-5);
+    margin: var(--space-4) 0;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+#defter-alani li:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+#defter-alani .word-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+#defter-alani .word-actions {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+#defter-alani button {
+    padding: var(--space-3) var(--space-4);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-base);
+    min-height: 40px;
+}
+
+.ses-oku-btn {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.ses-oku-btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+}
+
+.kelime-sil {
+    background: var(--color-error);
+    color: var(--color-white);
+}
+
+.kelime-sil:hover {
+    background: #b71c1c;
+    transform: translateY(-1px);
+}
+
+#defter-temizle {
+    margin-top: var(--space-5);
+    background: var(--color-error);
+    color: var(--color-white);
+    border: none;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+#defter-temizle:hover {
+    background: #b71c1c;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    #defter-alani li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #defter-alani .word-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
