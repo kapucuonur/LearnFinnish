@@ -1,5 +1,5 @@
-import { kelimeyiCevir } from './api.js';
-import { deftereEkle } from './defter.js';
+import { kelimeyiCevir } from '../services/api.js';
+import { deftereEkle } from '../services/storage.js';
 
 const hikayeAlani = document.getElementById('hikaye-alani');
 const popup = document.getElementById('ceviri-popup');
