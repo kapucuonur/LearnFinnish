@@ -1,7 +1,7 @@
 import { hikayeUret } from './api.js';
 import { hikayeYaz, kelimeEventiEkle } from './dom.js';
 import { defteriListele, defterSayisiniGuncelle, defteriTemizle } from './defter.js';
-import { auth, provider, signInWithPopup, signOut, onAuthStateChanged } from './auth.js';
+import { auth, provider, signInWithGoogle, signOutUser, onAuthStateChanged } from './auth.js';
 
 let currentLang = 'tr';
 let deferredPrompt;
@@ -77,10 +77,10 @@ document.getElementById('tab-defter').addEventListener('click', () => {
 
 // Defteri temizle
 document.getElementById('defter-temizle').addEventListener('click', () => {
-  const confirmMsg = currentLang === 'tr' 
-    ? 'Defterdeki tüm kelimeleri silmek istediğine emin misin?' 
+  const confirmMsg = currentLang === 'tr'
+    ? 'Defterdeki tüm kelimeleri silmek istediğine emin misin?'
     : 'Are you sure you want to clear all words from your notebook?';
-  
+
   if (confirm(confirmMsg)) {
     defteriTemizle();
     defteriListele();
@@ -129,9 +129,31 @@ const userName = document.getElementById('user-name');
 const logoutBtn = document.getElementById('logout-btn');
 const premiumInfo = document.getElementById('premium-info');
 
-loginBtn.onclick = () => signInWithPopup(auth, provider);
+// Login button handler with loading state
+loginBtn.onclick = async () => {
+  const originalText = loginBtn.textContent;
+  loginBtn.disabled = true;
+  loginBtn.textContent = currentLang === 'tr' ? 'Giriş yapılıyor...' : 'Signing in...';
 
-logoutBtn.onclick = () => signOut(auth);
+  const result = await signInWithGoogle(currentLang);
+
+  if (!result.success) {
+    alert(result.error);
+    loginBtn.disabled = false;
+    loginBtn.textContent = originalText;
+  }
+  // Success case is handled by onAuthStateChanged
+};
+
+// Logout button handler
+logoutBtn.onclick = async () => {
+  const result = await signOutUser(currentLang);
+
+  if (!result.success) {
+    alert(result.error);
+  }
+  // Success case is handled by onAuthStateChanged
+};
 
 premiumBtn.onclick = () => {
   if (auth.currentUser) {
@@ -145,12 +167,16 @@ premiumBtn.onclick = () => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     loginBtn.style.display = 'none';
-    userInfo.style.display = 'block';
-    userName.textContent = `Hoş geldin, ${user.displayName || user.email}!`;
+    loginBtn.disabled = false;
+    loginBtn.textContent = loginBtn.dataset[currentLang === 'tr' ? 'tr' : 'en'] || 'Google ile Giriş Yap';
+    userInfo.classList.remove('hidden');
+    userName.textContent = `${currentLang === 'tr' ? 'Hoş geldin' : 'Welcome'}, ${user.displayName || user.email}!`;
     premiumInfo.style.display = 'none'; // Giriş yapan premium olsun
   } else {
     loginBtn.style.display = 'block';
-    userInfo.style.display = 'none';
+    loginBtn.disabled = false;
+    loginBtn.textContent = loginBtn.dataset[currentLang === 'tr' ? 'tr' : 'en'] || 'Google ile Giriş Yap';
+    userInfo.classList.add('hidden');
     premiumInfo.style.display = 'block'; // Giriş yapmadan premium bilgisi görünsün
   }
 });

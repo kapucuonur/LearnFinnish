@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,16 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#006064">
-  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
+  <link rel="icon"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
 </head>
+
 <body>
   <div class="container">
     <div class="header">
       <h1 data-tr="FinceLearn" data-en="FinceLearn">FinceLearn</h1>
-      <p class="description" data-tr="Fince kısa hikâyeler okuyarak kelime öğren!" data-en="Learn Finnish words by reading short stories!">
+      <p class="description" data-tr="Fince kısa hikâyeler okuyarak kelime öğren!"
+        data-en="Learn Finnish words by reading short stories!">
         Fince kısa hikâyeler okuyarak kelime öğren!
       </p>
 
@@ -22,81 +26,93 @@
         <button class="lang-btn" data-lang="en">English</button>
       </div>
       <div id="auth-section" style="text-align: center; margin: 30px 0;">
-  <div id="user-info" class="hidden" style="background: #e8f5e8; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-    <span id="user-name" style="font-weight: bold; font-size: 1.1em;"></span>
-    <button id="logout-btn" style="margin-left: 15px; padding: 8px 16px; background: #d32f2f; color: white; border: none; border-radius: 6px; cursor: pointer;">
-      Çıkış Yap
-    </button>
-  </div>
+        <div id="user-info" class="hidden"
+          style="background: #e8f5e8; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+          <span id="user-name" style="font-weight: bold; font-size: 1.1em;"></span>
+          <button id="logout-btn"
+            style="margin-left: 15px; padding: 8px 16px; background: #d32f2f; color: white; border: none; border-radius: 6px; cursor: pointer;"
+            data-tr="Çıkış Yap" data-en="Sign Out">
+            Çıkış Yap
+          </button>
+        </div>
 
-  <button id="login-btn" style="padding: 14px 28px; background: #4285F4; color: white; border: none; border-radius: 12px; font-size: 1.1em; cursor: pointer;">
-    Google ile Giriş Yap
-  </button>
+        <button id="login-btn"
+          style="padding: 14px 28px; background: #4285F4; color: white; border: none; border-radius: 12px; font-size: 1.1em; cursor: pointer;"
+          data-tr="Google ile Giriş Yap" data-en="Sign in with Google">
+          Google ile Giriş Yap
+        </button>
 
-  <div id="premium-info" style="background: #fff3e0; padding: 20px; border-radius: 12px; margin-top: 20px;">
-    <p style="font-size: 1.2em; margin-bottom: 15px;" data-tr="Premium Özellikler:" data-en="Premium Features:">Premium Özellikler:</p>
-    <ul style="text-align: left; max-width: 500px; margin: 0 auto 20px; line-height: 1.8; font-size: 1.1em;">
-      <li data-tr="✓ Sesli okuma (hikaye ve kelimeler Fince okunur)" data-en="✓ Text-to-speech (stories and words read in Finnish)">✓ Sesli okuma (hikaye ve kelimeler Fince okunur)</li>
-      <li data-tr="✓ Sınırsız kelime defteri" data-en="✓ Unlimited word notebook">✓ Sınırsız kelime defteri</li>
-      <li data-tr="✓ Daha uzun ve karmaşık hikayeler" data-en="✓ Longer and more complex stories">✓ Daha uzun ve karmaşık hikayeler</li>
-      <li data-tr="✓ Reklamsız kullanım" data-en="✓ Ad-free experience">✓ Reklamsız kullanım</li>
-    </ul>
-    <button id="premium-btn" style="padding: 16px 32px; background: #ff9800; color: white; border: none; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer;" data-tr="Premium Ol (Aylık 49 TL)" data-en="Go Premium (Monthly $4.99)">
-      Premium Ol (Aylık 49 TL)
-    </button>
-  </div>
-</div>
+        <div id="premium-info" style="background: #fff3e0; padding: 20px; border-radius: 12px; margin-top: 20px;">
+          <p style="font-size: 1.2em; margin-bottom: 15px;" data-tr="Premium Özellikler:" data-en="Premium Features:">
+            Premium Özellikler:</p>
+          <ul style="text-align: left; max-width: 500px; margin: 0 auto 20px; line-height: 1.8; font-size: 1.1em;">
+            <li data-tr="✓ Sesli okuma (hikaye ve kelimeler Fince okunur)"
+              data-en="✓ Text-to-speech (stories and words read in Finnish)">✓ Sesli okuma (hikaye ve kelimeler Fince
+              okunur)</li>
+            <li data-tr="✓ Sınırsız kelime defteri" data-en="✓ Unlimited word notebook">✓ Sınırsız kelime defteri</li>
+            <li data-tr="✓ Daha uzun ve karmaşık hikayeler" data-en="✓ Longer and more complex stories">✓ Daha uzun ve
+              karmaşık hikayeler</li>
+            <li data-tr="✓ Reklamsız kullanım" data-en="✓ Ad-free experience">✓ Reklamsız kullanım</li>
+          </ul>
+          <button id="premium-btn"
+            style="padding: 16px 32px; background: #ff9800; color: white; border: none; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer;"
+            data-tr="Premium Ol (Aylık 49 TL)" data-en="Go Premium (Monthly $4.99)">
+            Premium Ol (Aylık 49 TL)
+          </button>
+        </div>
+      </div>
 
-    <div class="controls">
-      <input type="text" id="konu" 
-             data-placeholder-tr="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" 
-             data-placeholder-en="Story topic (optional, in Turkish or Finnish)" 
-             placeholder="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" />
-      <button id="uret-hikaye" data-tr="Yeni Fince Hikâye Üret" data-en="Generate New Finnish Story">
-        Yeni Fince Hikâye Üret
-      </button>
+      <div class="controls">
+        <input type="text" id="konu" data-placeholder-tr="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)"
+          data-placeholder-en="Story topic (optional, in Turkish or Finnish)"
+          placeholder="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" />
+        <button id="uret-hikaye" data-tr="Yeni Fince Hikâye Üret" data-en="Generate New Finnish Story">
+          Yeni Fince Hikâye Üret
+        </button>
+      </div>
+
+      <div class="tabs">
+        <button id="tab-hikaye" class="tab-btn active" data-tr="Hikaye" data-en="Story">Hikaye</button>
+        <button id="tab-defter" class="tab-btn" data-tr="Kelime Defterim" data-en="My Word Notebook">
+          Kelime Defterim (<span id="defter-sayi">0</span>)
+        </button>
+      </div>
+
+      <div id="defter-alani" class="hidden">
+        <h2 data-tr="Kelime Defterim" data-en="My Word Notebook">Kelime Defterim</h2>
+        <ul id="kelime-listesi"></ul>
+        <button id="defter-temizle" data-tr="Defteri Temizle" data-en="Clear Notebook"
+          style="margin-top: 20px; background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 8px;">
+          Defteri Temizle
+        </button>
+      </div>
+
+      <div id="hikaye-alani" class="hikaye"></div>
+
+      <div id="ceviri-popup" class="popup hidden">
+        <span id="ceviri-icerik" data-tr="Çeviriliyor..." data-en="Translating...">Çeviriliyor...</span>
+        <button id="kapat-popup">✕</button>
+      </div>
     </div>
 
-    <div class="tabs">
-      <button id="tab-hikaye" class="tab-btn active" data-tr="Hikaye" data-en="Story">Hikaye</button>
-      <button id="tab-defter" class="tab-btn" data-tr="Kelime Defterim" data-en="My Word Notebook">
-        Kelime Defterim (<span id="defter-sayi">0</span>)
-      </button>
-    </div>
+    <div class="overlay hidden"></div>
 
-    <div id="defter-alani" class="hidden">
-      <h2 data-tr="Kelime Defterim" data-en="My Word Notebook">Kelime Defterim</h2>
-      <ul id="kelime-listesi"></ul>
-      <button id="defter-temizle" data-tr="Defteri Temizle" data-en="Clear Notebook" style="margin-top: 20px; background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 8px;">
-        Defteri Temizle
-      </button>
-    </div>
-    
-    <div id="hikaye-alani" class="hikaye"></div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      const stripe = Stripe('pk_test_51RPSymGBPXxMTpubh4D982BiRPiBOXBxOGBLoBiSeWhrkAv2Ou9a2HAmkchbKktJXkpWYtcL307gdgT4PXWxRAc500tdraauMa'); // pk_test_... ile değiştir
+    </script>
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => console.log('Service Worker registered', reg))
+            .catch(err => console.log('Service Worker error', err));
+        });
+      }
+    </script>
 
-    <div id="ceviri-popup" class="popup hidden">
-      <span id="ceviri-icerik" data-tr="Çeviriliyor..." data-en="Translating...">Çeviriliyor...</span>
-      <button id="kapat-popup">✕</button>
-    </div>
-  </div>
-
-  <div class="overlay hidden"></div>
-
-  <script src="https://js.stripe.com/v3/"></script>
-<script>
-  const stripe = Stripe('pk_test_51RPSymGBPXxMTpubh4D982BiRPiBOXBxOGBLoBiSeWhrkAv2Ou9a2HAmkchbKktJXkpWYtcL307gdgT4PXWxRAc500tdraauMa'); // pk_test_... ile değiştir
-</script>
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(reg => console.log('Service Worker registered', reg))
-          .catch(err => console.log('Service Worker error', err));
-      });
-    }
-  </script>
-
-  <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/js/main.js"></script>
 </body>
+
 </html>
