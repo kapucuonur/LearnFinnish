@@ -89,4 +89,4 @@ auth.onAuthStateChanged(() => { }, (error) => {
   console.error('Firebase Auth Error:', error);
 });
 
-export { auth, provider, signInWithGoogle, signOutUser, onAuthStateChanged };
+export { signInWithGoogle, signOutUser, onAuthStateChanged };
