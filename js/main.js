@@ -2,6 +2,8 @@ import { hikayeUret } from './api.js';
 import { hikayeYaz, kelimeEventiEkle } from './dom.js';
 import { defteriListele, defterSayisiniGuncelle, defteriTemizle } from './defter.js';
 import { auth, provider, signInWithGoogle, signOutUser, onAuthStateChanged } from './auth.js';
+import { initializeStripe, createCheckoutSession, handlePaymentCallback, checkPremiumStatus } from './payment.js';
+
 
 let currentLang = 'tr';
 let deferredPrompt;
@@ -156,13 +158,19 @@ logoutBtn.onclick = async () => {
   // Success case is handled by onAuthStateChanged
 };
 
-premiumBtn.onclick = () => {
-  if (auth.currentUser) {
-    // Gerçek ödeme burada olacak (Stripe)
-    alert('Ödeme sistemi yakında aktif olacak!');
-  } else {
-    alert(currentLang === 'tr' ? 'Premium olmak için önce giriş yapmalısınız!' : 'Please sign in to go premium!');
+premiumBtn.onclick = async () => {
+  const originalText = premiumBtn.textContent;
+  premiumBtn.disabled = true;
+  premiumBtn.textContent = currentLang === 'tr' ? 'Yükleniyor...' : 'Loading...';
+
+  const result = await createCheckoutSession(currentLang);
+
+  if (!result.success) {
+    alert(result.error);
+    premiumBtn.disabled = false;
+    premiumBtn.textContent = originalText;
   }
+  // If successful, user will be redirected to Stripe checkout
 };
 
 onAuthStateChanged(auth, (user) => {
@@ -185,3 +193,10 @@ onAuthStateChanged(auth, (user) => {
 // Sayfa yüklendiğinde
 updateUI();
 defterSayisiniGuncelle();
+
+// Initialize Stripe with publishable key
+const stripeKey = 'pk_test_51RPSymGBPXxMTpubh4D982BiRPiBOXBxOGBLoBiSeWhrkAv2Ou9a2HAmkchbKktJXkpWYtcL307gdgT4PXWxRAc500tdraauMa';
+initializeStripe(stripeKey);
+
+// Handle payment callback from Stripe redirect
+handlePaymentCallback(currentLang);

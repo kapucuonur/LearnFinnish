@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Start local development server for FinceLearn app
-echo "🚀 Starting FinceLearn development server..."
+# Start local development server for LearnFinnish app
+echo "🚀 Starting LearnFinnish development server..."
 echo "📍 Server will run at: http://localhost:8000"
 echo "🌐 Open http://localhost:8000 in your browser"
 echo ""
