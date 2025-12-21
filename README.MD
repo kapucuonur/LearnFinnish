@@ -1,101 +1,185 @@
-Tamam, sorun şu: README.md içindeki yapı eski haliyle yazılmış (`src/` klasörü var), ama biz az önce tüm dosyaları köke taşıdık. Bu yüzden GitHub’da README’deki yapı artık gerçek proje yapısıyla uyuşmuyor ve “messy” görünüyor.
+# FinceLearn - Learn Finnish Through Stories 🇫🇮
 
-Hemen düzeltiyoruz! Aşağıdaki **yeni README.md** içeriğini tamamen kopyala ve projenin kökündeki `README.md` dosyasını bununla değiştir.
+Modern, responsive web application for learning Finnish vocabulary through interactive short stories.
 
-### Yeni README.md (Güncel, Temiz Yapıya Uygun – İngilizce)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Version](https://img.shields.io/badge/version-2.0.0-green.svg)
 
-```markdown
-# FinceLearn
+## 🌟 Features
 
-A Progressive Web App (PWA) for language learning. Generate short, engaging stories in **Turkish** or **English**, then tap any word to instantly see its translation in the other language.
+### Core Features
+- 📚 **AI-Generated Stories** - Create personalized Finnish stories on any topic
+- 🔤 **Interactive Vocabulary** - Click any word for instant translation
+- 📖 **Word Notebook** - Save and manage your learned vocabulary
+- 🌐 **Bilingual Support** - Turkish and English interface
+- 📱 **Progressive Web App** - Install and use offline
+- 🎨 **Responsive Design** - Optimized for mobile, tablet, and desktop
 
-Perfect for immersive language practice – read fun stories and learn vocabulary in context!
+### Premium Features
+- 🔊 **Text-to-Speech** - Listen to stories and words in Finnish
+- ♾️ **Unlimited Notebook** - Save unlimited words (free: 50 words)
+- 📚 **Extended Stories** - Access longer and more complex stories
+- 🚫 **Ad-Free Experience** - Enjoy learning without interruptions
 
-## Features
+### Authentication & Payment
+- 🔐 **Google Sign-In** - Secure authentication with Firebase
+- 💳 **Stripe Integration** - Safe and easy premium subscription
+- 👤 **User Profiles** - Personalized learning experience
 
-- Bilingual interface (Türkçe ↔ English)
-- Generate random or topic-based stories using Google Gemini
-- Tap any word in the story to see its translation (TR → EN or EN → TR)
-- Fully responsive – works great on mobile and desktop
-- Progressive Web App – installable on phone home screen (feels like a native app)
-- Offline support for cached assets
-- Secure: API key never exposed (uses Vercel serverless proxy)
+## 🏗️ Architecture
 
-## Project Structure
-```
-
-Fincelaarn/ ← Project root (clean & Vercel-ready)
-│
-├── index.html ← Main HTML page
-├── manifest.json ← PWA manifest (for "Add to Home Screen")
-│
-├── css/
-│ └── style.css ← All styles (responsive design)
-│
-├── js/
-│ ├── main.js ← App logic & language switching
-│ ├── api.js ← Frontend API calls (proxy + translation)
-│ └── dom.js ← Story rendering, word clicks, popup
-│
-├── api/
-│ └── hikaye.js ← Vercel serverless function (secure Gemini proxy)
-│
-├── .gitignore
-└── README.md ← This file
+### Professional `/src` Structure
 
 ```
+/src
+├── /assets          # Static assets (images, icons, fonts)
+├── /components      # Reusable UI components
+│   ├── AuthSection.js
+│   ├── LanguageSwitcher.js
+│   ├── PremiumCard.js
+│   ├── PWAInstall.js
+│   ├── StoryDisplay.js
+│   └── WordNotebook.js
+├── /config          # Configuration files
+│   ├── constants.js
+│   └── firebase.js
+├── /services        # Business logic & API calls
+│   ├── api.js
+│   ├── auth.js
+│   ├── payment.js
+│   └── storage.js
+├── /styles          # Modular CSS with design system
+│   ├── main.css
+│   ├── variables.css
+│   ├── reset.css
+│   ├── responsive.css
+│   ├── /components
+│   └── /layouts
+├── /utils           # Helper functions
+│   ├── dom.js
+│   └── i18n.js
+└── main.js          # Application entry point
+```
 
-## Live Demo
+### Design System
+- **Mobile-First**: Responsive breakpoints (640px, 768px, 1024px)
+- **CSS Variables**: Centralized design tokens
+- **Touch-Friendly**: Minimum 44px touch targets
+- **Accessible**: Focus-visible states and semantic HTML
 
-After deployment: https://your-project-name.vercel.app
+## 🚀 Getting Started
 
-Open on your phone → Menu → "Add to Home Screen" → Use it like a real app!
+### Prerequisites
+- Modern web browser with JavaScript enabled
+- Python 3 (for local development server)
 
-## How It Works
+### Local Development
 
-1. Choose language (Türkçe / English)
-2. (Optional) Enter a story topic
-3. Click "Generate New Story"
-4. Read the story and tap any word → instant translation popup
-5. Switch languages anytime – everything adapts automatically
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/learnfinnish.git
+   cd learnfinnish
+   ```
 
-## Deployment (Vercel – Free & Easy)
+2. **Start local server**
+   ```bash
+   ./start-server.sh
+   # or
+   python3 -m http.server 8000
+   ```
 
-1. Fork or push this repo to GitHub
-2. Go to [vercel.com](https://vercel.com) → New Project → Import your repo
-3. In Project Settings → Environment Variables:
-   - Add:
-     **Name:** `GEMINI_API_KEY`
-     **Value:** Your key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-4. Deploy! Vercel handles everything automatically.
+3. **Open in browser**
+   ```
+   http://localhost:8000
+   ```
 
-## Local Development
+### Backend Setup (Optional - for payment features)
 
-- No npm, no build tools needed (pure HTML/CSS/JS)
-- Open with VS Code + Live Server extension, or any local server
-- For local testing only: you can temporarily modify `api/hikaye.js` to use a local key (never commit it)
+Only needed if you want to enable premium subscription features:
 
-## Technologies
+```bash
+npm install
+```
 
-- Vanilla JavaScript, HTML5, CSS3
-- Google Gemini API (via secure serverless proxy)
-- LibreTranslate (free translation API)
-- Vercel (hosting + serverless)
-- Progressive Web App standards
+Required environment variables (see [STRIPE_SETUP.md](STRIPE_SETUP.md)):
+- `STRIPE_SECRET_KEY`
+- `STRIPE_PRICE_ID`
+- `STRIPE_WEBHOOK_SECRET`
+- `FIREBASE_PROJECT_ID`
+- `FIREBASE_CLIENT_EMAIL`
+- `FIREBASE_PRIVATE_KEY`
 
-## Contributing
+## 📦 Deployment
 
-Feel free to fork and add features:
-- Favorite words list
-- Text-to-speech
-- More languages
-- Difficulty levels
+### Vercel (Recommended)
 
-## License
+1. **Connect your repository** to Vercel
+2. **Add environment variables** in Vercel dashboard
+3. **Deploy** - Automatic deployment on push
 
-MIT License – free to use, modify, and share.
+The app is configured for Vercel with:
+- Serverless API functions in `/api`
+- Automatic HTTPS
+- CDN distribution
+- Environment variable support
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Vanilla JavaScript** (ES6 modules)
+- **CSS3** (Custom properties, Grid, Flexbox)
+- **Firebase SDK** (Authentication, Firestore)
+- **Stripe.js** (Payment processing)
+
+### Backend (Serverless)
+- **Vercel Functions** (Node.js)
+- **Stripe API** (Subscription management)
+- **Firebase Admin SDK** (User management)
+
+### APIs
+- **Google Gemini API** - Story generation
+- **Google Translate API** - Word translation
+
+## 📱 Progressive Web App
+
+Install FinceLearn on your device:
+- **Mobile**: Tap "Add to Home Screen"
+- **Desktop**: Click install icon in address bar
+- **Offline**: Access saved stories and notebook
+
+Features:
+- Service Worker caching
+- Offline functionality
+- App-like experience
+- Fast loading
+
+## 🎨 Design Highlights
+
+- **Gradient Background** - Soothing blue gradient
+- **Card-Based Layout** - Clean, modern interface
+- **Smooth Animations** - Micro-interactions for better UX
+- **Responsive Typography** - Scales with screen size
+- **Touch Optimization** - Perfect for mobile devices
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENCE](LICENCE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Contact
+
+For questions or feedback, please open an issue on GitHub.
+
+## 🙏 Acknowledgments
+
+- Finnish language learning community
+- Google Gemini API for story generation
+- Firebase for authentication infrastructure
+- Stripe for payment processing
 
 ---
 
-Made with ❤️ for language learners.
-```
+**Made with ❤️ for Finnish language learners**
