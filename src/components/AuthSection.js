@@ -48,7 +48,8 @@ export function initAuthSection() {
             loginBtn.textContent = loginBtn.dataset[currentLang === 'tr' ? 'tr' : 'en'] || 'Google ile Giriş Yap';
             userInfo.classList.remove('hidden');
             userName.textContent = `${currentLang === 'tr' ? 'Hoş geldin' : 'Welcome'}, ${user.displayName || user.email}!`;
-            if (premiumInfo) premiumInfo.style.display = 'none';
+            // Keep premium section visible - user might not be premium yet
+            if (premiumInfo) premiumInfo.style.display = 'block';
         } else {
             loginBtn.style.display = 'block';
             loginBtn.disabled = false;
