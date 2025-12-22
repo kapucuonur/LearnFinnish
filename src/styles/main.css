@@ -18,6 +18,11 @@
 @import url('./components/story-display.css');
 @import url('./components/word-notebook.css');
 @import url('./components/popup.css');
+@import url('./components/controls.css');
+@import url('./components/story.css');
+@import url('./components/flashcard.css');
+@import url('./components/usage-limit-modal.css');
+@import url('./components/usage-indicators.css');
 
 /* Layout Styles */
 @import url('./layouts/container.css');
