@@ -13,6 +13,7 @@
 @import url('./components/header.css');
 @import url('./components/buttons.css');
 @import url('./components/tabs.css');
+@import url('./components/theme-toggle.css');
 @import url('./components/premium-card.css');
 @import url('./components/word-notebook.css');
 @import url('./components/flashcard.css');

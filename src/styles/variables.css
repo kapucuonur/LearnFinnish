@@ -120,3 +120,39 @@
     --color-border: #3d3d3d;
   }
 }
+
+/* Dark Theme (Manual Toggle) */
+[data-theme="dark"] {
+  /* Background Colors */
+  --color-background: #0a0e27;
+  --color-surface: #151a30;
+  --color-card: #1e2438;
+
+  /* Text Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0aec0;
+  --color-text-disabled: #4a5568;
+  --color-text-inverse: #1a202c;
+
+  /* Border & Divider */
+  --color-border: #2d3748;
+  --color-border-light: #252d3d;
+  --color-divider: #2d3748;
+
+  /* Primary Colors (slightly lighter for dark mode) */
+  --color-primary-light: #00a8b3;
+
+  /* Keep accent colors vibrant */
+  --color-accent: #ffa726;
+  --color-accent-light: #ffb74d;
+}
+
+/* Smooth theme transition */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Disable transitions on theme change to avoid flash */
+body.theme-transitioning * {
+  transition: none !important;
+}
