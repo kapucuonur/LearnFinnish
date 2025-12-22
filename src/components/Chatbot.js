@@ -44,7 +44,11 @@ export function initChatbot() {
     if (!chatButton || !chatWindow) return;
 
     let isOpen = false;
-    let currentLang = document.documentElement.lang || 'tr';
+
+    // Get current language from document
+    function getCurrentLang() {
+        return document.documentElement.lang || 'tr';
+    }
 
     // Toggle chat window
     chatButton.addEventListener('click', () => {
@@ -53,7 +57,8 @@ export function initChatbot() {
         chatButton.classList.toggle('hidden', isOpen);
 
         if (isOpen && chatMessages.children.length === 0) {
-            addMessage(helpResponses[currentLang].greeting, 'bot');
+            const lang = getCurrentLang();
+            addMessage(helpResponses[lang].greeting, 'bot');
         }
     });
 
@@ -76,7 +81,8 @@ export function initChatbot() {
 
         // Get response
         setTimeout(() => {
-            const response = getResponse(message, currentLang);
+            const lang = getCurrentLang();
+            const response = getResponse(message, lang);
             addMessage(response, 'bot');
         }, 500);
     }
@@ -121,9 +127,4 @@ export function initChatbot() {
             return responses.default;
         }
     }
-
-    // Update language when changed
-    document.addEventListener('languageChanged', (e) => {
-        currentLang = e.detail.lang;
-    });
 }
