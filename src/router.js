@@ -73,13 +73,14 @@ export class Router {
             mainContent.classList.add('hidden');
         }
 
-        // Show page container
+        // Show page container - append to body, not main
         let pageContainer = document.getElementById('page-container');
         if (!pageContainer) {
             pageContainer = document.createElement('div');
             pageContainer.id = 'page-container';
             pageContainer.className = 'page-container';
-            document.querySelector('main').appendChild(pageContainer);
+            // Append to body so it's not hidden when app-main is hidden
+            document.body.appendChild(pageContainer);
         }
 
         pageContainer.classList.remove('hidden');
