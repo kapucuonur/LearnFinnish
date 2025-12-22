@@ -47,15 +47,10 @@ export class Router {
     }
 
     showHomePage() {
-        const pageContainer = document.getElementById('page-container');
-        if (pageContainer) {
-            pageContainer.classList.add('hidden');
-        }
-
-        // Show main app content
-        const mainContent = document.querySelector('.app-main');
-        if (mainContent) {
-            mainContent.classList.remove('hidden');
+        const modal = document.getElementById('legal-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scroll
         }
 
         this.currentPage = 'home';
@@ -67,32 +62,51 @@ export class Router {
 
         if (!page) return;
 
-        // Hide main app content
-        const mainContent = document.querySelector('.app-main');
-        if (mainContent) {
-            mainContent.classList.add('hidden');
+        // Create or get modal
+        let modal = document.getElementById('legal-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'legal-modal';
+            modal.className = 'legal-modal';
+            modal.innerHTML = `
+                <div class="legal-modal-overlay"></div>
+                <div class="legal-modal-content">
+                    <button class="legal-modal-close" aria-label="Close">&times;</button>
+                    <div class="legal-modal-body"></div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            // Close button handler
+            modal.querySelector('.legal-modal-close').addEventListener('click', () => {
+                window.location.hash = '';
+            });
+
+            // Overlay click to close
+            modal.querySelector('.legal-modal-overlay').addEventListener('click', () => {
+                window.location.hash = '';
+            });
+
+            // ESC key to close
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    window.location.hash = '';
+                }
+            });
         }
 
-        // Show page container - append to body, not main
-        let pageContainer = document.getElementById('page-container');
-        if (!pageContainer) {
-            pageContainer = document.createElement('div');
-            pageContainer.id = 'page-container';
-            pageContainer.className = 'page-container';
-            // Append to body so it's not hidden when app-main is hidden
-            document.body.appendChild(pageContainer);
-        }
+        // Update modal content
+        const modalBody = modal.querySelector('.legal-modal-body');
+        modalBody.innerHTML = page.render(lang);
 
-        pageContainer.classList.remove('hidden');
-        pageContainer.innerHTML = page.render(lang);
+        // Show modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
 
         // Attach event listeners for contact page
         if (pageName === 'contact' && page.attachEventListeners) {
             page.attachEventListeners(lang);
         }
-
-        // Scroll to top
-        window.scrollTo(0, 0);
 
         this.currentPage = pageName;
     }
