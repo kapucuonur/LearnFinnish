@@ -1,0 +1,38 @@
+/* Usage Indicators Styles */
+
+.usage-indicators {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-radius: 12px;
+    border: 2px solid #ff9800;
+    font-size: 0.95em;
+}
+
+.usage-indicators.hidden {
+    display: none;
+}
+
+.usage-indicators span {
+    color: #e65100;
+    font-weight: 600;
+}
+
+.usage-indicators strong {
+    color: #bf360c;
+    font-size: 1.1em;
+    margin-left: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .usage-indicators {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 0.9em;
+    }
+}

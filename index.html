@@ -41,6 +41,9 @@
         <p style="font-size: 1.2em; margin-bottom: 15px;" data-tr="Premium Özellikler:" data-en="Premium Features:">
           Premium Özellikler:</p>
         <ul style="text-align: left; max-width: 500px; margin: 0 auto 20px; line-height: 1.8; font-size: 1.1em;">
+          <li data-tr="✓ Sınırsız hikaye üretimi" data-en="✓ Unlimited story generation">✓ Sınırsız hikaye üretimi</li>
+          <li data-tr="✓ Sınırsız flashcard çalışması" data-en="✓ Unlimited flashcard practice">✓ Sınırsız flashcard
+            çalışması</li>
           <li data-tr="✓ Sesli okuma (hikaye ve kelimeler Fince okunur)"
             data-en="✓ Text-to-speech (stories and words read in Finnish)">✓ Sesli okuma (hikaye ve kelimeler Fince
             okunur)</li>
@@ -64,13 +67,40 @@
       <button id="uret-hikaye" data-tr="Yeni Fince Hikâye Üret" data-en="Generate New Finnish Story">
         Yeni Fince Hikâye Üret
       </button>
+      <!-- Usage indicators for free users -->
+      <div id="usage-indicators" class="usage-indicators hidden">
+        <span id="story-usage" data-tr="Hikayeler: " data-en="Stories: ">Hikayeler: <strong>0/3</strong></span>
+        <span id="flashcard-usage" data-tr="Flashcardlar: " data-en="Flashcards: ">Flashcardlar:
+          <strong>0/10</strong></span>
+      </div>
     </div>
 
     <div class="tabs">
       <button id="tab-hikaye" class="tab-btn active" data-tr="Hikaye" data-en="Story">Hikaye</button>
+      <button id="tab-flashcard" class="tab-btn" data-tr="Flashcardlar" data-en="Flashcards">
+        Flashcardlar
+      </button>
       <button id="tab-defter" class="tab-btn" data-tr="Kelime Defterim" data-en="My Word Notebook">
         Kelime Defterim (<span id="defter-sayi">0</span>)
       </button>
+    </div>
+
+    <div id="flashcard-alani" class="hidden">
+      <div class="flashcard-header">
+        <h2 data-tr="Flashcard Çalışması" data-en="Flashcard Practice">Flashcard Çalışması</h2>
+        <p class="flashcard-progress" id="flashcard-progress">0 / 0</p>
+      </div>
+      <div id="flashcard-container" class="flashcard-container"></div>
+      <div class="flashcard-controls">
+        <button id="prev-card-btn" data-tr="← Önceki" data-en="← Previous">← Önceki</button>
+        <button id="shuffle-cards-btn" class="shuffle-btn" data-tr="🔀 Karıştır" data-en="🔀 Shuffle">🔀
+          Karıştır</button>
+        <button id="next-card-btn" data-tr="Sonraki →" data-en="Next →">Sonraki →</button>
+      </div>
+      <p class="keyboard-hint" data-tr="İpucu: ← → ok tuşları ile gezin, Boşluk/Enter ile çevirin"
+        data-en="Tip: Use ← → arrow keys to navigate, Space/Enter to flip">
+        İpucu: ← → ok tuşları ile gezin, Boşluk/Enter ile çevirin
+      </p>
     </div>
 
     <div id="defter-alani" class="hidden">
