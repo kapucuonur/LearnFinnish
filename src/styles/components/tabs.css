@@ -1,45 +1,89 @@
-/* Tabs Component */
+/* ========================================
+   TABS
+   ======================================== */
+
+.tabs-container {
+    position: sticky;
+    top: var(--header-height);
+    z-index: var(--z-sticky);
+    background: var(--color-background);
+    padding: var(--space-md) 0;
+    margin-bottom: var(--space-lg);
+}
+
 .tabs {
     display: flex;
-    justify-content: center;
-    gap: var(--space-3);
-    margin-bottom: var(--space-8);
-    flex-wrap: wrap;
+    gap: var(--space-sm);
+    background: var(--color-surface);
+    padding: var(--space-xs);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tab-btn {
-    padding: var(--space-3) var(--space-6);
-    background: var(--color-gray-200);
-    border: none;
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    font-weight: var(--font-weight-bold);
+    flex: 1;
+    min-width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
     font-size: var(--font-size-base);
-    transition: all var(--transition-base);
-    min-height: 44px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    position: relative;
 }
 
-.tab-btn:hover {
-    background: var(--color-gray-300);
-    transform: translateY(-2px);
+.tab-btn:hover:not(.active) {
+    background: var(--color-background);
+    color: var(--color-text-primary);
 }
 
 .tab-btn.active {
     background: var(--color-primary);
-    color: var(--color-white);
+    color: var(--color-text-inverse);
+    box-shadow: var(--shadow-sm);
 }
 
-#defter-sayi {
-    display: inline-block;
-    background: var(--color-white);
-    color: var(--color-primary);
-    padding: 2px 8px;
+.tab-icon {
+    font-size: var(--font-size-lg);
+}
+
+.tab-label {
+    white-space: nowrap;
+}
+
+/* Hide scrollbar but keep functionality */
+.tabs::-webkit-scrollbar {
+    height: 4px;
+}
+
+.tabs::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+    background: var(--color-border);
     border-radius: var(--radius-full);
-    font-size: var(--font-size-sm);
-    margin-left: var(--space-1);
 }
 
-.tab-btn.active #defter-sayi {
-    background: var(--color-primary-light);
-    color: var(--color-white);
+/* Responsive */
+@media (max-width: 768px) {
+    .tab-btn {
+        flex-direction: column;
+        padding: var(--space-sm) var(--space-md);
+        gap: var(--space-xs);
+    }
+
+    .tab-icon {
+        font-size: var(--font-size-xl);
+    }
+
+    .tab-label {
+        font-size: var(--font-size-xs);
+    }
 }

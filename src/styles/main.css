@@ -5,38 +5,81 @@
 /* Import order matters! */
 @import url('./variables.css');
 @import url('./reset.css');
-@import url('./responsive.css');
-
-/* Component Styles */
-@import url('./components/header.css');
-@import url('./components/language-switcher.css');
-@import url('./components/auth-header.css');
-@import url('./components/auth-section.css');
-@import url('./components/premium-card.css');
-@import url('./components/story-controls.css');
-@import url('./components/tabs.css');
-@import url('./components/story-display.css');
-@import url('./components/word-notebook.css');
-@import url('./components/popup.css');
-@import url('./components/controls.css');
-@import url('./components/story.css');
-@import url('./components/flashcard.css');
-@import url('./components/usage-limit-modal.css');
-@import url('./components/usage-indicators.css');
 
 /* Layout Styles */
 @import url('./layouts/container.css');
 
-/* Global Styles */
-body {
-    background: linear-gradient(to bottom, #f0f7f9, #e0f0f5);
-    min-height: 100vh;
-    padding: var(--space-4);
+/* Component Styles */
+@import url('./components/header.css');
+@import url('./components/buttons.css');
+@import url('./components/tabs.css');
+@import url('./components/premium-card.css');
+@import url('./components/word-notebook.css');
+@import url('./components/flashcard.css');
+@import url('./components/usage-limit-modal.css');
+@import url('./components/popup.css');
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
 }
 
-@media (min-width: 768px) {
-    body {
-        padding: var(--space-6);
+.mt-1 {
+    margin-top: var(--space-sm);
+}
+
+.mt-2 {
+    margin-top: var(--space-md);
+}
+
+.mt-3 {
+    margin-top: var(--space-lg);
+}
+
+.mt-4 {
+    margin-top: var(--space-xl);
+}
+
+.mb-1 {
+    margin-bottom: var(--space-sm);
+}
+
+.mb-2 {
+    margin-bottom: var(--space-md);
+}
+
+.mb-3 {
+    margin-bottom: var(--space-lg);
+}
+
+.mb-4 {
+    margin-bottom: var(--space-xl);
+}
+
+/* Loading State */
+.loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--color-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
 }
 
@@ -48,5 +91,5 @@ html {
 /* Selection color */
 ::selection {
     background-color: var(--color-primary-light);
-    color: var(--color-white);
+    color: var(--color-text-inverse);
 }

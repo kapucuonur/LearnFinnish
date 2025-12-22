@@ -1,19 +1,131 @@
-/* Container Layout */
+/* ========================================
+   CARDS & LAYOUT
+   ======================================== */
+
+.app-main {
+    padding: var(--space-xl) 0;
+    min-height: calc(100vh - var(--header-height));
+}
+
 .container {
-    background: var(--color-white);
-    border-radius: var(--radius-xl);
-    padding: var(--space-5);
-    box-shadow: var(--shadow-xl);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
 }
 
-@media (min-width: 768px) {
-    .container {
-        padding: var(--space-8);
+/* Card Component */
+.card {
+    background: var(--color-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: var(--space-lg);
+    transition: box-shadow var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.card-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.card-body {
+    padding: var(--space-lg);
+}
+
+/* Story Card */
+.story-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid var(--color-primary);
+}
+
+/* Input Group */
+.input-group {
+    display: flex;
+    gap: var(--space-md);
+    align-items: stretch;
+}
+
+.input {
+    flex: 1;
+    padding: var(--space-md);
+    font-size: var(--font-size-base);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    background: var(--color-surface);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 96, 100, 0.1);
+}
+
+.input::placeholder {
+    color: var(--color-text-disabled);
+}
+
+/* Content Area */
+.content-area {
+    min-height: 400px;
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3xl);
+    text-align: center;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-lg);
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.empty-state p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
     }
-}
 
-@media (min-width: 1024px) {
-    .container {
-        padding: var(--space-10);
+    .card-header,
+    .card-body {
+        padding: var(--space-md);
+    }
+
+    .empty-state {
+        padding: var(--space-2xl);
     }
 }

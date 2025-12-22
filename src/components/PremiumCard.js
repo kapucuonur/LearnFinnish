@@ -4,22 +4,30 @@ import { getCurrentLang } from './LanguageSwitcher.js';
 
 export function initPremiumCard() {
     const premiumBtn = document.getElementById('premium-btn');
+    const premiumToggle = document.getElementById('premium-toggle');
+    const premiumBanner = document.getElementById('premium-banner');
 
-    if (!premiumBtn) return;
+    // Premium button click handler
+    if (premiumBtn) {
+        premiumBtn.addEventListener('click', async () => {
+            const currentLang = getCurrentLang();
+            const result = await createCheckoutSession(currentLang);
 
-    premiumBtn.onclick = async () => {
-        const currentLang = getCurrentLang();
-        const originalText = premiumBtn.textContent;
-        premiumBtn.disabled = true;
-        premiumBtn.textContent = currentLang === 'tr' ? 'Yükleniyor...' : 'Loading...';
+            if (!result.success && result.error) {
+                alert(result.error);
+            }
+        });
+    }
 
-        const result = await createCheckoutSession(currentLang);
+    // Premium banner toggle
+    if (premiumToggle && premiumBanner) {
+        premiumToggle.addEventListener('click', () => {
+            premiumBanner.classList.toggle('collapsed');
+        });
 
-        if (!result.success) {
-            alert(result.error);
-            premiumBtn.disabled = false;
-            premiumBtn.textContent = originalText;
+        // Start collapsed on mobile
+        if (window.innerWidth < 768) {
+            premiumBanner.classList.add('collapsed');
         }
-        // If successful, user will be redirected to Stripe checkout
-    };
+    }
 }

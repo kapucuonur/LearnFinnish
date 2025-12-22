@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-tr="LearnFinnish - Fince Öğren" data-en="LearnFinnish - Learn Finnish">LearnFinnish - Fince Öğren</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/styles/main.css">
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#006064">
@@ -13,111 +16,177 @@
 </head>
 
 <body>
-  <!-- Auth section in top-right corner -->
-  <div id="auth-section" class="auth-header">
-    <div id="user-info" class="hidden">
-      <span id="user-name"></span>
-      <button id="logout-btn" data-tr="Çıkış Yap" data-en="Sign Out">Çıkış Yap</button>
-    </div>
-    <button id="login-btn" data-tr="Google ile Giriş Yap" data-en="Sign in with Google">
-      Google ile Giriş Yap
-    </button>
-  </div>
-
-  <div class="container">
-    <div class="header">
-      <h1 data-tr="LearnFinnish" data-en="LearnFinnish">LearnFinnish</h1>
-      <p class="description" data-tr="Fince kısa hikâyeler okuyarak kelime öğren!"
-        data-en="Learn Finnish words by reading short stories!">
-        Fince kısa hikâyeler okuyarak kelime öğren!
-      </p>
-
-      <div class="language-switcher">
-        <button class="lang-btn active" data-lang="tr">Türkçe</button>
-        <button class="lang-btn" data-lang="en">English</button>
+  <!-- Modern App Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="header-left">
+        <h1 class="app-logo" data-tr="LearnFinnish" data-en="LearnFinnish">LearnFinnish</h1>
+        <p class="app-tagline" data-tr="Fince öğrenmenin en kolay yolu" data-en="The easiest way to learn Finnish">
+          Fince öğrenmenin en kolay yolu
+        </p>
       </div>
-      <!-- Premium info section -->
-      <div id="premium-info" style="background: #fff3e0; padding: 20px; border-radius: 12px; margin: 30px 0;">
-        <p style="font-size: 1.2em; margin-bottom: 15px;" data-tr="Premium Özellikler:" data-en="Premium Features:">
-          Premium Özellikler:</p>
-        <ul style="text-align: left; max-width: 500px; margin: 0 auto 20px; line-height: 1.8; font-size: 1.1em;">
-          <li data-tr="✓ Sınırsız hikaye üretimi" data-en="✓ Unlimited story generation">✓ Sınırsız hikaye üretimi</li>
-          <li data-tr="✓ Sınırsız flashcard çalışması" data-en="✓ Unlimited flashcard practice">✓ Sınırsız flashcard
-            çalışması</li>
-          <li data-tr="✓ Sesli okuma (hikaye ve kelimeler Fince okunur)"
-            data-en="✓ Text-to-speech (stories and words read in Finnish)">✓ Sesli okuma (hikaye ve kelimeler Fince
-            okunur)</li>
-          <li data-tr="✓ Sınırsız kelime defteri" data-en="✓ Unlimited word notebook">✓ Sınırsız kelime defteri</li>
-          <li data-tr="✓ Daha uzun ve karmaşık hikayeler" data-en="✓ Longer and more complex stories">✓ Daha uzun ve
-            karmaşık hikayeler</li>
-          <li data-tr="✓ Reklamsız kullanım" data-en="✓ Ad-free experience">✓ Reklamsız kullanım</li>
-        </ul>
-        <button id="premium-btn"
-          style="padding: 16px 32px; background: #ff9800; color: white; border: none; border-radius: 12px; font-size: 1.2em; font-weight: bold; cursor: pointer;"
-          data-tr="Premium Ol (Aylık 49 TL)" data-en="Go Premium (Monthly $4.99)">
-          Premium Ol (Aylık 49 TL)
+
+      <div class="header-right">
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="tr">🇹🇷 TR</button>
+          <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+        </div>
+
+        <div id="auth-section" class="auth-section">
+          <div id="user-info" class="user-info hidden">
+            <span id="user-name" class="user-name"></span>
+            <button id="logout-btn" class="btn btn-secondary btn-sm" data-tr="Çıkış" data-en="Sign Out">Çıkış</button>
+          </div>
+          <button id="login-btn" class="btn btn-primary btn-sm" data-tr="Giriş Yap" data-en="Sign In">
+            Giriş Yap
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="container">
+
+      <!-- Story Generator Card -->
+      <div class="card story-card">
+        <div class="card-header">
+          <h2 class="card-title" data-tr="Yeni Hikaye Oluştur" data-en="Generate New Story">Yeni Hikaye Oluştur</h2>
+          <p class="card-subtitle" data-tr="Fince kısa hikâyeler okuyarak kelime öğren"
+            data-en="Learn Finnish words by reading short stories">
+            Fince kısa hikâyeler okuyarak kelime öğren
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="input-group">
+            <input type="text" id="konu" class="input" data-placeholder-tr="Hikâye konusu (isteğe bağlı)"
+              data-placeholder-en="Story topic (optional)" placeholder="Hikâye konusu (isteğe bağlı)">
+            <button id="uret-hikaye" class="btn btn-primary btn-lg" data-tr="Hikaye Üret" data-en="Generate Story">
+              Hikaye Üret
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-container">
+        <div class="tabs">
+          <button id="tab-hikaye" class="tab-btn active" data-tr="Hikaye" data-en="Story">
+            <span class="tab-icon">📖</span>
+            <span class="tab-label">Hikaye</span>
+          </button>
+          <button id="tab-flashcard" class="tab-btn" data-tr="Flashcardlar" data-en="Flashcards">
+            <span class="tab-icon">🎴</span>
+            <span class="tab-label">Flashcardlar</span>
+          </button>
+          <button id="tab-defter" class="tab-btn" data-tr="Kelime Defterim" data-en="My Words">
+            <span class="tab-icon">📚</span>
+            <span class="tab-label">Kelime Defterim (<span id="defter-sayi">0</span>)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Story Content Area -->
+      <div id="hikaye-alani" class="content-area card">
+        <div class="empty-state">
+          <div class="empty-icon">📖</div>
+          <h3 data-tr="Henüz hikaye oluşturulmadı" data-en="No story generated yet">Henüz hikaye oluşturulmadı</h3>
+          <p data-tr="Yukarıdaki butona tıklayarak yeni bir hikaye oluşturun"
+            data-en="Click the button above to generate a new story">
+            Yukarıdaki butona tıklayarak yeni bir hikaye oluşturun
+          </p>
+        </div>
+      </div>
+
+      <!-- Flashcard Area -->
+      <div id="flashcard-alani" class="content-area card hidden">
+        <div class="flashcard-header">
+          <h2 data-tr="Flashcard Çalışması" data-en="Flashcard Practice">Flashcard Çalışması</h2>
+          <p class="flashcard-progress" id="flashcard-progress">0 / 0</p>
+        </div>
+        <div id="flashcard-container" class="flashcard-container"></div>
+        <div class="flashcard-controls">
+          <button id="prev-card-btn" class="btn btn-secondary" data-tr="← Önceki" data-en="← Previous">← Önceki</button>
+          <button id="shuffle-cards-btn" class="btn btn-accent shuffle-btn" data-tr="🔀 Karıştır"
+            data-en="🔀 Shuffle">🔀 Karıştır</button>
+          <button id="next-card-btn" class="btn btn-secondary" data-tr="Sonraki →" data-en="Next →">Sonraki →</button>
+        </div>
+        <p class="keyboard-hint" data-tr="İpucu: ← → ok tuşları ile gezin, Boşluk/Enter ile çevirin"
+          data-en="Tip: Use ← → arrow keys to navigate, Space/Enter to flip">
+          İpucu: ← → ok tuşları ile gezin, Boşluk/Enter ile çevirin
+        </p>
+      </div>
+
+      <!-- Word Notebook Area -->
+      <div id="defter-alani" class="content-area card hidden">
+        <div class="card-header">
+          <h2 data-tr="Kelime Defterim" data-en="My Word Notebook">Kelime Defterim</h2>
+        </div>
+        <div class="card-body">
+          <ul id="kelime-listesi" class="word-list"></ul>
+          <button id="defter-temizle" class="btn btn-danger" data-tr="Defteri Temizle" data-en="Clear Notebook">
+            Defteri Temizle
+          </button>
+        </div>
+      </div>
+
+      <!-- Premium Banner (Collapsible) -->
+      <div id="premium-banner" class="premium-banner">
+        <button id="premium-toggle" class="premium-toggle">
+          <span data-tr="⭐ Premium Özellikler" data-en="⭐ Premium Features">⭐ Premium Özellikler</span>
+          <span class="toggle-icon">▼</span>
         </button>
+
+        <div id="premium-content" class="premium-content">
+          <div class="premium-grid">
+            <div class="premium-feature">
+              <span class="feature-icon">🚀</span>
+              <span data-tr="Sınırsız hikaye" data-en="Unlimited stories">Sınırsız hikaye</span>
+            </div>
+            <div class="premium-feature">
+              <span class="feature-icon">🎴</span>
+              <span data-tr="Sınırsız flashcard" data-en="Unlimited flashcards">Sınırsız flashcard</span>
+            </div>
+            <div class="premium-feature">
+              <span class="feature-icon">🔊</span>
+              <span data-tr="Sesli okuma" data-en="Text-to-speech">Sesli okuma</span>
+            </div>
+            <div class="premium-feature">
+              <span class="feature-icon">📚</span>
+              <span data-tr="Sınırsız kelime" data-en="Unlimited words">Sınırsız kelime</span>
+            </div>
+            <div class="premium-feature">
+              <span class="feature-icon">📖</span>
+              <span data-tr="Uzun hikayeler" data-en="Longer stories">Uzun hikayeler</span>
+            </div>
+            <div class="premium-feature">
+              <span class="feature-icon">✨</span>
+              <span data-tr="Reklamsız" data-en="Ad-free">Reklamsız</span>
+            </div>
+          </div>
+
+          <button id="premium-btn" class="btn btn-premium btn-lg" data-tr="Premium Ol - Aylık 49 TL"
+            data-en="Go Premium - Monthly $4.99">
+            Premium Ol - Aylık 49 TL
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div class="controls">
-      <input type="text" id="konu" data-placeholder-tr="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)"
-        data-placeholder-en="Story topic (optional, in Turkish or Finnish)"
-        placeholder="Hikâye konusu (isteğe bağlı, Türkçe veya Fince)" />
-      <button id="uret-hikaye" data-tr="Yeni Fince Hikâye Üret" data-en="Generate New Finnish Story">
-        Yeni Fince Hikâye Üret
-      </button>
     </div>
+  </main>
 
-    <div class="tabs">
-      <button id="tab-hikaye" class="tab-btn active" data-tr="Hikaye" data-en="Story">Hikaye</button>
-      <button id="tab-flashcard" class="tab-btn" data-tr="Flashcardlar" data-en="Flashcards">
-        Flashcardlar
-      </button>
-      <button id="tab-defter" class="tab-btn" data-tr="Kelime Defterim" data-en="My Word Notebook">
-        Kelime Defterim (<span id="defter-sayi">0</span>)
-      </button>
-    </div>
-
-    <div id="flashcard-alani" class="hidden">
-      <div class="flashcard-header">
-        <h2 data-tr="Flashcard Çalışması" data-en="Flashcard Practice">Flashcard Çalışması</h2>
-        <p class="flashcard-progress" id="flashcard-progress">0 / 0</p>
-      </div>
-      <div id="flashcard-container" class="flashcard-container"></div>
-      <div class="flashcard-controls">
-        <button id="prev-card-btn" data-tr="← Önceki" data-en="← Previous">← Önceki</button>
-        <button id="shuffle-cards-btn" class="shuffle-btn" data-tr="🔀 Karıştır" data-en="🔀 Shuffle">🔀
-          Karıştır</button>
-        <button id="next-card-btn" data-tr="Sonraki →" data-en="Next →">Sonraki →</button>
-      </div>
-      <p class="keyboard-hint" data-tr="İpucu: ← → ok tuşları ile gezin, Boşluk/Enter ile çevirin"
-        data-en="Tip: Use ← → arrow keys to navigate, Space/Enter to flip">
-        İpucu: ← → ok tuşları ile gezin, Boşluk/Enter ile çevirin
-      </p>
-    </div>
-
-    <div id="defter-alani" class="hidden">
-      <h2 data-tr="Kelime Defterim" data-en="My Word Notebook">Kelime Defterim</h2>
-      <ul id="kelime-listesi"></ul>
-      <button id="defter-temizle" data-tr="Defteri Temizle" data-en="Clear Notebook"
-        style="margin-top: 20px; background: #d32f2f; color: white; border: none; padding: 10px 20px; border-radius: 8px;">
-        Defteri Temizle
-      </button>
-    </div>
-
-    <div id="hikaye-alani" class="hikaye"></div>
-
-    <div id="ceviri-popup" class="popup hidden">
-      <span id="ceviri-icerik" data-tr="Çeviriliyor..." data-en="Translating...">Çeviriliyor...</span>
-      <button id="kapat-popup">✕</button>
-    </div>
+  <!-- Translation Popup -->
+  <div id="ceviri-popup" class="popup hidden">
+    <span id="ceviri-icerik" data-tr="Çeviriliyor..." data-en="Translating...">Çeviriliyor...</span>
+    <button id="kapat-popup" class="popup-close">✕</button>
   </div>
 
   <div class="overlay hidden"></div>
 
+  <!-- Scripts -->
   <script src="https://js.stripe.com/v3/"></script>
-  <!-- Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -127,7 +196,6 @@
       });
     }
   </script>
-
   <script type="module" src="/src/main.js"></script>
 </body>
 
