@@ -1,14 +1,18 @@
-node_modules/
-.DS_Store
-.vercel
-.env
-.env.local
-.env.example
+# Dependencies
 node_modules/
 package-lock.json
 
-/history
+# Environment variables (keep .env.example for templates)
+.env
+.env.local
+
+# Vercel
+.vercel
+
+# IDE and OS
+.DS_Store
 .history/
-.history
+
+# Scripts (except start-server.sh which is needed for local dev)
 *.sh
 !start-server.sh
