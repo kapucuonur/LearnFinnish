@@ -1,13 +1,40 @@
-# FinceLearn - Learn Finnish Through Stories 🇫🇮
+# LearnFinnish - Learn Finnish Through Stories 🇫🇮
 
 Modern, responsive web application for learning Finnish vocabulary through interactive short stories.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/version-2.0.0-green.svg)
 
+## 📸 Screenshots
+
+### Main Interface
+![Main Application Interface](screenshots/01-main-interface.png)
+*Clean, modern interface with gradient background and story generation controls*
+
+### Interactive Vocabulary Translation
+![Interactive Vocabulary Feature](screenshots/02-interactive-vocabulary.png)
+*Click any Finnish word to see instant translation with pronunciation and save options*
+
+### Word Notebook
+![Word Notebook Management](screenshots/03-word-notebook.png)
+*Save and manage your learned vocabulary with audio playback*
+
+### Bilingual Support
+![English Interface](screenshots/04-english-interface.png)
+*Seamless language switching between Turkish and English*
+
+### Premium Features
+![Premium Subscription](screenshots/05-premium-features.png)
+*Unlock unlimited stories, flashcards, and ad-free experience*
+
+### Mobile Responsive Design
+![Mobile View](screenshots/06-mobile-responsive.png)
+*Fully responsive design optimized for all devices*
+
 ## 🌟 Features
 
 ### Core Features
+
 - 📚 **AI-Generated Stories** - Create personalized Finnish stories on any topic
 - 🔤 **Interactive Vocabulary** - Click any word for instant translation
 - 📖 **Word Notebook** - Save and manage your learned vocabulary
@@ -16,12 +43,14 @@ Modern, responsive web application for learning Finnish vocabulary through inter
 - 🎨 **Responsive Design** - Optimized for mobile, tablet, and desktop
 
 ### Premium Features
+
 - 🔊 **Text-to-Speech** - Listen to stories and words in Finnish
 - ♾️ **Unlimited Notebook** - Save unlimited words (free: 50 words)
 - 📚 **Extended Stories** - Access longer and more complex stories
 - 🚫 **Ad-Free Experience** - Enjoy learning without interruptions
 
 ### Authentication & Payment
+
 - 🔐 **Google Sign-In** - Secure authentication with Firebase
 - 💳 **Stripe Integration** - Safe and easy premium subscription
 - 👤 **User Profiles** - Personalized learning experience
@@ -62,6 +91,7 @@ Modern, responsive web application for learning Finnish vocabulary through inter
 ```
 
 ### Design System
+
 - **Mobile-First**: Responsive breakpoints (640px, 768px, 1024px)
 - **CSS Variables**: Centralized design tokens
 - **Touch-Friendly**: Minimum 44px touch targets
@@ -70,18 +100,21 @@ Modern, responsive web application for learning Finnish vocabulary through inter
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Modern web browser with JavaScript enabled
 - Python 3 (for local development server)
 
 ### Local Development
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/learnfinnish.git
    cd learnfinnish
    ```
 
 2. **Start local server**
+
    ```bash
    ./start-server.sh
    # or
@@ -102,6 +135,7 @@ npm install
 ```
 
 Required environment variables (see [STRIPE_SETUP.md](STRIPE_SETUP.md)):
+
 - `STRIPE_SECRET_KEY`
 - `STRIPE_PRICE_ID`
 - `STRIPE_WEBHOOK_SECRET`
@@ -118,6 +152,7 @@ Required environment variables (see [STRIPE_SETUP.md](STRIPE_SETUP.md)):
 3. **Deploy** - Automatic deployment on push
 
 The app is configured for Vercel with:
+
 - Serverless API functions in `/api`
 - Automatic HTTPS
 - CDN distribution
@@ -126,28 +161,33 @@ The app is configured for Vercel with:
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - **Vanilla JavaScript** (ES6 modules)
 - **CSS3** (Custom properties, Grid, Flexbox)
 - **Firebase SDK** (Authentication, Firestore)
 - **Stripe.js** (Payment processing)
 
 ### Backend (Serverless)
+
 - **Vercel Functions** (Node.js)
 - **Stripe API** (Subscription management)
 - **Firebase Admin SDK** (User management)
 
 ### APIs
+
 - **Google Gemini API** - Story generation
 - **Google Translate API** - Word translation
 
 ## 📱 Progressive Web App
 
-Install FinceLearn on your device:
+Install LearnFinnish on your device:
+
 - **Mobile**: Tap "Add to Home Screen"
 - **Desktop**: Click install icon in address bar
 - **Offline**: Access saved stories and notebook
 
 Features:
+
 - Service Worker caching
 - Offline functionality
 - App-like experience
