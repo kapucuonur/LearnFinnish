@@ -7,29 +7,37 @@ Modern, responsive web application for learning Finnish vocabulary through inter
 
 ## 📸 Screenshots
 
+## 📸 Screenshots
+
 ### Main Interface
-![Main Application Interface](screenshots/01-main-interface.png)
-*Clean, modern interface with gradient background and story generation controls*
+
+![Main Application Interface](screenshots/maininterface.png)
+_Clean, modern interface with gradient background and story generation controls_
 
 ### Interactive Vocabulary Translation
-![Interactive Vocabulary Feature](screenshots/02-interactive-vocabulary.png)
-*Click any Finnish word to see instant translation with pronunciation and save options*
+
+![Interactive Vocabulary Feature](screenshots/vocabulary.png)
+_Click any Finnish word to see instant translation with pronunciation and save options_
 
 ### Word Notebook
-![Word Notebook Management](screenshots/03-word-notebook.png)
-*Save and manage your learned vocabulary with audio playback*
+
+![Word Notebook Management](screenshots/myWordsNoteBook.png)
+_Save and manage your learned vocabulary with audio playback_
 
 ### Bilingual Support
-![English Interface](screenshots/04-english-interface.png)
-*Seamless language switching between Turkish and English*
+
+![English Interface](screenshots/flashCardPractice.png)
+_Seamless language Flashcard switching between Finnish to Turkish and English_
 
 ### Premium Features
-![Premium Subscription](screenshots/05-premium-features.png)
-*Unlock unlimited stories, flashcards, and ad-free experience*
+
+![Premium Subscription](screenshots/chatbot.png)
+_Unlock unlimited stories, flashcards, and ad-free , catbot experience_
 
 ### Mobile Responsive Design
-![Mobile View](screenshots/06-mobile-responsive.png)
-*Fully responsive design optimized for all devices*
+
+![Mobile View](screenshots/mobileResponsive.png)
+_Fully responsive design optimized for all devices_
 
 ## 🌟 Features
 
