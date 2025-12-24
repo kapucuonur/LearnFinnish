@@ -1,8 +1,4 @@
 // api/translate.js - Context-aware word translation using Gemini API
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
@@ -12,8 +8,6 @@ export default async function handler(req, res) {
   const targetLanguage = hedefDil === 'tr' ? 'Turkish' : 'English';
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-
     // Create a prompt that asks for ONLY the word's translation in context
     const prompt = context && context.length > kelime.length
       ? `Given this Finnish sentence: "${context}"
@@ -34,9 +28,27 @@ Provide ONLY the translation (1-3 words maximum), nothing else.
 
 Translation:`;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    let translation = response.text().trim();
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      }
+    );
+
+    if (!geminiRes.ok) {
+      const error = await geminiRes.text();
+      console.error('Gemini API error:', error);
+      return res.status(500).json({
+        translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error'
+      });
+    }
+
+    const data = await geminiRes.json();
+    let translation = data.candidates[0].content.parts[0].text.trim();
 
     // Clean up the response - remove quotes, periods, extra whitespace
     translation = translation
