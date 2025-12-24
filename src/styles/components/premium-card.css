@@ -40,6 +40,7 @@
     max-height: 500px;
     opacity: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     transition: all var(--transition-base);
 }
 
@@ -113,5 +114,11 @@
     .btn-coffee,
     .btn-premium {
         width: 100%;
+    }
+
+    .premium-content {
+        max-height: 70vh;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
     }
 }
