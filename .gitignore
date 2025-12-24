@@ -12,7 +12,13 @@ package-lock.json
 # IDE and OS
 .DS_Store
 .history/
+.vscode/
+.idea/
 
 # Scripts (except start-server.sh which is needed for local dev)
 *.sh
 !start-server.sh
+
+# Old/deprecated files
+favicon.ico
+GOOGLE_TRANSLATE_SETUP.md
