@@ -24,10 +24,5 @@ export function initPremiumCard() {
         premiumToggle.addEventListener('click', () => {
             premiumBanner.classList.toggle('collapsed');
         });
-
-        // Start collapsed on mobile
-        if (window.innerWidth < 768) {
-            premiumBanner.classList.add('collapsed');
-        }
     }
 }
