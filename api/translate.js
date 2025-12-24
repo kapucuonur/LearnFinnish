@@ -1,59 +1,62 @@
-// api/translate.js - Free Google Translate with context support (no API key required)
+// api/translate.js - Context-aware word translation using Gemini API
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
   }
 
   const { kelime, hedefDil, context } = req.body;
-  const target = hedefDil === 'tr' ? 'tr' : 'en';
+  const targetLanguage = hedefDil === 'tr' ? 'Turkish' : 'English';
 
   try {
-    let translation;
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    // If context (sentence) is provided, translate the sentence for better accuracy
-    if (context && context.length > kelime.length) {
-      // Translate the full sentence
-      const sentenceResponse = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fi&tl=${target}&dt=t&q=${encodeURIComponent(context)}`
-      );
+    // Create a prompt that asks for ONLY the word's translation in context
+    const prompt = context && context.length > kelime.length
+      ? `Given this Finnish sentence: "${context}"
 
-      if (sentenceResponse.ok) {
-        const sentenceData = await sentenceResponse.json();
-        const translatedSentence = sentenceData[0][0][0];
+Translate ONLY the word "${kelime}" to ${targetLanguage} based on how it's used in this sentence.
 
-        // Try to extract the word's translation from the sentence
-        // This gives context-aware translation
-        const words = context.split(/\\s+/);
-        const wordIndex = words.findIndex(w => w.toLowerCase().includes(kelime.toLowerCase()));
+Rules:
+- Provide ONLY the translation (1-3 words maximum)
+- Consider the word's meaning in this specific context
+- Do NOT translate the entire sentence
+- Do NOT add explanations or extra text
+- Just the word's meaning, nothing else
 
-        if (wordIndex !== -1 && translatedSentence) {
-          const translatedWords = translatedSentence.split(/\\s+/);
-          // Get the corresponding word from translated sentence
-          if (translatedWords[wordIndex]) {
-            translation = translatedWords[wordIndex].replace(/[.,!?;:]/g, '');
-          }
-        }
-      }
-    }
+Translation:`
+      : `Translate this Finnish word to ${targetLanguage}: "${kelime}"
 
-    // Fallback: translate just the word if context translation failed
-    if (!translation) {
-      const response = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=fi&tl=${target}&dt=t&q=${encodeURIComponent(kelime)}`
-      );
+Provide ONLY the translation (1-3 words maximum), nothing else.
 
-      if (!response.ok) {
-        return res.status(500).json({ translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error' });
-      }
+Translation:`;
 
-      const data = await response.json();
-      translation = data[0][0][0] || (hedefDil === 'tr' ? 'Çeviri bulunamadı' : 'No translation found');
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    let translation = response.text().trim();
+
+    // Clean up the response - remove quotes, periods, extra whitespace
+    translation = translation
+      .replace(/^["']|["']$/g, '') // Remove surrounding quotes
+      .replace(/\.$/, '') // Remove trailing period
+      .trim();
+
+    // If response is too long (more than 50 chars), it's probably not just the word
+    if (translation.length > 50) {
+      // Fallback: take first few words
+      const words = translation.split(/\s+/);
+      translation = words.slice(0, 3).join(' ');
     }
 
     res.status(200).json({ translation });
   } catch (err) {
     console.error('Translation error:', err);
-    res.status(500).json({ translation: hedefDil === 'tr' ? 'Bağlantı hatası' : 'Connection error' });
+    res.status(500).json({
+      translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error'
+    });
   }
 }
 
