@@ -9,6 +9,7 @@ export const sampleStories = [
         titleEn: "In the Sauna",
         level: "B1",
         category: "Kültür",
+        categoryEn: "Culture",
         story: `Lauantai-iltana Mikko ja hänen ystävänsä Antti päättivät mennä saunaan. Suomessa sauna on tärkeä osa kulttuuria ja rentoutumista. He lämmittivät saunan noin 80 asteeseen.
 
 "Onko sauna tarpeeksi kuuma?" kysyi Antti.
@@ -31,6 +32,7 @@ Palattuaan saunaan he jatkoivat rentoutumista. Sauna ei ole vain paikka puhdista
         titleEn: "Winter Day",
         level: "B1",
         category: "Mevsimler",
+        categoryEn: "Seasons",
         story: `Tammikuussa Suomessa on usein hyvin kylmä. Lämpötila voi laskea jopa -25 asteeseen. Laura heräsi aikaisin aamulla ja katsoi ulos ikkunasta. Lumi peitti kaiken valkealla peitteellä.
 
 "Täydellinen päivä hiihtämiseen!" hän ajatteli iloisesti.
@@ -51,6 +53,7 @@ Kotona Laura lämmitti saunan ja valmisti lämmintä glögiä. Talvipäivän pä
         titleEn: "Autumn Walk in the Forest",
         level: "B1",
         category: "Luonto",
+        categoryEn: "Nature",
         story: `Syyskuussa Suomen metsät muuttuvat kauniiksi. Lehdet vaihtavat väriään vihreästä keltaiseen, oranssiin ja punaiseen. Emma päätti lähteä kävelylle lähimetsään nauttimaan syksyn väreistä.
 
 Ilma oli raikas mutta ei liian kylmä. Emma puki päälleen kevyen takin ja mukavat kengät. Hän otti mukaansa korin, koska halusi kerätä sieniä ja marjoja.
@@ -71,6 +74,7 @@ Tunnin kävelyn jälkeen Emma istahti kivelle lepäämään. Hän joi termospull
         titleEn: "Summer Vacation at the Beach",
         level: "B1",
         category: "Tatil",
+        categoryEn: "Holiday",
         story: `Heinäkuussa Liisa ja hänen perheensä matkustivat kesälomalle Turun saaristoon. He olivat varanneet mökin aivan meren rannalla. Kesä Suomessa on lyhyt mutta kaunis, ja ihmiset haluavat nauttia siitä mahdollisimman paljon.
 
 "Vau, mökki on upea!" huudahti Liisan tytär Sofia saapuessaan. Mökillä oli iso terassi, jolta avautui näkymä merelle. Aurinko paistoi kirkkaasti ja taivas oli pilvetön.
@@ -93,6 +97,7 @@ Loman lopussa Liisa tunsi olonsa rennoksi ja energiseksi. Kesäloma oli antanut 
         titleEn: "Christmas Eve",
         level: "B1",
         category: "Juhla",
+        categoryEn: "Celebration",
         story: `Jouluaatto on Suomessa vuoden tärkein juhlapäivä. Matti ja hänen perheensä valmistautuivat juhlaan jo aamulla. Koko talo tuoksui joulutortuilta ja piparkakuilta.
 
 "Muistatko laittaa kynttilät ikkunoille?" kysyi Matin vaimo Kaarina.
@@ -119,6 +124,7 @@ Ilta päättyi saunaan ja joulumusiikin kuunteluun. Perhe oli kiitollinen siitä
         titleEn: "Coffee Break with Friends",
         level: "B1",
         category: "Sosiaalisuus",
+        categoryEn: "Social",
         story: `Perjantai-iltapäivänä Sanna tapasi kaksi ystäväänsä, Marian ja Lauran, keskustan kahvilassa. He olivat sopineet tapaamisesta jo viikko sitten.
 
 "Hei! Miten menee?" kysyi Maria hymyillen.
@@ -145,6 +151,7 @@ Kahden tunnin jälkeen oli aika lähteä. "Tämä oli mukavaa! Tavataan taas pia
         titleEn: "Family Celebration",
         level: "B1",
         category: "Aile",
+        categoryEn: "Family",
         story: `Lauantaina oli Annan isoäidin 70-vuotispäivät. Koko perhe kokoontui juhlimaan tätä tärkeää päivää. Juhlat pidettiin isoäidin kotona maaseudulla.
 
 Anna saapui paikalle varhain auttamaan valmisteluissa. "Hei mummo! Paljon onnea!" hän sanoi ja halasi isoäitiään lämpimästi.
@@ -169,6 +176,7 @@ Lähtiessään Anna halasi isoäitiään. "Kiitos ihanasta päivästä. Rakastan
         titleEn: "Shopping at the Market",
         level: "B1",
         category: "Günlük Hayat",
+        categoryEn: "Daily Life",
         story: `Tiistai-aamuna Petri meni lähikauppaan ostamaan ruokaa viikolle. Hän oli tehnyt ostoslistan kotona, jotta ei unohtaisi mitään tärkeää.
 
 Kaupassa Petri otti ostoskorin ja aloitti kierroksen. Ensimmäisenä hän meni hedelmä- ja vihannesosastolle. Hän valitsi tuoreita omenoita, banaaneja, tomaatteja ja kurkkua.
@@ -195,6 +203,7 @@ Kotona Petri laittoi tavarat jääkaappiin ja kaappeihin. Hän oli tyytyväinen,
         titleEn: "New Job",
         level: "B1",
         category: "İş",
+        categoryEn: "Work",
         story: `Maanantaiaamuna Mikael heräsi aikaisin. Tänään oli hänen ensimmäinen työpäivänsä uudessa yrityksessä. Hän oli innoissaan mutta myös hieman jännittynyt.
 
 Mikael pukeutui huolellisesti: puku, kauluspaita ja solmio. Ensivaikutelma on tärkeä työelämässä. Hän halusi näyttää ammattimaiselta ja luotettavalta.

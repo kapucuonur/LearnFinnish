@@ -36,7 +36,7 @@ function createStoryCard(story, lang) {
       <span class="story-level-badge">${story.level}</span>
     </div>
     <div class="story-card-body">
-      <p class="story-card-category">${story.category}</p>
+    <p class="story-card-category">${lang === 'tr' ? story.category : story.categoryEn}</p>
       <p class="story-card-preview">${preview}</p>
       <div class="story-card-meta">
         <span class="story-word-count">📖 ~${wordCount} ${lang === 'tr' ? 'kelime' : 'words'}</span>
@@ -77,7 +77,7 @@ function loadSampleStory(story) {
     <h2>${story.title}</h2>
     <div class="story-meta">
       <span class="story-level">${story.level}</span>
-      <span class="story-category">${story.category}</span>
+      <span class="story-category">${lang === 'tr' ? story.category : story.categoryEn}</span>
     </div>
   `;
     storyArea.appendChild(header);
@@ -133,8 +133,10 @@ function loadSampleStory(story) {
 
     storyArea.appendChild(content);
 
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to story area smoothly after content loads
+    setTimeout(() => {
+        storyArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
 }
 
 // Initialize when DOM is loaded
