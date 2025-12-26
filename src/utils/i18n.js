@@ -35,8 +35,8 @@ export function updateTranslations(lang = currentLanguage) {
         btn.classList.toggle('active', btn.dataset.lang === lang);
     });
 
-    // Update blog link with language parameter - use more flexible selector
-    const blogLink = document.querySelector('a[href^="/blog"]');
+    // Update blog link with language parameter - use reliable ID selector
+    const blogLink = document.getElementById('blog-nav-link');
     console.log('Updating blog link:', blogLink, 'to language:', lang);
     if (blogLink) {
         // Remove any existing query parameters and add new lang parameter
