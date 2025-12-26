@@ -44,6 +44,30 @@
     gap: var(--space-md);
 }
 
+/* Header Navigation */
+.header-nav {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    background: var(--color-background);
+}
+
+.nav-link:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+
 /* Language Switcher */
 .language-switcher {
     display: flex;
