@@ -251,6 +251,8 @@
             const storedLang = localStorage.getItem('selectedLanguage');
             const currentLang = urlLang || storedLang || 'tr';
 
+            console.log('Blog language:', currentLang, 'URL:', urlLang, 'Stored:', storedLang);
+
             // Update all elements with data-tr and data-en attributes
             document.querySelectorAll('[data-tr][data-en]').forEach(element => {
                 const text = currentLang === 'tr' ? element.dataset.tr : element.dataset.en;
@@ -258,10 +260,20 @@
                     element.textContent = text;
                 }
             });
+
+            // Also save to localStorage if from URL
+            if (urlLang) {
+                localStorage.setItem('selectedLanguage', urlLang);
+            }
         }
 
-        // Run on page load
+        // Run immediately (not waiting for DOMContentLoaded)
         updateTranslations();
+
+        // Also run on DOMContentLoaded to be safe
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateTranslations);
+        }
 
         // Listen for storage changes (when language changes on main site)
         window.addEventListener('storage', (e) => {
