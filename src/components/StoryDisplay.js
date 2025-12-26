@@ -29,6 +29,14 @@ export function initStoryControls() {
             hikayeYaz(story);
             kelimeEventiEkle(currentLang);
 
+            // Scroll to story area after content loads
+            setTimeout(() => {
+                const storyArea = document.getElementById('hikaye-alani');
+                if (storyArea) {
+                    storyArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+
             // Increment usage count on successful generation
             incrementStoryCount();
             updateUsageIndicators();
