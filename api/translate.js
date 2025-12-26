@@ -40,10 +40,11 @@ Translation:`;
     );
 
     if (!geminiRes.ok) {
-      const error = await geminiRes.text();
-      console.error('Gemini API error:', error);
+      const errorText = await geminiRes.text();
+      console.error('Gemini API error:', errorText);
       return res.status(500).json({
-        translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error'
+        translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error',
+        details: errorText // Add this for debugging
       });
     }
 
