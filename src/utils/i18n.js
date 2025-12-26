@@ -35,10 +35,16 @@ export function updateTranslations(lang = currentLanguage) {
         btn.classList.toggle('active', btn.dataset.lang === lang);
     });
 
-    // Update blog link with language parameter
-    const blogLink = document.querySelector('a[href="/blog/"]');
+    // Update blog link with language parameter - use more flexible selector
+    const blogLink = document.querySelector('a[href^="/blog"]');
+    console.log('Updating blog link:', blogLink, 'to language:', lang);
     if (blogLink) {
-        blogLink.href = `/blog/?lang=${lang}`;
+        // Remove any existing query parameters and add new lang parameter
+        const baseUrl = blogLink.href.split('?')[0];
+        blogLink.href = `${baseUrl}?lang=${lang}`;
+        console.log('Blog link updated to:', blogLink.href);
+    } else {
+        console.warn('Blog link not found!');
     }
 
     // Save language preference to localStorage for blog page
