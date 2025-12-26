@@ -15,7 +15,8 @@
 <body>
     <header class="blog-header">
         <div class="container">
-            <a href="/" class="back-link">← LearnFinnish'e Dön</a>
+            <a href="/" class="back-link" data-tr="← LearnFinnish'e Dön" data-en="← Return to LearnFinnish">←
+                LearnFinnish'e Dön</a>
             <h1 data-tr="LearnFinnish Blog" data-en="LearnFinnish Blog">LearnFinnish Blog</h1>
         </div>
     </header>
@@ -23,7 +24,9 @@
     <main class="blog-main">
         <article class="blog-article">
             <header class="article-header">
-                <h1>Fince Alfabe ve Telaffuz: Başlangıç Rehberi</h1>
+                <h1 data-tr="Fince Alfabe ve Telaffuz: Başlangıç Rehberi"
+                    data-en="Finnish Alphabet and Pronunciation: Beginner's Guide">Fince Alfabe ve Telaffuz: Başlangıç
+                    Rehberi</h1>
                 <div class="article-meta">
                     <span class="article-date">Aralık 2024</span>
                     <span class="article-reading-time">5 dakika okuma</span>
@@ -120,7 +123,8 @@
                     <span class="tag">Başlangıç Seviyesi</span>
                 </div>
                 <div class="article-navigation">
-                    <a href="/blog/" class="btn-secondary">← Tüm Makaleler</a>
+                    <a href="/blog/" class="btn-secondary" data-tr="← Tüm Makaleler" data-en="← All Articles">← Tüm
+                        Makaleler</a>
                     <a href="/blog/temel-fince-kelimeler.html" class="btn-primary">Sonraki Makale →</a>
                 </div>
             </footer>
@@ -131,13 +135,43 @@
         <div class="container">
             <p>&copy; 2024 LearnFinnish. Tüm hakları saklıdır.</p>
             <nav class="footer-nav">
-                <a href="/">Ana Sayfa</a>
-                <a href="/blog/">Blog</a>
-                <a href="/#about">Hakkında</a>
-                <a href="/#contact">İletişim</a>
+                <a href="/" data-tr="Ana Sayfa" data-en="Home">Ana Sayfa</a>
+                <a href="/blog/" data-tr="Blog" data-en="Blog">Blog</a>
+                <a href="/#about" data-tr="Hakkında" data-en="About">Hakkında</a>
+                <a href="/#contact" data-tr="İletişim" data-en="Contact">İletişim</a>
             </nav>
         </div>
     </footer>
+    <script>
+        // Simple translation function for blog posts
+        function updateTranslations() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            const storedLang = localStorage.getItem('selectedLanguage');
+            const currentLang = urlLang || storedLang || 'tr';
+
+            document.querySelectorAll('[data-tr][data-en]').forEach(element => {
+                const text = currentLang === 'tr' ? element.dataset.tr : element.dataset.en;
+                if (text) {
+                    element.textContent = text;
+                }
+            });
+
+            if (urlLang) {
+                localStorage.setItem('selectedLanguage', urlLang);
+            }
+        }
+
+        updateTranslations();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateTranslations);
+        }
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'selectedLanguage') {
+                updateTranslations();
+            }
+        });
+    </script>
 </body>
 
 </html>
