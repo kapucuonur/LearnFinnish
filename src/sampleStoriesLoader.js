@@ -57,6 +57,9 @@ function createStoryCard(story, lang) {
 
 // Load a sample story into the story viewer
 function loadSampleStory(story) {
+    // Get current language
+    const lang = document.querySelector('.lang-btn.active')?.dataset.lang || 'tr';
+
     // Switch to story tab
     const storyTab = document.getElementById('tab-hikaye');
     if (storyTab) {
