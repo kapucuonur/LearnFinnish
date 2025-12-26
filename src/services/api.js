@@ -36,7 +36,7 @@ export async function kelimeyiCevir(kelime, hedefDil = 'tr', context = '') {
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({}));
-    console.error('API Error details:', errData);
+    console.error('API Hata Detayı:', JSON.stringify(errData, null, 2));
     throw new Error(hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error');
   }
 
