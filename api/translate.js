@@ -5,29 +5,38 @@ export default async function handler(req, res) {
   }
 
   const { kelime, hedefDil, context } = req.body;
-  const targetLanguage = hedefDil === 'tr' ? 'Turkish' : 'English';
 
-  console.error('ListModels Error:', errorText);
-  return res.status(500).json({
-    translation: 'Model List Error',
-    details: errorText
-  });
-}
+  try {
+    // DEBUG: List available models to find the correct name
+    console.log('Fetching model list...');
+    const modelsRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models?key=${process.env.GEMINI_API_KEY}`
+    );
 
-const data = await modelsRes.json();
-console.log('Available Models:', JSON.stringify(data, null, 2));
+    if (!modelsRes.ok) {
+      const errorText = await modelsRes.text();
+      console.error('ListModels Error:', errorText);
+      return res.status(500).json({
+        translation: 'Model List Error',
+        details: errorText
+      });
+    }
 
-// Return the list of models to the frontend to be logged
-return res.status(200).json({
-  translation: 'Check Console',
-  details: JSON.stringify(data, null, 2)
-});
-} catch (err) {
-  console.error('Translation error:', err);
-  res.status(500).json({
-    translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error'
-  });
-}
+    const data = await modelsRes.json();
+    console.log('Available Models:', JSON.stringify(data, null, 2));
+
+    // Return the list of models to the frontend to be logged
+    return res.status(200).json({
+      translation: 'Check Console',
+      details: JSON.stringify(data, null, 2)
+    });
+  } catch (err) {
+    console.error('Translation error:', err);
+    res.status(500).json({
+      translation: 'Error',
+      details: err.message
+    });
+  }
 }
 
 export const config = {
