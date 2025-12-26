@@ -34,6 +34,10 @@
       </div>
 
       <div class="header-right">
+        <nav class="header-nav">
+          <a href="/blog/" class="nav-link" data-tr="📚 Blog" data-en="📚 Blog">📚 Blog</a>
+        </nav>
+
         <div class="language-switcher">
           <button class="lang-btn active" data-lang="tr">🇹🇷 TR</button>
           <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
@@ -79,6 +83,21 @@
               Hikaye Üret
             </button>
           </div>
+        </div>
+      </div>
+
+      <!-- Sample Stories Section -->
+      <div class="sample-stories-section">
+        <div class="section-header">
+          <h2 class="section-title" data-tr="Örnek Hikayeler" data-en="Sample Stories">Örnek Hikayeler</h2>
+          <p class="section-subtitle" data-tr="Hazır B1 seviyesi hikayelerle pratik yapın"
+            data-en="Practice with ready-made B1 level stories">
+            Hazır B1 seviyesi hikayelerle pratik yapın
+          </p>
+        </div>
+
+        <div id="sample-stories-grid" class="sample-stories-grid">
+          <!-- Stories will be loaded here by JavaScript -->
         </div>
       </div>
 
@@ -261,6 +280,7 @@
     }
   </script>
   <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/sampleStoriesLoader.js"></script>
 </body>
 
 </html>
