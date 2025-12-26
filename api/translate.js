@@ -26,7 +26,8 @@ export default async function handler(req, res) {
     console.log('Available Models:', JSON.stringify(data, null, 2));
 
     // Return the list of models to the frontend to be logged
-    return res.status(200).json({
+    // Force 500 so frontend logs the details
+    return res.status(500).json({
       translation: 'Check Console',
       details: JSON.stringify(data, null, 2)
     });
