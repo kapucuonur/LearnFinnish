@@ -1,4 +1,4 @@
-const NOTEBOOK_KEY = 'LearnFinnish_kelimeler';
+const NOTEBOOK_KEY = 'LearnFinnish_words';
 
 export function addWord(word, translation, targetLang) {
   const notebook = JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
@@ -34,7 +34,7 @@ export function getWords() {
 
 export function renderWordList() {
   const notebook = getWords();
-  const list = document.getElementById('kelime-listesi');
+  const list = document.getElementById('word-list');
   if (!list) return;
 
   list.innerHTML = '';
@@ -47,13 +47,12 @@ export function renderWordList() {
   notebook.forEach(item => {
     const li = document.createElement('li');
     li.innerHTML = `
-      <div class="kelime-defter-item">
-        <strong>${item.word}</strong><br>
-        ${item.translation} <small>(English)</small>
-      </div>
-      <div>
-        <button class="ses-oku-btn" data-word="${item.word}">🔊</button>
-        <button class="kelime-sil" data-word="${item.word}" data-lang="${item.targetLang}">Delete</button>
+      <div class="word-notebook-item">
+        <div>
+          <strong>${item.word}</strong>
+          <span>${item.translation}</span>
+        </div>
+        <button class="word-delete" data-word="${item.word}" data-lang="${item.targetLang}">Delete</button>
       </div>
     `;
     list.appendChild(li);
@@ -65,7 +64,7 @@ export function renderWordList() {
   });
 
   // Delete buttons
-  document.querySelectorAll('.kelime-sil').forEach(btn => {
+  document.querySelectorAll('.word-delete').forEach(btn => {
     btn.onclick = () => {
       removeWord(btn.dataset.word, btn.dataset.lang);
       renderWordList();
@@ -84,7 +83,7 @@ function speak(text) {
 
 export function updateWordCount() {
   const notebook = JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
-  const countEl = document.getElementById('defter-sayi');
+  const countEl = document.getElementById('notebook-count');
   if (countEl) {
     countEl.textContent = notebook.length;
   }

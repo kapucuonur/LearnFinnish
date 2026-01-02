@@ -1,6 +1,6 @@
 /* Story Display Component */
-.hikaye,
-#hikaye-alani {
+.story,
+#story-area {
     font-size: var(--font-size-xl);
     line-height: 2.2;
     text-align: justify;
@@ -12,7 +12,7 @@
     box-shadow: var(--shadow-sm);
 }
 
-.kelime {
+.word {
     cursor: pointer;
     padding: 2px 6px;
     border-bottom: 2px dotted var(--color-primary);
@@ -21,20 +21,20 @@
     display: inline-block;
 }
 
-.kelime:hover {
+.word:hover {
     background: #e0f7fa;
     color: var(--color-primary);
     transform: translateY(-1px);
 }
 
-.kelime:active {
+.word:active {
     transform: translateY(0);
 }
 
 @media (min-width: 768px) {
 
-    .hikaye,
-    #hikaye-alani {
+    .story,
+    #story-area {
         font-size: var(--font-size-2xl);
         padding: var(--space-8);
     }
@@ -42,8 +42,8 @@
 
 @media (max-width: 480px) {
 
-    .hikaye,
-    #hikaye-alani {
+    .story,
+    #story-area {
         font-size: var(--font-size-lg);
         line-height: 2;
         text-align: left;

@@ -19,13 +19,13 @@ export default async function handler(req, res) {
 
   if (!geminiRes.ok) {
     const error = await geminiRes.text();
-    return res.status(500).json({ error: 'Gemini hatası', details: error });
+    return res.status(500).json({ error: 'Gemini error', details: error });
   }
 
   const data = await geminiRes.json();
-  const hikaye = data.candidates[0].content.parts[0].text.trim();
+  const story = data.candidates[0].content.parts[0].text.trim();
 
-  res.status(200).json({ hikaye });
+  res.status(200).json({ story });
 }
 
 export const config = {

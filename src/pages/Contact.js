@@ -1,31 +1,6 @@
 export class ContactPage {
   constructor() {
     this.translations = {
-      tr: {
-        title: 'İletişim',
-        subtitle: 'Bizimle İletişime Geçin',
-        intro: 'Sorularınız, önerileriniz veya geri bildirimleriniz için bize ulaşabilirsiniz. Size en kısa sürede dönüş yapacağız.',
-        info: {
-          title: 'İletişim Bilgileri',
-          email: 'E-posta',
-          phone: 'Telefon',
-          location: 'Konum'
-        },
-        form: {
-          title: 'Mesaj Gönderin',
-          name: 'Adınız',
-          email: 'E-posta Adresiniz',
-          subject: 'Konu',
-          message: 'Mesajınız',
-          send: 'Gönder',
-          success: 'Mesajınız başarıyla gönderildi!',
-          error: 'Bir hata oluştu. Lütfen doğrudan e-posta gönderin.'
-        },
-        support: {
-          title: 'Destek',
-          text: 'Teknik destek veya hesap sorunları için lütfen e-posta gönderin. Genellikle 24 saat içinde yanıt veriyoruz.'
-        }
-      },
       en: {
         title: 'Contact',
         subtitle: 'Get in Touch',

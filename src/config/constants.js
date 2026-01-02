@@ -5,14 +5,14 @@ export const APP_NAME = 'LearnFinnish';
 export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51RPSymGBPXxMTpubh4D982BiRPiBOXBxOGBLoBiSeWhrkAv2Ou9a2HAmkchbKktJXkpWYtcL307gdgT4PXWxRAc500tdraauMa';
 
 export const API_ENDPOINTS = {
-    STORY: '/api/hikaye',
+    STORY: '/api/story',
     TRANSLATE: '/api/translate',
     CHECKOUT: '/api/create-checkout-session',
     WEBHOOK: '/api/webhook'
 };
 
 export const STORAGE_KEYS = {
-    WORD_NOTEBOOK: 'kelimeDefter',
+    WORD_NOTEBOOK: 'wordNotebook',
     LANGUAGE: 'selectedLanguage'
 };
 

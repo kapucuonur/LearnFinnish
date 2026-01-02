@@ -1,12 +1,12 @@
 // Story Display Component
-import { hikayeUret } from '../services/api.js';
-import { hikayeYaz, kelimeEventiEkle } from '../utils/dom.js';
+import { generateStory } from '../services/api.js';
+import { writeStory, addWordEvents } from '../utils/dom.js';
 import { canGenerateStory, incrementStoryCount } from '../services/usageLimits.js';
 import { showUsageLimitModal } from './UsageLimitModal.js';
 
-export function initStoryControls() {
-    const button = document.getElementById('uret-hikaye');
-    const topicInput = document.getElementById('konu');
+export function initStoryDisplay() {
+    const button = document.getElementById('generate-story');
+    const topicInput = document.getElementById('topic');
 
     if (!button || !topicInput) return;
 
@@ -23,13 +23,13 @@ export function initStoryControls() {
 
         try {
             const topic = topicInput.value.trim();
-            const story = await hikayeUret(topic);
-            hikayeYaz(story);
-            kelimeEventiEkle('en'); // Force English
+            const story = await generateStory(topic);
+            writeStory(story);
+            addWordEvents('en'); // Force English
 
             // Scroll to story area after content loads
             setTimeout(() => {
-                const storyArea = document.getElementById('hikaye-alani');
+                const storyArea = document.getElementById('story-area');
                 if (storyArea) {
                     storyArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }

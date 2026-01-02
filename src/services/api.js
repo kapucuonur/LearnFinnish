@@ -2,14 +2,14 @@
 
 import { API_ENDPOINTS } from '../config/constants.js';
 
-export async function hikayeUret(konu) {
+export async function generateStory(topic) {
   try {
-    const response = await fetch(API_ENDPOINTS.HIKAYE, {
+    const response = await fetch(API_ENDPOINTS.STORY, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ konu }),
+      body: JSON.stringify({ topic }),
     });
 
     if (!response.ok) {
@@ -17,14 +17,14 @@ export async function hikayeUret(konu) {
     }
 
     const data = await response.json();
-    return data.hikaye;
+    return data.story;
   } catch (error) {
     console.error('API Error:', error);
     throw error;
   }
 }
 
-export async function kelimeyiCevir(kelime, context = '') {
+export async function translateWord(word, context = '') {
   try {
     const targetLang = 'en'; // Force English
     const response = await fetch(API_ENDPOINTS.TRANSLATE, {
@@ -33,7 +33,7 @@ export async function kelimeyiCevir(kelime, context = '') {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        text: kelime,
+        text: word,
         targetLang,
         context
       }),

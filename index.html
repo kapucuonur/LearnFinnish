@@ -73,8 +73,8 @@
 
         <div class="card-body">
           <div class="input-group">
-            <input type="text" id="konu" class="input" placeholder="Story topic (optional)">
-            <button id="uret-hikaye" class="btn btn-primary btn-lg">
+            <input type="text" id="topic" class="input" placeholder="Story topic (optional)">
+            <button id="generate-story" class="btn btn-primary btn-lg">
               Generate Story
             </button>
           </div>
@@ -98,7 +98,7 @@
       <!-- Tabs Navigation -->
       <div class="tabs-container">
         <div class="tabs">
-          <button id="tab-hikaye" class="tab-btn active">
+          <button id="tab-story" class="tab-btn active">
             <span class="tab-icon">📖</span>
             <span class="tab-label">Story</span>
           </button>
@@ -106,15 +106,15 @@
             <span class="tab-icon">🎴</span>
             <span class="tab-label">Flashcards</span>
           </button>
-          <button id="tab-defter" class="tab-btn">
+          <button id="tab-notebook" class="tab-btn">
             <span class="tab-icon">📚</span>
-            <span class="tab-label">My Words (<span id="defter-sayi">0</span>)</span>
+            <span class="tab-label">My Words (<span id="notebook-count">0</span>)</span>
           </button>
         </div>
       </div>
 
       <!-- Story Content Area -->
-      <div id="hikaye-alani" class="content-area card">
+      <div id="story-area" class="content-area card">
         <div class="empty-state">
           <div class="empty-icon">📖</div>
           <h3>No story generated yet</h3>
@@ -142,13 +142,13 @@
       </div>
 
       <!-- Word Notebook Area -->
-      <div id="defter-alani" class="content-area card hidden">
+      <div id="notebook-area" class="content-area card hidden">
         <div class="card-header">
           <h2>My Word Notebook</h2>
         </div>
         <div class="card-body">
-          <ul id="kelime-listesi" class="word-list"></ul>
-          <button id="defter-temizle" class="btn btn-danger">
+          <ul id="word-list" class="word-list"></ul>
+          <button id="notebook-clear" class="btn btn-danger">
             Clear Notebook
           </button>
         </div>
@@ -229,9 +229,9 @@
   </footer>
 
   <!-- Translation Popup -->
-  <div id="ceviri-popup" class="popup hidden">
-    <span id="ceviri-icerik">Translating...</span>
-    <button id="kapat-popup" class="popup-close">✕</button>
+  <div id="translation-popup" class="popup hidden">
+    <span id="translation-content">Translating...</span>
+    <button id="close-popup" class="popup-close">✕</button>
   </div>
 
   <!-- Chatbot -->

@@ -1,47 +1,6 @@
 export class AboutPage {
   constructor() {
     this.translations = {
-      tr: {
-        title: 'Hakkımızda',
-        subtitle: 'LearnFinnish - Fince Öğrenmenin En Kolay Yolu',
-        mission: {
-          title: 'Misyonumuz',
-          text: 'LearnFinnish, Fince öğrenmek isteyen herkes için etkileşimli ve eğlenceli bir öğrenme deneyimi sunmayı amaçlamaktadır. Yapay zeka destekli hikayeler ve flashcard sistemimiz ile Fince kelime dağarcığınızı geliştirmenize yardımcı oluyoruz.'
-        },
-        features: {
-          title: 'Özelliklerimiz',
-          items: [
-            {
-              icon: '📖',
-              title: 'AI Destekli Hikayeler',
-              text: 'Seviyenize uygun, ilgi çekici Fince hikayeler oluşturuyoruz'
-            },
-            {
-              icon: '🎴',
-              title: 'Akıllı Flashcardlar',
-              text: 'Kelime ezberlemek için etkileşimli flashcard sistemi'
-            },
-            {
-              icon: '📚',
-              title: 'Kişisel Kelime Defteri',
-              text: 'Öğrendiğiniz kelimeleri kaydedin ve takip edin'
-            },
-            {
-              icon: '🌍',
-              title: 'Çift Dil Desteği',
-              text: 'Türkçe ve İngilizce arayüz seçenekleri'
-            }
-          ]
-        },
-        team: {
-          title: 'Ekibimiz',
-          text: 'LearnFinnish, Finlandiya\'da yaşayan ve Fince öğrenme sürecini deneyimleyen bir ekip tarafından geliştirilmiştir. Kendi deneyimlerimizden yola çıkarak, dil öğrenmeyi daha kolay ve eğlenceli hale getirmek için bu platformu oluşturduk.'
-        },
-        contact: {
-          title: 'İletişim',
-          text: 'Sorularınız veya önerileriniz için bizimle iletişime geçebilirsiniz.'
-        }
-      },
       en: {
         title: 'About Us',
         subtitle: 'LearnFinnish - The Easiest Way to Learn Finnish',
@@ -69,8 +28,8 @@ export class AboutPage {
             },
             {
               icon: '🌍',
-              title: 'Bilingual Support',
-              text: 'Turkish and English interface options'
+              title: 'User-Friendly Interface',
+              text: 'Clean English interface for easy navigation'
             }
           ]
         },

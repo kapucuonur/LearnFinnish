@@ -24,11 +24,11 @@
     transform: translateX(4px);
 }
 
-.kelime-defter-item {
+.word-notebook-item {
     flex: 1;
 }
 
-.kelime-defter-item strong {
+.word-notebook-item strong {
     display: block;
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
@@ -36,7 +36,7 @@
     margin-bottom: var(--space-xs);
 }
 
-.kelime-defter-item small {
+.word-notebook-item small {
     color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
 }
@@ -58,11 +58,11 @@
     background: #1976d2;
 }
 
-.kelime-sil {
+.word-delete {
     background: var(--color-error);
     color: var(--color-text-inverse);
 }
 
-.kelime-sil:hover {
+.word-delete:hover {
     background: #c62828;
 }
