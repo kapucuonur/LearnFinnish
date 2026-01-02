@@ -151,12 +151,17 @@
   --color-input-bg: #151a30;
 }
 
-/* Smooth theme transition */
-* {
+/* Smooth theme transition - Applied to body and common elements instead of universal selector */
+body,
+.card,
+.btn,
+input,
+textarea {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Disable transitions on theme change to avoid flash */
+body.theme-transitioning,
 body.theme-transitioning * {
   transition: none !important;
 }
