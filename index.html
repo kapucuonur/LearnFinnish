@@ -269,53 +269,7 @@
     </div>
   </footer>
 
-  <div id="privacy-modal" class="modal-overlay">
-    <div class="modal-content">
-      <button class="modal-close" onclick="document.getElementById('privacy-modal').style.display='none'">✕</button>
-      <h2>Privacy</h2>
-      <p><strong>Last Updated:</strong> December 22, 2024</p>
-      <p>At LearnFinnish, we are committed to protecting the privacy of our users. This privacy policy explains how we
-        collect, use, and protect your personal data.</p>
 
-      <h3>1. Information We Collect</h3>
-      <p>When using LearnFinnish, we may collect the following information:</p>
-      <ul>
-        <li><strong>Account Information:</strong> Your name and email address when you sign in with your Google account
-        </li>
-        <li><strong>Usage Data:</strong> Stories you create, words you save, and your learning progress</li>
-        <li><strong>Technical Data:</strong> IP address, browser type, device information, and usage statistics</li>
-        <li><strong>Cookies:</strong> We use cookies for session management and to improve user experience</li>
-      </ul>
-
-      <h3>2. How We Use Your Information</h3>
-      <p>We use the collected information for: Providing and improving services, personalized learning, managing
-        accounts, technical support, analytics, and legal obligations.</p>
-
-      <h3>3. Information Sharing</h3>
-      <p>We do not share your personal information with third parties except: Service Providers (Firebase, Stripe,
-        Google AdSense), Legal Requirements, or Business Transfers.</p>
-
-      <h3>4. Data Security</h3>
-      <p>We use SSL/TLS encryption, Firebase security rules, and limited access controls to protect your data.</p>
-
-      <h3>5. Cookies and Tracking</h3>
-      <p>We use Essential Cookies, Analytics Cookies, and Advertising Cookies (Google AdSense). You can manage cookies
-        through your browser settings.</p>
-
-      <h3>6. User Rights</h3>
-      <p>Under GDPR, you have the right to Access, Rectification, Erasure, Object, and Data Portability. Contact us at
-        kapucuonur@hotmail.com to exercise these rights.</p>
-
-      <h3>7. Children's Privacy</h3>
-      <p>Our service is not directed to children under 13.</p>
-
-      <h3>8. Third-Party Links</h3>
-      <p>We are not responsible for the privacy practices of third-party sites linked from our app.</p>
-
-      <h3>10. Contact</h3>
-      <p>Email: kapucuonur@hotmail.com<br>Phone: +358 44 235 9429<br>Address: Tampere, Finland</p>
-    </div>
-  </div>
 
   <div id="translation-popup" class="popup hidden">
     <span id="translation-content">Translating...</span>
@@ -350,10 +304,7 @@
       });
     }
 
-    // URL'de #privacy varsa modalı otomatik aç
-    if (window.location.hash === '#privacy') {
-      document.getElementById('privacy-modal').style.display = 'flex';
-    }
+
   </script>
   <script type="module" src="/src/app.js"></script>
   <script type="module" src="/src/sampleStoriesLoader.js"></script>

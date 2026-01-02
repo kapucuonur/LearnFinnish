@@ -1,6 +1,6 @@
 import { AboutPage } from './pages/About.js';
 import { ContactPage } from './pages/Contact.js';
-import { PrivacyPage } from './pages/Privacy.js';
+
 import { TermsPage } from './pages/Terms.js';
 
 export class Router {
@@ -9,14 +9,14 @@ export class Router {
             '': 'home',
             'about': 'about',
             'contact': 'contact',
-            'privacy': 'privacy',
+
             'terms': 'terms'
         };
 
         this.pages = {
             about: new AboutPage(),
             contact: new ContactPage(),
-            privacy: new PrivacyPage(),
+
             terms: new TermsPage()
         };
 
