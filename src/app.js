@@ -2,8 +2,8 @@
 // import { initLanguageSwitcher } from './components/LanguageSwitcher.js'; // Removed
 import { initAuthSection } from './components/AuthSection.js';
 import { initPremiumCard } from './components/PremiumCard.js';
-import { initStoryControls, updateUsageIndicators } from './components/StoryDisplay.js';
-import { initTabs, initNotebookClear } from './components/WordNotebook.js';
+import { initStoryDisplay, updateUsageIndicators } from './components/StoryDisplay.js';
+import { initWordNotebook, initNotebookClear } from './components/WordNotebook.js';
 import { initPWAInstall } from './components/PWAInstall.js';
 import { initUsageLimitModal } from './components/UsageLimitModal.js';
 import { initThemeToggle } from './components/ThemeToggle.js';
@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     initThemeToggle();
     initAuthSection();
     initPremiumCard();
-    initStoryControls();
-    initTabs();
+    initStoryDisplay();
+    initWordNotebook();
     initNotebookClear();
     initPWAInstall();
     initUsageLimitModal();
