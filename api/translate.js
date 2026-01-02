@@ -1,4 +1,4 @@
-// api/translate.js - Context-aware word translation using Gemini API (High Limit Flash model)
+// api/translate.js - Hybrid Translation: Gemini (Primary) -> MyMemory (Fallback)
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
@@ -6,98 +6,87 @@ export default async function handler(req, res) {
 
   const { text, context } = req.body;
 
-  console.log('Translation request received:', { text, context, hasApiKey: !!process.env.GEMINI_API_KEY });
+  console.log('Translation req:', { text, context: !!context });
 
-  // Validate required fields
   if (!text || text.trim() === '') {
-    console.error('Translation error: No text provided');
-    return res.status(400).json({
-      translation: 'Error',
-      details: 'No text provided for translation'
-    });
+    return res.status(400).json({ translation: 'Error', details: 'No text' });
   }
 
-  // Check for API key
-  if (!process.env.GEMINI_API_KEY) {
-    console.error('Translation error: GEMINI_API_KEY not configured');
-    return res.status(500).json({
-      translation: 'Configuration Error',
-      details: 'API key not configured'
-    });
+  // 1. Try Gemini (Smart, Context-aware) - 1,500 req/day free
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      const translation = await translateWithGemini(text, context);
+      console.log('Gemini translation success');
+      return res.status(200).json({ translation });
+    } catch (err) {
+      console.warn('Gemini failed, switching to fallback:', err.message);
+      // Fall through to MyMemory...
+    }
   }
 
-  const targetLanguage = 'English'; // Force English
-
+  // 2. Fallback: MyMemory API (Generic, High volume) - 10,000 req/day free
   try {
-    // Create a prompt that asks for ONLY the word's translation in context
-    const prompt = context && context.length > text.length
-      ? `Given this Finnish sentence: "${context}"
-
-Translate ONLY the word "${text}" to ${targetLanguage} based on how it's used in this sentence.
-
-Rules:
-- Provide ONLY the translation (1-3 words maximum)
-- Consider the word's meaning in this specific context
-- Do NOT translate the entire sentence
-- Do NOT add explanations or extra text
-- Just the word's meaning, nothing else
-
-Translation:`
-      : `Translate this Finnish word to ${targetLanguage}: "${text}"
-
-Provide ONLY the translation (1-3 words maximum), nothing else.
-
-Translation:`;
-
-    // Using gemini-1.5-flash (high free tier: 1500 RPD)
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
-
-    if (!geminiRes.ok) {
-      const errorText = await geminiRes.text();
-      console.error('Gemini API error:', errorText);
-      return res.status(500).json({
-        translation: 'Translation error',
-        details: errorText
-      });
-    }
-
-    const data = await geminiRes.json();
-    let translation = data.candidates[0].content.parts[0].text.trim();
-
-    // Clean up the response - remove quotes, periods, extra whitespace
-    translation = translation
-      .replace(/^["']|["']$/g, '') // Remove surrounding quotes
-      .replace(/\.$/, '') // Remove trailing period
-      .trim();
-
-    // If response is too long (more than 50 chars), it's probably not just the word
-    if (translation.length > 50) {
-      // Fallback: take first few words
-      const words = translation.split(/\s+/);
-      translation = words.slice(0, 3).join(' ');
-    }
-
-    res.status(200).json({ translation });
+    const translation = await translateWithMyMemory(text);
+    console.log('MyMemory translation success');
+    return res.status(200).json({ translation });
   } catch (err) {
-    console.error('Translation error:', err);
-    res.status(500).json({
-      translation: 'Error',
-      details: err.message
-    });
+    console.error('All translation services failed:', err);
+    return res.status(500).json({ translation: 'Error', details: 'Translation failed' });
   }
 }
 
+// --- Helper Functions ---
+
+async function translateWithGemini(text, context) {
+  const targetLanguage = 'English';
+  const prompt = context && context.length > text.length
+    ? `Given Finnish sentence: "${context}". Translate ONLY word "${text}" to ${targetLanguage}. No explanations.`
+    : `Translate Finnish word "${text}" to ${targetLanguage}. Output ONLY the translation.`;
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+    }
+  );
+
+  if (!response.ok) {
+    const errText = await response.text();
+    // Throw error to trigger fallback
+    throw new Error(`Gemini status ${response.status}: ${errText}`);
+  }
+
+  const data = await response.json();
+  let result = data.candidates[0].content.parts[0].text.trim();
+
+  // Clean up
+  result = result.replace(/^["']|["']$/g, '').replace(/\.$/, '').trim();
+
+  // Validate length
+  if (result.length > 50) result = result.split(/\s+/).slice(0, 3).join(' ');
+  return result;
+}
+
+async function translateWithMyMemory(text) {
+  const encodedText = encodeURIComponent(text.trim());
+  const url = `https://api.mymemory.translated.net/get?q=${encodedText}&langpair=fi|en`;
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`MyMemory status ${response.status}`);
+
+  const data = await response.json();
+  if (data.responseStatus !== 200) throw new Error(data.responseDetails);
+
+  let result = data.responseData.translatedText.trim();
+
+  // Clean up
+  result = result.replace(/^["']|["']$/g, '').replace(/\.$/, '').trim();
+  if (result.length > 50) result = result.split(/\s+/).slice(0, 3).join(' ');
+  return result;
+}
+
 export const config = {
-  api: {
-    bodyParser: true,
-  },
+  api: { bodyParser: true },
 };
