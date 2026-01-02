@@ -1,7 +1,5 @@
 // Auth Section Component - v4.0 (English Only)
 import { auth, signInWithGoogle, signOutUser, onAuthStateChanged } from '../services/auth.js';
-// Auth Section Component
-import { updateTranslations } from '../utils/i18n.js';
 
 export function initAuthSection() {
     const loginBtn = document.getElementById('login-btn');

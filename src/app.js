@@ -10,7 +10,6 @@ import { initThemeToggle } from './components/ThemeToggle.js';
 import { initChatbot } from './components/Chatbot.js';
 import { initializeStripe, handlePaymentCallback } from './services/payment.js';
 import { updateWordCount } from './services/storage.js';
-import { updateTranslations, getCurrentLanguage } from './utils/i18n.js';
 import { STRIPE_PUBLISHABLE_KEY } from './config/constants.js';
 import { Router } from './router.js';
 
@@ -35,10 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeStripe(STRIPE_PUBLISHABLE_KEY);
 
     // Handle payment callback from Stripe redirect
-    handlePaymentCallback(getCurrentLanguage());
-
-    // Update UI with current language
-    updateTranslations();
+    handlePaymentCallback('en');
 
     // Update word notebook counter
     updateWordCount();
