@@ -1,4 +1,4 @@
-// Main Application Entry Point
+// Main Application Entry Point - v4.0
 // import { initLanguageSwitcher } from './components/LanguageSwitcher.js'; // Removed
 import { initAuthSection } from './components/AuthSection.js';
 import { initPremiumCard } from './components/PremiumCard.js';

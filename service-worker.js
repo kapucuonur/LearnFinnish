@@ -1,11 +1,11 @@
-const CACHE_NAME = 'learnfinnish-v3';
+const CACHE_NAME = 'learnfinnish-v4';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/src/styles/main.css',
-  '/src/styles/variables.css',
-  '/src/styles/reset.css',
-  '/src/main.js',
+  '/src/styles/main.css?v=4',
+  '/src/styles/variables.css?v=4',
+  '/src/styles/reset.css?v=4',
+  '/src/main.js?v=4',
   '/manifest.json'
 ];
 
