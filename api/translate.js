@@ -1,4 +1,4 @@
-// api/translate.js - Context-aware word translation using Gemini API (FREE tier)
+// api/translate.js - Context-aware word translation using Gemini 2.0 Flash API (FREE)
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
@@ -49,9 +49,9 @@ Provide ONLY the translation (1-3 words maximum), nothing else.
 
 Translation:`;
 
-    // Using gemini-pro which is the free tier model
+    // Using gemini-2.0-flash-exp which is available in v1beta
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

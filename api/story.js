@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     : `Write a short Finnish story (150-200 words, B1 level) about everyday life in Finland. Make it engaging and use common vocabulary suitable for learners.`;
 
   const geminiRes = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${process.env.GEMINI_API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
