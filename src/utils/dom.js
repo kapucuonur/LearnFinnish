@@ -70,23 +70,114 @@ export function writeStory(text, targetElement = storyArea) {
     }
   });
 
-  // Read full story button
-  const readBtn = document.createElement('button');
-  readBtn.textContent = '🔊 Read Story Aloud';
-  readBtn.className = 'read-story-btn';
-  readBtn.style.marginTop = '30px';
-  readBtn.style.padding = '12px 24px';
-  readBtn.style.background = '#006064';
-  readBtn.style.color = 'white';
-  readBtn.style.border = 'none';
-  readBtn.style.borderRadius = '12px';
-  readBtn.style.fontSize = '1.1em';
-  readBtn.style.cursor = 'pointer';
-  readBtn.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-  readBtn.onclick = () => speakText(text);
+  // Audio Control Panel
+  const controlPanel = document.createElement('div');
+  controlPanel.className = 'audio-controls';
+  controlPanel.style.marginTop = '30px';
+  controlPanel.style.display = 'flex';
+  controlPanel.style.gap = '15px';
+  controlPanel.style.justifyContent = 'center';
+
+  // Helper to create control buttons
+  const createBtn = (text, onClick, bgColor = '#006064') => {
+    const btn = document.createElement('button');
+    btn.innerHTML = text;
+    btn.style.padding = '12px 24px';
+    btn.style.background = bgColor;
+    btn.style.color = 'white';
+    btn.style.border = 'none';
+    btn.style.borderRadius = '12px';
+    btn.style.fontSize = '1.1em';
+    btn.style.cursor = 'pointer';
+    btn.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+    btn.style.transition = 'all 0.2s';
+    btn.onclick = onClick;
+
+    btn.onmouseover = () => { if (!btn.disabled) btn.style.transform = 'translateY(-2px)'; };
+    btn.onmouseout = () => { if (!btn.disabled) btn.style.transform = 'translateY(0)'; };
+
+    return btn;
+  };
+
+  let isPaused = false;
+
+  const playBtn = createBtn('▶️ Read Aloud', () => {
+    if (speechSynthesis.paused && speechSynthesis.speaking) {
+      speechSynthesis.resume();
+      isPaused = false;
+      playBtn.innerHTML = '▶️ Resuming...';
+      setTimeout(() => playBtn.innerHTML = '▶️ Playing', 500);
+    } else {
+      speakText(text);
+      playBtn.innerHTML = '▶️ Playing';
+    }
+    updateButtonStates();
+  }, '#2e7d32'); // Green
+
+  const pauseBtn = createBtn('⏸️ Pause', () => {
+    if (speechSynthesis.speaking && !speechSynthesis.paused) {
+      speechSynthesis.pause();
+      isPaused = true;
+      playBtn.innerHTML = '▶️ Resume';
+    }
+    updateButtonStates();
+  }, '#f57c00'); // Orange
+
+  const stopBtn = createBtn('⏹️ Stop', () => {
+    speechSynthesis.cancel();
+    isPaused = false;
+    playBtn.innerHTML = '▶️ Read Aloud';
+    updateButtonStates();
+  }, '#d32f2f'); // Red
+
+  // Update button visibility/state
+  const updateButtonStates = () => {
+    const isSpeaking = speechSynthesis.speaking;
+
+    // Simple state checking loop
+    setInterval(() => {
+      if (!speechSynthesis.speaking) {
+        playBtn.disabled = false;
+        playBtn.style.opacity = '1';
+        playBtn.innerHTML = '▶️ Read Aloud';
+
+        pauseBtn.disabled = true;
+        pauseBtn.style.opacity = '0.5';
+
+        stopBtn.disabled = true;
+        stopBtn.style.opacity = '0.5';
+      } else {
+        playBtn.disabled = true;
+        playBtn.style.opacity = '0.5';
+
+        pauseBtn.disabled = false;
+        pauseBtn.style.opacity = '1';
+
+        stopBtn.disabled = false;
+        stopBtn.style.opacity = '1';
+
+        if (speechSynthesis.paused) {
+          playBtn.disabled = false;
+          playBtn.style.opacity = '1';
+          playBtn.innerHTML = '▶️ Resume';
+          pauseBtn.innerHTML = '⏸️ Paused';
+        } else {
+          playBtn.innerHTML = '🔊 Playing...';
+          pauseBtn.innerHTML = '⏸️ Pause';
+        }
+      }
+    }, 500);
+  };
+
+  // Initial state calling
+  updateButtonStates();
+
+  controlPanel.appendChild(playBtn);
+  controlPanel.appendChild(pauseBtn);
+  controlPanel.appendChild(stopBtn);
 
   targetElement.appendChild(document.createElement('br'));
-  targetElement.appendChild(readBtn);
+  targetElement.appendChild(controlPanel);
 }
 
 export function addWordEvents(targetLang = 'en') {
