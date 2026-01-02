@@ -1,4 +1,4 @@
-// api/translate.js - Free translation using MyMemory API (10K words/day, no API key)
+// api/translate.js - Context-aware word translation using Gemini API (FREE tier)
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
   const { text, context } = req.body;
 
-  console.log('Translation request received:', { text, context });
+  console.log('Translation request received:', { text, context, hasApiKey: !!process.env.GEMINI_API_KEY });
 
   // Validate required fields
   if (!text || text.trim() === '') {
@@ -17,26 +17,61 @@ export default async function handler(req, res) {
     });
   }
 
+  // Check for API key
+  if (!process.env.GEMINI_API_KEY) {
+    console.error('Translation error: GEMINI_API_KEY not configured');
+    return res.status(500).json({
+      translation: 'Configuration Error',
+      details: 'API key not configured'
+    });
+  }
+
+  const targetLanguage = 'English'; // Force English
+
   try {
-    // Use MyMemory Translation API (free, 10K words/day, no API key)
-    // API docs: https://mymemory.translated.net/doc/spec.php
-    const encodedText = encodeURIComponent(text.trim());
-    const url = `https://api.mymemory.translated.net/get?q=${encodedText}&langpair=fi|en`;
+    // Create a prompt that asks for ONLY the word's translation in context
+    const prompt = context && context.length > text.length
+      ? `Given this Finnish sentence: "${context}"
 
-    const response = await fetch(url);
+Translate ONLY the word "${text}" to ${targetLanguage} based on how it's used in this sentence.
 
-    if (!response.ok) {
-      throw new Error(`MyMemory API returned ${response.status}`);
+Rules:
+- Provide ONLY the translation (1-3 words maximum)
+- Consider the word's meaning in this specific context
+- Do NOT translate the entire sentence
+- Do NOT add explanations or extra text
+- Just the word's meaning, nothing else
+
+Translation:`
+      : `Translate this Finnish word to ${targetLanguage}: "${text}"
+
+Provide ONLY the translation (1-3 words maximum), nothing else.
+
+Translation:`;
+
+    // Using gemini-pro which is the free tier model
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }]
+        })
+      }
+    );
+
+    if (!geminiRes.ok) {
+      const errorText = await geminiRes.text();
+      console.error('Gemini API error:', errorText);
+      return res.status(500).json({
+        translation: 'Translation error',
+        details: errorText
+      });
     }
 
-    const data = await response.json();
-
-    // Check if translation was successful
-    if (data.responseStatus !== 200) {
-      throw new Error(data.responseDetails || 'Translation failed');
-    }
-
-    let translation = data.responseData.translatedText.trim();
+    const data = await geminiRes.json();
+    let translation = data.candidates[0].content.parts[0].text.trim();
 
     // Clean up the response - remove quotes, periods, extra whitespace
     translation = translation
@@ -44,8 +79,9 @@ export default async function handler(req, res) {
       .replace(/\.$/, '') // Remove trailing period
       .trim();
 
-    // If response is too long (more than 50 chars), take first few words
+    // If response is too long (more than 50 chars), it's probably not just the word
     if (translation.length > 50) {
+      // Fallback: take first few words
       const words = translation.split(/\s+/);
       translation = words.slice(0, 3).join(' ');
     }
