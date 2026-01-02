@@ -119,7 +119,7 @@ export function kelimeEventiEkle(hedefDil = 'en') {
           contextSentence = allText.substring(0, 200); // First 200 chars
         }
 
-        const translation = await kelimeyiCevir(original, hedefDil, contextSentence);
+        const translation = await kelimeyiCevir(original, contextSentence);
 
         // Listen button
         const audioBtn = document.createElement('button');

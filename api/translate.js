@@ -5,6 +5,27 @@ export default async function handler(req, res) {
   }
 
   const { text, context } = req.body;
+
+  console.log('Translation request received:', { text, context, hasApiKey: !!process.env.GEMINI_API_KEY });
+
+  // Validate required fields
+  if (!text || text.trim() === '') {
+    console.error('Translation error: No text provided');
+    return res.status(400).json({
+      translation: 'Error',
+      details: 'No text provided for translation'
+    });
+  }
+
+  // Check for API key
+  if (!process.env.GEMINI_API_KEY) {
+    console.error('Translation error: GEMINI_API_KEY not configured');
+    return res.status(500).json({
+      translation: 'Configuration Error',
+      details: 'API key not configured'
+    });
+  }
+
   const targetLanguage = 'English'; // Force English
 
   try {
