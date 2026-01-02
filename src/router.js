@@ -31,8 +31,7 @@ export class Router {
         // Handle initial load
         this.handleRoute();
 
-        // Add navigation links to footer
-        this.addFooterLinks();
+
     }
 
     handleRoute() {
@@ -115,29 +114,7 @@ export class Router {
         window.location.hash = path;
     }
 
-    addFooterLinks() {
-        // Create footer if it doesn't exist
-        let footer = document.querySelector('.app-footer');
-        if (!footer) {
-            footer = document.createElement('footer');
-            footer.className = 'app-footer';
-            document.body.appendChild(footer);
-        }
 
-        footer.innerHTML = `
-      <div class="footer-container">
-        <div class="footer-links">
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-          <a href="#privacy">Privacy</a>
-          <a href="#terms">Terms of Service</a>
-        </div>
-        <div class="footer-copy">
-          <p>&copy; 2024 LearnFinnish. <span>All rights reserved.</span></p>
-        </div>
-      </div>
-    `;
-    }
 
     updateLanguage(lang) {
         // No-op for English only
