@@ -337,15 +337,16 @@ export function addWordEvents(targetLang = 'en') {
         };
 
         // Popup content — word, translation and buttons
+        // Popup content — word, translation and buttons
         translationContent.innerHTML = `
-  < div style = "margin-bottom: 15px;" >
+          <div style="margin-bottom: 15px;">
             <strong style="font-size: 1.8em; display: block; margin-bottom: 8px; color: #006064;">${original}</strong>
             <span style="font-size: 1.5em; display: block; margin-bottom: 5px; color: #333;">${translation}</span>
             <small style="color: #666; display: block;">(English)</small>
-          </div >
-    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-    </div>
-  `;
+          </div>
+          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+          </div>
+        `;
 
         const buttonContainer = translationContent.querySelector('div:last-child');
         buttonContainer.appendChild(audioBtn);
@@ -354,7 +355,7 @@ export function addWordEvents(targetLang = 'en') {
         // Auto speak
         speakText(original);
       } catch (err) {
-        translationContent.innerHTML = `< div style = "color: #d32f2f; padding: 20px 0;" > Error occurred</div > `;
+        translationContent.innerHTML = `<div style="color: #d32f2f; padding: 20px 0;">Error occurred</div>`;
       }
     };
   });
