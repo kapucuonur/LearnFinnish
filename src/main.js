@@ -1,5 +1,5 @@
 // Main Application Entry Point
-import { initLanguageSwitcher } from './components/LanguageSwitcher.js';
+// import { initLanguageSwitcher } from './components/LanguageSwitcher.js'; // Removed
 import { initAuthSection } from './components/AuthSection.js';
 import { initPremiumCard } from './components/PremiumCard.js';
 import { initStoryControls, updateUsageIndicators } from './components/StoryDisplay.js';
@@ -17,7 +17,7 @@ import { Router } from './router.js';
 // Initialize application when DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
     // Initialize all components
-    initLanguageSwitcher();
+    // initLanguageSwitcher(); // Removed
     initThemeToggle();
     initAuthSection();
     initPremiumCard();

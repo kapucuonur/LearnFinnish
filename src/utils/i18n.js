@@ -2,53 +2,14 @@
 
 import { LANGUAGES } from '../config/constants.js';
 
-let currentLanguage = LANGUAGES.TR;
+// Always default to English
+const currentLanguage = LANGUAGES.EN;
 
-// Update all translatable elements on the page
+// Update all translatable elements on the page (No-op for English-only site)
 export function updateTranslations(lang = currentLanguage) {
-    currentLanguage = lang;
-
-    // Update title
-    const titleEl = document.querySelector('title');
-    if (titleEl) {
-        titleEl.textContent = titleEl.dataset[lang] || titleEl.textContent;
-    }
-
-    // Update all elements with data-tr and data-en attributes
-    document.querySelectorAll('[data-tr]').forEach(el => {
-        const key = lang === LANGUAGES.TR ? 'tr' : 'en';
-        if (el.dataset[key]) {
-            el.textContent = el.dataset[key];
-        }
-    });
-
-    // Update placeholders
-    document.querySelectorAll('[data-placeholder-tr]').forEach(el => {
-        const key = lang === LANGUAGES.TR ? 'placeholderTr' : 'placeholderEn';
-        if (el.dataset[key]) {
-            el.placeholder = el.dataset[key];
-        }
-    });
-
-    // Update language buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-    });
-
-    // Update blog link with language parameter - use reliable ID selector
-    const blogLink = document.getElementById('blog-nav-link');
-    console.log('Updating blog link:', blogLink, 'to language:', lang);
-    if (blogLink) {
-        // Remove any existing query parameters and add new lang parameter
-        const baseUrl = blogLink.href.split('?')[0];
-        blogLink.href = `${baseUrl}?lang=${lang}`;
-        console.log('Blog link updated to:', blogLink.href);
-    } else {
-        console.warn('Blog link not found!');
-    }
-
-    // Save language preference to localStorage for blog page
-    localStorage.setItem('selectedLanguage', lang);
+    // Logic removed as the site is now English-only
+    // We can keep this empty function to avoid breaking other imports that might call it
+    // console.log('Site is English-only. Translations update skipped.');
 }
 
 // Get current language
@@ -56,16 +17,12 @@ export function getCurrentLanguage() {
     return currentLanguage;
 }
 
-// Set current language
+// Set current language (No-op)
 export function setCurrentLanguage(lang) {
-    if (lang === LANGUAGES.TR || lang === LANGUAGES.EN) {
-        currentLanguage = lang;
-        document.documentElement.lang = lang; // Update HTML lang attribute for chatbot
-        updateTranslations(lang);
-    }
+    // console.log('Language switching is disabled. Current language:', currentLanguage);
 }
 
-// Get translated text
+// Get translated text - Always return English
 export function t(trText, enText) {
-    return currentLanguage === LANGUAGES.TR ? trText : enText;
+    return enText;
 }

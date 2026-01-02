@@ -9,18 +9,15 @@ function initSampleStories() {
     const grid = document.getElementById('sample-stories-grid');
     if (!grid) return;
 
-    // Get current language
-    const currentLang = document.querySelector('.lang-btn.active')?.dataset.lang || 'tr';
-
     // Create story cards
     sampleStories.forEach(story => {
-        const card = createStoryCard(story, currentLang);
+        const card = createStoryCard(story);
         grid.appendChild(card);
     });
 }
 
 // Create a story card element
-function createStoryCard(story, lang) {
+function createStoryCard(story) {
     const card = document.createElement('div');
     card.className = 'sample-story-card';
     card.dataset.storyId = story.id;
@@ -31,20 +28,23 @@ function createStoryCard(story, lang) {
     // Get preview text (first 100 characters)
     const preview = story.story.substring(0, 100) + '...';
 
+    // Use English category or fallback
+    const category = story.categoryEn || story.category;
+
     card.innerHTML = `
     <div class="story-card-header">
       <h3 class="story-card-title">${story.title}</h3>
       <span class="story-level-badge">${story.level}</span>
     </div>
     <div class="story-card-body">
-    <p class="story-card-category">${lang === 'tr' ? story.category : story.categoryEn}</p>
+    <p class="story-card-category">${category}</p>
       <p class="story-card-preview">${preview}</p>
       <div class="story-card-meta">
-        <span class="story-word-count">📖 ~${wordCount} ${lang === 'tr' ? 'kelime' : 'words'}</span>
+        <span class="story-word-count">📖 ~${wordCount} words</span>
       </div>
     </div>
-    <button class="story-card-button" data-tr="Hikayeyi Oku" data-en="Read Story">
-      ${lang === 'tr' ? 'Hikayeyi Oku' : 'Read Story'} →
+    <button class="story-card-button">
+      Read Story →
     </button>
   `;
 
@@ -58,9 +58,6 @@ function createStoryCard(story, lang) {
 
 // Load a sample story into the story viewer
 function loadSampleStory(story) {
-    // Get current language
-    const lang = document.querySelector('.lang-btn.active')?.dataset.lang || 'tr';
-
     // Switch to story tab
     const storyTab = document.getElementById('tab-hikaye');
     if (storyTab) {
@@ -74,6 +71,8 @@ function loadSampleStory(story) {
     // Clear existing content
     storyArea.innerHTML = '';
 
+    const category = story.categoryEn || story.category;
+
     // Create story header
     const header = document.createElement('div');
     header.className = 'story-header';
@@ -81,7 +80,7 @@ function loadSampleStory(story) {
     <h2>${story.title}</h2>
     <div class="story-meta">
       <span class="story-level">${story.level}</span>
-      <span class="story-category">${lang === 'tr' ? story.category : story.categoryEn}</span>
+      <span class="story-category">${category}</span>
     </div>
   `;
     storyArea.appendChild(header);
@@ -116,7 +115,7 @@ function loadSampleStory(story) {
 
                 // Call translation API
                 const cleanWord = this.dataset.word;
-                const currentLang = document.querySelector('.lang-btn.active')?.dataset.lang || 'tr';
+                const currentLang = 'en';
 
                 try {
                     // Use existing Google Translate API
@@ -152,7 +151,7 @@ if (document.readyState === 'loading') {
     initSampleStories();
 }
 
-// Re-initialize when language changes
+// Re-initialize (kept for compatibility, though not needed for language switch anymore)
 document.addEventListener('languageChanged', () => {
     const grid = document.getElementById('sample-stories-grid');
     if (grid) {

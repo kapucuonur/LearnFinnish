@@ -57,7 +57,7 @@ export class Router {
     }
 
     showPage(pageName) {
-        const lang = document.querySelector('.lang-btn.active')?.dataset.lang || 'tr';
+        const lang = 'en'; // Force English
         const page = this.pages[pageName];
 
         if (!page) return;
@@ -127,21 +127,19 @@ export class Router {
         footer.innerHTML = `
       <div class="footer-container">
         <div class="footer-links">
-          <a href="#about" data-tr="Hakkımızda" data-en="About">Hakkımızda</a>
-          <a href="#contact" data-tr="İletişim" data-en="Contact">İletişim</a>
-          <a href="#privacy" data-tr="Gizlilik Politikası" data-en="Privacy Policy">Gizlilik Politikası</a>
-          <a href="#terms" data-tr="Kullanım Koşulları" data-en="Terms of Service">Kullanım Koşulları</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#terms">Terms of Service</a>
         </div>
         <div class="footer-copy">
-          <p>&copy; 2024 LearnFinnish. <span data-tr="Tüm hakları saklıdır." data-en="All rights reserved.">Tüm hakları saklıdır.</span></p>
+          <p>&copy; 2024 LearnFinnish. <span>All rights reserved.</span></p>
         </div>
       </div>
     `;
     }
 
     updateLanguage(lang) {
-        if (this.currentPage && this.currentPage !== 'home') {
-            this.showPage(this.currentPage);
-        }
+        // No-op for English only
     }
 }

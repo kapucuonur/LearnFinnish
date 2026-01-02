@@ -1,7 +1,6 @@
 // Story Display Component
 import { hikayeUret } from '../services/api.js';
 import { hikayeYaz, kelimeEventiEkle } from '../utils/dom.js';
-import { getCurrentLang } from './LanguageSwitcher.js';
 import { canGenerateStory, incrementStoryCount } from '../services/usageLimits.js';
 import { showUsageLimitModal } from './UsageLimitModal.js';
 
@@ -19,15 +18,14 @@ export function initStoryControls() {
             return;
         }
 
-        const currentLang = getCurrentLang();
         button.disabled = true;
-        button.textContent = currentLang === 'tr' ? 'Hikâye üretiliyor...' : 'Generating story...';
+        button.textContent = 'Generating story...';
 
         try {
             const topic = topicInput.value.trim();
             const story = await hikayeUret(topic);
             hikayeYaz(story);
-            kelimeEventiEkle(currentLang);
+            kelimeEventiEkle('en'); // Force English
 
             // Scroll to story area after content loads
             setTimeout(() => {
@@ -41,11 +39,11 @@ export function initStoryControls() {
             incrementStoryCount();
             updateUsageIndicators();
         } catch (err) {
-            alert(currentLang === 'tr' ? 'Hata: ' + err.message : 'Error: ' + err.message);
+            alert('Error: ' + err.message);
         }
 
         button.disabled = false;
-        button.textContent = button.dataset[currentLang === 'tr' ? 'tr' : 'en'];
+        button.textContent = 'Generate Story';
     });
 }
 
@@ -75,11 +73,11 @@ async function updateUsageIndicators() {
         indicatorsEl.id = 'usage-indicators';
         indicatorsEl.className = 'usage-indicators';
         indicatorsEl.innerHTML = `
-            <span id="story-usage" data-tr="Hikayeler: " data-en="Stories: ">
-                Hikayeler: <strong>0/3</strong>
+            <span id="story-usage">
+                Stories: <strong>0/3</strong>
             </span>
-            <span id="flashcard-usage" data-tr="Flashcardlar: " data-en="Flashcards: ">
-                Flashcardlar: <strong>0/10</strong>
+            <span id="flashcard-usage">
+                Flashcards: <strong>0/10</strong>
             </span>
         `;
         controlsDiv.appendChild(indicatorsEl);
