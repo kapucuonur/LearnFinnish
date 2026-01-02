@@ -1,12 +1,12 @@
 // Firebase Authentication Service (using CDN for compatibility)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getAuth,
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
   onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyABTl3pLxVHJKa3RCOz1ZgheKbNs-NbjfM",

@@ -145,6 +145,9 @@
   /* Keep accent colors vibrant */
   --color-accent: #ffa726;
   --color-accent-light: #ffb74d;
+
+  /* Input Background */
+  --color-input-bg: #151a30;
 }
 
 /* Smooth theme transition */

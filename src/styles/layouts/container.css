@@ -50,7 +50,7 @@
 
 /* Story Card */
 .story-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: var(--color-card);
     border: 2px solid var(--color-primary);
 }
 

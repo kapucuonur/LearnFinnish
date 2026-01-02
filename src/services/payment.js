@@ -1,6 +1,6 @@
 // Payment handling with Stripe
 import { auth } from './auth.js';
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const db = getFirestore();
 

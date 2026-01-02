@@ -18,7 +18,7 @@ export function initAuthSection() {
         loginBtn.disabled = true;
         loginBtn.textContent = 'Signing in...';
 
-        const result = await signInWithGoogle('en');
+        const result = await signInWithGoogle();
 
         if (!result.success) {
             alert(result.error);
@@ -38,11 +38,9 @@ export function initAuthSection() {
 
     // Auth state observer
     onAuthStateChanged(auth, (user) => {
-
         if (user) {
             loginBtn.style.display = 'none';
             loginBtn.disabled = false;
-            loginBtn.textContent = loginBtn.dataset['en'] || 'Sign in with Google';
             userInfo.classList.remove('hidden');
             userName.textContent = `Welcome, ${user.displayName || user.email}!`;
             // Keep premium section visible - user might not be premium yet
@@ -50,7 +48,7 @@ export function initAuthSection() {
         } else {
             loginBtn.style.display = 'block';
             loginBtn.disabled = false;
-            loginBtn.textContent = loginBtn.dataset['en'] || 'Sign in with Google';
+            loginBtn.textContent = 'Sign In';
             userInfo.classList.add('hidden');
             if (premiumInfo) premiumInfo.style.display = 'block';
         }
