@@ -71,68 +71,44 @@
 /* Language Switcher */
 .language-switcher {
     display: flex;
-    gap: var(--space-xs);
-    background: var(--color-background);
-    padding: var(--space-xs);
-    border-radius: var(--radius-lg);
-}
 
-.lang-btn {
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-secondary);
-    transition: all var(--transition-fast);
-}
-
-.lang-btn:hover {
-    background: var(--color-surface);
-    color: var(--color-text-primary);
-}
-
-.lang-btn.active {
-    background: var(--color-primary);
-    color: var(--color-text-inverse);
-}
-
-/* Auth Section */
-.auth-section {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-}
-
-.user-name {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-primary);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--space-md);
+    /* Auth Section */
+    .auth-section {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
     }
 
-    .header-right {
-        width: 100%;
-        justify-content: space-between;
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
     }
 
-    .app-logo {
-        font-size: var(--font-size-xl);
+    .user-name {
+        font-size: var(--font-size-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-text-primary);
     }
 
-    .app-tagline {
-        font-size: var(--font-size-xs);
+    /* Responsive */
+    @media (max-width: 768px) {
+        .header-container {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--space-md);
+        }
+
+        .header-right {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .app-logo {
+            font-size: var(--font-size-xl);
+        }
+
+        .app-tagline {
+            font-size: var(--font-size-xs);
+        }
     }
-}

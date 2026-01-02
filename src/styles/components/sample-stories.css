@@ -208,7 +208,8 @@
 }
 
 .story-word.translated::after {
-  content: attr(data-translation);
+  /* content: attr(data-translation); */
+  /* Removed as per instruction */
   position: absolute;
   bottom: 100%;
   left: 50%;
@@ -236,19 +237,19 @@
     grid-template-columns: 1fr;
     gap: var(--space-md);
   }
-  
+
   .section-title {
     font-size: 1.5rem;
   }
-  
+
   .section-subtitle {
     font-size: 1rem;
   }
-  
+
   .story-header h2 {
     font-size: 1.5rem;
   }
-  
+
   .story-sentence {
     font-size: 1rem;
   }
