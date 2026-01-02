@@ -132,7 +132,8 @@
   --color-text-primary: #ffffff;
   --color-text-secondary: #a0aec0;
   --color-text-disabled: #4a5568;
-  --color-text-inverse: #1a202c;
+  /* Inverse text (on primary/accent) should remain light if background is dark */
+  --color-text-inverse: #ffffff;
 
   /* Border & Divider */
   --color-border: #2d3748;

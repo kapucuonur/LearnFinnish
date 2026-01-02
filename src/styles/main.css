@@ -11,6 +11,7 @@
 
 /* Component Styles */
 @import url('./components/header.css');
+@import url('./components/auth-section.css');
 @import url('./components/buttons.css');
 @import url('./components/tabs.css');
 @import url('./components/theme-toggle.css');

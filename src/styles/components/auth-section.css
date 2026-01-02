@@ -1,73 +1,36 @@
-/* Auth Section Component */
-#auth-section {
-    text-align: center;
-    margin: var(--space-8) 0;
-    padding: var(--space-6);
-    background: var(--bg-info);
-    border-radius: var(--radius-lg);
-}
-
-#user-info {
-    background: var(--bg-success);
-    padding: var(--space-4);
-    border-radius: var(--radius-lg);
-    margin-bottom: var(--space-5);
+/* Auth Section Component - Refactored for Header */
+.auth-section {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-sm);
 }
 
-@media (min-width: 640px) {
-    #user-info {
-        flex-direction: row;
-        justify-content: center;
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.user-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+}
+
+/* Hide when not authenticated */
+.user-info.hidden {
+    display: none !important;
+}
+
+/* Ensure buttons in auth section don't break layout */
+.auth-section .btn {
+    white-space: nowrap;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 768px) {
+    .user-name {
+        display: none;
+        /* Hide name on mobile to save space if needed */
     }
-}
-
-#user-name {
-    font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-lg);
-    color: var(--color-gray-800);
-}
-
-#login-btn,
-#logout-btn {
-    padding: var(--space-4) var(--space-8);
-    border: none;
-    border-radius: var(--radius-lg);
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-bold);
-    cursor: pointer;
-    transition: all var(--transition-base);
-    min-height: 48px;
-}
-
-#login-btn {
-    background: var(--color-secondary);
-    color: var(--color-white);
-}
-
-#login-btn:hover {
-    background: var(--color-secondary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-#logout-btn {
-    background: var(--color-error);
-    color: var(--color-white);
-    padding: var(--space-2) var(--space-4);
-    font-size: var(--font-size-base);
-    min-height: 44px;
-}
-
-#logout-btn:hover {
-    background: #b71c1c;
-}
-
-#login-btn:disabled,
-#logout-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
 }

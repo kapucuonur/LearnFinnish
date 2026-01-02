@@ -20,7 +20,7 @@
 #ceviri-icerik {
     font-size: var(--font-size-lg);
     line-height: var(--line-height-relaxed);
-    color: var(--color-gray-800);
+    color: var(--color-text-primary);
     margin-bottom: var(--space-4);
 }
 
