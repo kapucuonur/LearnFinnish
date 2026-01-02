@@ -28,8 +28,8 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
         if (onFlip) onFlip();
     });
 
-    // Valid word check
-    if (!word || !word.tr || !word.en) {
+    // Valid word check - match storage format
+    if (!word || !word.word || !word.translation) {
         console.error('Invalid word data:', word);
         return;
     }
@@ -38,13 +38,12 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
         <div class="flashcard-inner">
             <div class="flashcard-front">
                 <div class="card-label">Finnish</div>
-                <div class="card-word">${word.fi || word.original}</div>
+                <div class="card-word">${word.word}</div>
                 <div class="card-hint">Click to flip</div>
             </div>
             <div class="flashcard-back">
                 <div class="card-label">English</div>
-                <div class="card-word">${word.en}</div>
-                <div class="card-context">${word.context || ''}</div>
+                <div class="card-word">${word.translation}</div>
             </div>
         </div>
     `;
