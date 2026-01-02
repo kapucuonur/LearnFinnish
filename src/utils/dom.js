@@ -7,39 +7,108 @@ const translationContent = document.getElementById('translation-content');
 const closeBtn = document.getElementById('close-popup');
 const overlay = document.querySelector('.overlay');
 
-const voices = [];
-function loadVoices() {
-  const allVoices = speechSynthesis.getVoices();
-  if (allVoices.length > 0) {
-    voices.length = 0;
-    voices.push(...allVoices);
+// Google TTS Player for Natural Voice
+class GoogleTTSPlayer {
+  constructor() {
+    this.audio = new Audio();
+    this.queue = [];
+    this.currentIndex = 0;
+    this.isPlaying = false;
+    this.isPaused = false;
+    this.onStateChange = null;
+
+    this.audio.addEventListener('ended', () => this.playNext());
+    this.audio.addEventListener('error', (e) => {
+      console.error('Audio playback error', e);
+      this.stop();
+    });
   }
-}
-speechSynthesis.onvoiceschanged = loadVoices;
-loadVoices();
 
-function speakText(text) {
-  if ('speechSynthesis' in window) {
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'fi-FI';
-    utterance.rate = 0.85; // Slightly slower for better clarity
-    utterance.pitch = 1;
-    utterance.volume = 1;
+  // Split text into chunks < 200 chars (Google TTS limit)
+  chunkText(text) {
+    // Split by sentence endings but keep the punctuation
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    const chunks = [];
+    let currentChunk = '';
 
-    // Try to find a high quality Finnish voice
-    if (voices.length === 0) loadVoices();
+    sentences.forEach(sentence => {
+      if ((currentChunk + sentence).length < 200) {
+        currentChunk += sentence + ' ';
+      } else {
+        if (currentChunk) chunks.push(currentChunk.trim());
+        currentChunk = sentence + ' ';
+      }
+    });
+    if (currentChunk) chunks.push(currentChunk.trim());
+    return chunks;
+  }
 
-    const finnishVoice = voices.find(v => v.lang === 'fi-FI' && v.name.includes('Google')) ||
-      voices.find(v => v.lang === 'fi-FI' && v.name.includes('Suomi')) ||
-      voices.find(v => v.lang === 'fi-FI');
+  play(text) {
+    this.stop(); // Reset
+    this.queue = this.chunkText(text);
+    this.currentIndex = 0;
+    this.isPlaying = true;
+    this.isPaused = false;
+    this.playNext();
+    this.broadcastState();
+  }
 
-    if (finnishVoice) {
-      utterance.voice = finnishVoice;
+  playNext() {
+    if (this.currentIndex >= this.queue.length) {
+      this.stop();
+      return;
     }
 
-    speechSynthesis.speak(utterance);
+    const text = this.queue[this.currentIndex];
+    const encodedText = encodeURIComponent(text);
+    // Use Google Translate TTS endpoint
+    this.audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&tl=fi&client=tw-ob&q=${encodedText}`;
+    this.audio.play().catch(e => console.error('Play error:', e));
+    this.currentIndex++;
   }
+
+  pause() {
+    if (this.isPlaying && !this.isPaused) {
+      this.audio.pause();
+      this.isPaused = true;
+      this.broadcastState();
+    }
+  }
+
+  resume() {
+    if (this.isPlaying && this.isPaused) {
+      this.audio.play();
+      this.isPaused = false;
+      this.broadcastState();
+    }
+  }
+
+  stop() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.queue = [];
+    this.currentIndex = 0;
+    this.isPlaying = false;
+    this.isPaused = false;
+    this.broadcastState();
+  }
+
+  broadcastState() {
+    if (this.onStateChange) {
+      this.onStateChange({
+        isPlaying: this.isPlaying,
+        isPaused: this.isPaused
+      });
+    }
+  }
+}
+
+const ttsPlayer = new GoogleTTSPlayer();
+
+function speakText(text) {
+  // Simple direct playback for single words
+  const audio = new Audio(\`https://translate.google.com/translate_tts?ie=UTF-8&tl=fi&client=tw-ob&q=\${encodeURIComponent(text)}\`);
+  audio.play();
 }
 
 export function writeStory(text, targetElement = storyArea) {
@@ -92,87 +161,48 @@ export function writeStory(text, targetElement = storyArea) {
     btn.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
     btn.style.transition = 'all 0.2s';
     btn.onclick = onClick;
-
-    btn.onmouseover = () => { if (!btn.disabled) btn.style.transform = 'translateY(-2px)'; };
-    btn.onmouseout = () => { if (!btn.disabled) btn.style.transform = 'translateY(0)'; };
-
+    
+    btn.onmouseover = () => { if(!btn.disabled) btn.style.transform = 'translateY(-2px)'; };
+    btn.onmouseout = () => { if(!btn.disabled) btn.style.transform = 'translateY(0)'; };
+    
     return btn;
   };
 
-  let isPaused = false;
+  const playBtn = createBtn('▶️ Read Aloud', () => ttsPlayer.play(text), '#2e7d32');
+  const pauseBtn = createBtn('⏸️ Pause', () => ttsPlayer.pause(), '#f57c00');
+  const stopBtn = createBtn('⏹️ Stop', () => ttsPlayer.stop(), '#d32f2f');
+  const resumeBtn = createBtn('▶️ Resume', () => ttsPlayer.resume(), '#2e7d32');
 
-  const playBtn = createBtn('▶️ Read Aloud', () => {
-    if (speechSynthesis.paused && speechSynthesis.speaking) {
-      speechSynthesis.resume();
-      isPaused = false;
-      playBtn.innerHTML = '▶️ Resuming...';
-      setTimeout(() => playBtn.innerHTML = '▶️ Playing', 500);
+  // Initial Visibility
+  pauseBtn.style.display = 'none';
+  stopBtn.style.display = 'none';
+  resumeBtn.style.display = 'none';
+
+  // Subscribe to state changes
+  ttsPlayer.onStateChange = (state) => {
+    if (!state.isPlaying) {
+      // Stopped
+      playBtn.style.display = 'block';
+      pauseBtn.style.display = 'none';
+      stopBtn.style.display = 'none';
+      resumeBtn.style.display = 'none';
+    } else if (state.isPaused) {
+      // Paused
+      playBtn.style.display = 'none';
+      pauseBtn.style.display = 'none';
+      stopBtn.style.display = 'block';
+      resumeBtn.style.display = 'block';
     } else {
-      speakText(text);
-      playBtn.innerHTML = '▶️ Playing';
+      // Playing
+      playBtn.style.display = 'none';
+      pauseBtn.style.display = 'block';
+      stopBtn.style.display = 'block';
+      resumeBtn.style.display = 'none';
     }
-    updateButtonStates();
-  }, '#2e7d32'); // Green
-
-  const pauseBtn = createBtn('⏸️ Pause', () => {
-    if (speechSynthesis.speaking && !speechSynthesis.paused) {
-      speechSynthesis.pause();
-      isPaused = true;
-      playBtn.innerHTML = '▶️ Resume';
-    }
-    updateButtonStates();
-  }, '#f57c00'); // Orange
-
-  const stopBtn = createBtn('⏹️ Stop', () => {
-    speechSynthesis.cancel();
-    isPaused = false;
-    playBtn.innerHTML = '▶️ Read Aloud';
-    updateButtonStates();
-  }, '#d32f2f'); // Red
-
-  // Update button visibility/state
-  const updateButtonStates = () => {
-    const isSpeaking = speechSynthesis.speaking;
-
-    // Simple state checking loop
-    setInterval(() => {
-      if (!speechSynthesis.speaking) {
-        playBtn.disabled = false;
-        playBtn.style.opacity = '1';
-        playBtn.innerHTML = '▶️ Read Aloud';
-
-        pauseBtn.disabled = true;
-        pauseBtn.style.opacity = '0.5';
-
-        stopBtn.disabled = true;
-        stopBtn.style.opacity = '0.5';
-      } else {
-        playBtn.disabled = true;
-        playBtn.style.opacity = '0.5';
-
-        pauseBtn.disabled = false;
-        pauseBtn.style.opacity = '1';
-
-        stopBtn.disabled = false;
-        stopBtn.style.opacity = '1';
-
-        if (speechSynthesis.paused) {
-          playBtn.disabled = false;
-          playBtn.style.opacity = '1';
-          playBtn.innerHTML = '▶️ Resume';
-          pauseBtn.innerHTML = '⏸️ Paused';
-        } else {
-          playBtn.innerHTML = '🔊 Playing...';
-          pauseBtn.innerHTML = '⏸️ Pause';
-        }
-      }
-    }, 500);
   };
 
-  // Initial state calling
-  updateButtonStates();
-
   controlPanel.appendChild(playBtn);
+  controlPanel.appendChild(resumeBtn);
   controlPanel.appendChild(pauseBtn);
   controlPanel.appendChild(stopBtn);
 
@@ -191,7 +221,7 @@ export function addWordEvents(targetLang = 'en') {
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
       // Popup open and loading message
-      translationContent.innerHTML = `<div style="padding: 20px 0; font-size: 1.1em;">Translating...</div>`;
+      translationContent.innerHTML = `< div style = "padding: 20px 0; font-size: 1.1em;" > Translating...</div > `;
       popup.classList.remove('hidden');
       overlay.classList.remove('hidden');
 
@@ -199,18 +229,18 @@ export function addWordEvents(targetLang = 'en') {
 
       // Position popup near the clicked word
       popup.style.position = 'absolute';
-      popup.style.top = `${rect.bottom + scrollTop + 10}px`;
-      popup.style.left = `${rect.left + scrollLeft}px`;
+      popup.style.top = `${ rect.bottom + scrollTop + 10 }px`;
+      popup.style.left = `${ rect.left + scrollLeft }px`;
       popup.style.transform = 'none';
 
       // Adjust if popup goes off-screen
       setTimeout(() => {
         const popupRect = popup.getBoundingClientRect();
         if (popupRect.right > window.innerWidth) {
-          popup.style.left = `${window.innerWidth - popupRect.width - 20}px`;
+          popup.style.left = `${ window.innerWidth - popupRect.width - 20 }px`;
         }
         if (popupRect.bottom > window.innerHeight + scrollTop) {
-          popup.style.top = `${rect.top + scrollTop - popupRect.height - 10}px`;
+          popup.style.top = `${ rect.top + scrollTop - popupRect.height - 10 }px`;
         }
       }, 10);
 
@@ -308,14 +338,14 @@ export function addWordEvents(targetLang = 'en') {
 
         // Popup content — word, translation and buttons
         translationContent.innerHTML = `
-          <div style="margin-bottom: 15px;">
+  < div style = "margin-bottom: 15px;" >
             <strong style="font-size: 1.8em; display: block; margin-bottom: 8px; color: #006064;">${original}</strong>
             <span style="font-size: 1.5em; display: block; margin-bottom: 5px; color: #333;">${translation}</span>
             <small style="color: #666; display: block;">(English)</small>
-          </div>
-          <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-          </div>
-        `;
+          </div >
+    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+    </div>
+  `;
 
         const buttonContainer = translationContent.querySelector('div:last-child');
         buttonContainer.appendChild(audioBtn);
@@ -324,7 +354,7 @@ export function addWordEvents(targetLang = 'en') {
         // Auto speak
         speakText(original);
       } catch (err) {
-        translationContent.innerHTML = `<div style="color: #d32f2f; padding: 20px 0;">Error occurred</div>`;
+        translationContent.innerHTML = `< div style = "color: #d32f2f; padding: 20px 0;" > Error occurred</div > `;
       }
     };
   });
