@@ -1,14 +1,14 @@
 export class PrivacyPage {
-    constructor() {
-        this.translations = {
-            tr: {
-                title: 'Gizlilik Politikası',
-                lastUpdated: 'Son Güncelleme: 22 Aralık 2024',
-                intro: 'LearnFinnish olarak, kullanıcılarımızın gizliliğini korumayı taahhüt ediyoruz. Bu gizlilik politikası, kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır.',
-                sections: [
-                    {
-                        title: '1. Topladığımız Bilgiler',
-                        content: `
+  constructor() {
+    this.translations = {
+      tr: {
+        title: 'Gizlilik Politikası',
+        lastUpdated: 'Son Güncelleme: 22 Aralık 2024',
+        intro: 'LearnFinnish olarak, kullanıcılarımızın gizliliğini korumayı taahhüt ediyoruz. Bu gizlilik politikası, kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır.',
+        sections: [
+          {
+            title: '1. Topladığımız Bilgiler',
+            content: `
               <p>LearnFinnish kullanırken aşağıdaki bilgileri toplayabiliriz:</p>
               <ul>
                 <li><strong>Hesap Bilgileri:</strong> Google hesabınız üzerinden giriş yaptığınızda, adınız ve e-posta adresiniz</li>
@@ -17,10 +17,10 @@ export class PrivacyPage {
                 <li><strong>Çerezler:</strong> Oturum yönetimi ve kullanıcı deneyimini iyileştirmek için çerezler kullanıyoruz</li>
               </ul>
             `
-                    },
-                    {
-                        title: '2. Bilgileri Nasıl Kullanıyoruz',
-                        content: `
+          },
+          {
+            title: '2. Bilgileri Nasıl Kullanıyoruz',
+            content: `
               <p>Topladığımız bilgileri şu amaçlarla kullanıyoruz:</p>
               <ul>
                 <li>Hizmetlerimizi sağlamak ve iyileştirmek</li>
@@ -31,10 +31,10 @@ export class PrivacyPage {
                 <li>Yasal yükümlülüklerimizi yerine getirmek</li>
               </ul>
             `
-                    },
-                    {
-                        title: '3. Bilgi Paylaşımı',
-                        content: `
+          },
+          {
+            title: '3. Bilgi Paylaşımı',
+            content: `
               <p>Kişisel bilgilerinizi üçüncü taraflarla paylaşmıyoruz. Ancak aşağıdaki durumlarda bilgi paylaşımı gerekebilir:</p>
               <ul>
                 <li><strong>Hizmet Sağlayıcılar:</strong> Firebase (kimlik doğrulama ve veritabanı), Stripe (ödeme işlemleri), Google AdSense (reklamlar)</li>
@@ -42,10 +42,10 @@ export class PrivacyPage {
                 <li><strong>İş Transferi:</strong> Şirket birleşmesi, satın alma veya varlık satışı durumunda</li>
               </ul>
             `
-                    },
-                    {
-                        title: '4. Veri Güvenliği',
-                        content: `
+          },
+          {
+            title: '4. Veri Güvenliği',
+            content: `
               <p>Kişisel verilerinizi korumak için endüstri standardı güvenlik önlemleri kullanıyoruz:</p>
               <ul>
                 <li>SSL/TLS şifreleme ile güvenli veri iletimi</li>
@@ -54,10 +54,10 @@ export class PrivacyPage {
                 <li>Sınırlı erişim kontrolleri</li>
               </ul>
             `
-                    },
-                    {
-                        title: '5. Çerezler ve İzleme Teknolojileri',
-                        content: `
+          },
+          {
+            title: '5. Çerezler ve İzleme Teknolojileri',
+            content: `
               <p>Sitemizde aşağıdaki çerez türlerini kullanıyoruz:</p>
               <ul>
                 <li><strong>Zorunlu Çerezler:</strong> Oturum yönetimi ve temel işlevsellik için gerekli</li>
@@ -66,10 +66,10 @@ export class PrivacyPage {
               </ul>
               <p>Tarayıcı ayarlarınızdan çerezleri yönetebilirsiniz.</p>
             `
-                    },
-                    {
-                        title: '6. Kullanıcı Hakları',
-                        content: `
+          },
+          {
+            title: '6. Kullanıcı Hakları',
+            content: `
               <p>GDPR ve KVKK kapsamında aşağıdaki haklara sahipsiniz:</p>
               <ul>
                 <li><strong>Erişim Hakkı:</strong> Kişisel verilerinize erişim talep edebilirsiniz</li>
@@ -80,28 +80,28 @@ export class PrivacyPage {
               </ul>
               <p>Bu haklarınızı kullanmak için kapucuonur@hotmail.com adresinden bize ulaşabilirsiniz.</p>
             `
-                    },
-                    {
-                        title: '7. Çocukların Gizliliği',
-                        content: `
+          },
+          {
+            title: '7. Çocukların Gizliliği',
+            content: `
               <p>Hizmetimiz 13 yaşın altındaki çocuklara yönelik değildir. Bilerek 13 yaşın altındaki çocuklardan kişisel bilgi toplamıyoruz. Eğer bir ebeveyn veya vasi olarak çocuğunuzun bize kişisel bilgi verdiğini fark ederseniz, lütfen bizimle iletişime geçin.</p>
             `
-                    },
-                    {
-                        title: '8. Üçüncü Taraf Bağlantılar',
-                        content: `
+          },
+          {
+            title: '8. Üçüncü Taraf Bağlantılar',
+            content: `
               <p>Sitemiz üçüncü taraf web sitelerine bağlantılar içerebilir. Bu sitelerin gizlilik uygulamalarından sorumlu değiliz. Başka bir siteyi ziyaret ettiğinizde gizlilik politikalarını okumanızı öneririz.</p>
             `
-                    },
-                    {
-                        title: '9. Politika Değişiklikleri',
-                        content: `
+          },
+          {
+            title: '9. Politika Değişiklikleri',
+            content: `
               <p>Bu gizlilik politikasını zaman zaman güncelleyebiliriz. Önemli değişiklikler olduğunda sizi bilgilendireceğiz. Politikayı düzenli olarak gözden geçirmenizi öneririz.</p>
             `
-                    },
-                    {
-                        title: '10. İletişim',
-                        content: `
+          },
+          {
+            title: '10. İletişim',
+            content: `
               <p>Gizlilik politikamız hakkında sorularınız varsa, bizimle iletişime geçebilirsiniz:</p>
               <ul>
                 <li><strong>E-posta:</strong> kapucuonur@hotmail.com</li>
@@ -109,17 +109,17 @@ export class PrivacyPage {
                 <li><strong>Adres:</strong> Tampere, Finland</li>
               </ul>
             `
-                    }
-                ]
-            },
-            en: {
-                title: 'Privacy Policy',
-                lastUpdated: 'Last Updated: December 22, 2024',
-                intro: 'At LearnFinnish, we are committed to protecting the privacy of our users. This privacy policy explains how we collect, use, and protect your personal data.',
-                sections: [
-                    {
-                        title: '1. Information We Collect',
-                        content: `
+          }
+        ]
+      },
+      en: {
+        title: 'Privacy Policy',
+        lastUpdated: 'Last Updated: December 22, 2024',
+        intro: 'At LearnFinnish, we are committed to protecting the privacy of our users. This privacy policy explains how we collect, use, and protect your personal data.',
+        sections: [
+          {
+            title: '1. Information We Collect',
+            content: `
               <p>When using LearnFinnish, we may collect the following information:</p>
               <ul>
                 <li><strong>Account Information:</strong> Your name and email address when you sign in with your Google account</li>
@@ -128,10 +128,10 @@ export class PrivacyPage {
                 <li><strong>Cookies:</strong> We use cookies for session management and to improve user experience</li>
               </ul>
             `
-                    },
-                    {
-                        title: '2. How We Use Your Information',
-                        content: `
+          },
+          {
+            title: '2. How We Use Your Information',
+            content: `
               <p>We use the collected information for the following purposes:</p>
               <ul>
                 <li>To provide and improve our services</li>
@@ -142,10 +142,10 @@ export class PrivacyPage {
                 <li>To fulfill our legal obligations</li>
               </ul>
             `
-                    },
-                    {
-                        title: '3. Information Sharing',
-                        content: `
+          },
+          {
+            title: '3. Information Sharing',
+            content: `
               <p>We do not share your personal information with third parties. However, information sharing may be necessary in the following cases:</p>
               <ul>
                 <li><strong>Service Providers:</strong> Firebase (authentication and database), Stripe (payment processing), Google AdSense (advertising)</li>
@@ -153,10 +153,10 @@ export class PrivacyPage {
                 <li><strong>Business Transfer:</strong> In case of merger, acquisition, or asset sale</li>
               </ul>
             `
-                    },
-                    {
-                        title: '4. Data Security',
-                        content: `
+          },
+          {
+            title: '4. Data Security',
+            content: `
               <p>We use industry-standard security measures to protect your personal data:</p>
               <ul>
                 <li>Secure data transmission with SSL/TLS encryption</li>
@@ -165,10 +165,10 @@ export class PrivacyPage {
                 <li>Limited access controls</li>
               </ul>
             `
-                    },
-                    {
-                        title: '5. Cookies and Tracking Technologies',
-                        content: `
+          },
+          {
+            title: '5. Cookies and Tracking Technologies',
+            content: `
               <p>We use the following types of cookies on our site:</p>
               <ul>
                 <li><strong>Essential Cookies:</strong> Required for session management and basic functionality</li>
@@ -177,10 +177,10 @@ export class PrivacyPage {
               </ul>
               <p>You can manage cookies through your browser settings.</p>
             `
-                    },
-                    {
-                        title: '6. User Rights',
-                        content: `
+          },
+          {
+            title: '6. User Rights',
+            content: `
               <p>Under GDPR and KVKK, you have the following rights:</p>
               <ul>
                 <li><strong>Right to Access:</strong> You can request access to your personal data</li>
@@ -191,28 +191,28 @@ export class PrivacyPage {
               </ul>
               <p>To exercise these rights, please contact us at kapucuonur@hotmail.com.</p>
             `
-                    },
-                    {
-                        title: '7. Children\'s Privacy',
-                        content: `
+          },
+          {
+            title: '7. Children\'s Privacy',
+            content: `
               <p>Our service is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and become aware that your child has provided us with personal information, please contact us.</p>
             `
-                    },
-                    {
-                        title: '8. Third-Party Links',
-                        content: `
+          },
+          {
+            title: '8. Third-Party Links',
+            content: `
               <p>Our site may contain links to third-party websites. We are not responsible for the privacy practices of these sites. We recommend reading their privacy policies when visiting other sites.</p>
             `
-                    },
-                    {
-                        title: '9. Policy Changes',
-                        content: `
+          },
+          {
+            title: '9. Policy Changes',
+            content: `
               <p>We may update this privacy policy from time to time. We will notify you of significant changes. We recommend reviewing the policy regularly.</p>
             `
-                    },
-                    {
-                        title: '10. Contact',
-                        content: `
+          },
+          {
+            title: '10. Contact',
+            content: `
               <p>If you have questions about our privacy policy, you can contact us:</p>
               <ul>
                 <li><strong>Email:</strong> kapucuonur@hotmail.com</li>
@@ -220,16 +220,16 @@ export class PrivacyPage {
                 <li><strong>Address:</strong> Tampere, Finland</li>
               </ul>
             `
-                    }
-                ]
-            }
-        };
-    }
+          }
+        ]
+      }
+    };
+  }
 
-    render(lang = 'tr') {
-        const t = this.translations[lang];
+  render() {
+    const t = this.translations['en'];
 
-        return `
+    return `
       <div class="legal-page">
         <div class="legal-header">
           <h1>${t.title}</h1>
@@ -250,5 +250,5 @@ export class PrivacyPage {
         </div>
       </div>
     `;
-    }
+  }
 }

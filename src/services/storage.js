@@ -1,80 +1,99 @@
-const DEFTER_KEY = 'LearnFinnish_kelimeler';
+const NOTEBOOK_KEY = 'LearnFinnish_kelimeler';
 
-export function deftereEkle(kelime, ceviri, hedefDil) {
-  const defter = JSON.parse(localStorage.getItem(DEFTER_KEY) || '[]');
-  const yeniKelime = {
-    kelime,
-    ceviri,
-    hedefDil,
-    tarih: new Date().toISOString()
+export function addWord(word, translation, targetLang) {
+  const notebook = JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
+  const newWord = {
+    word,
+    translation,
+    targetLang,
+    date: new Date().toISOString()
   };
 
-  // Aynı kelime varsa ekleme
-  if (!defter.some(k => k.kelime === kelime && k.hedefDil === hedefDil)) {
-    defter.unshift(yeniKelime); // En üste ekle
-    localStorage.setItem(DEFTER_KEY, JSON.stringify(defter));
-    defterSayisiniGuncelle();
+  // Prevent duplicates
+  if (!notebook.some(k => k.word === word && k.targetLang === targetLang)) {
+    notebook.unshift(newWord); // Add to top
+    localStorage.setItem(NOTEBOOK_KEY, JSON.stringify(notebook));
+    updateWordCount();
   }
 }
 
-export function defterdenSil(kelime, hedefDil) {
-  let defter = JSON.parse(localStorage.getItem(DEFTER_KEY) || '[]');
-  defter = defter.filter(k => !(k.kelime === kelime && k.hedefDil === hedefDil));
-  localStorage.setItem(DEFTER_KEY, JSON.stringify(defter));
-  defterSayisiniGuncelle();
+export function removeWord(word, targetLang) {
+  let notebook = JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
+  notebook = notebook.filter(k => !(k.word === word && k.targetLang === targetLang));
+  localStorage.setItem(NOTEBOOK_KEY, JSON.stringify(notebook));
+  updateWordCount();
 }
 
-export function defteriListele() {
-  const defter = JSON.parse(localStorage.getItem(DEFTER_KEY) || '[]');
-  const liste = document.getElementById('kelime-listesi');
-  liste.innerHTML = '';
+/**
+ * Returns the list of words from storage.
+ * @returns {Array} List of word objects
+ */
+export function getWords() {
+  return JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
+}
 
-  if (defter.length === 0) {
-    liste.innerHTML = '<li style="text-align:center; color:#999;">Henüz kelime eklenmemiş.</li>';
+export function renderWordList() {
+  const notebook = getWords();
+  const list = document.getElementById('kelime-listesi');
+  if (!list) return;
+
+  list.innerHTML = '';
+
+  if (notebook.length === 0) {
+    list.innerHTML = '<li style="text-align:center; color:#999;">No words added yet.</li>';
     return;
   }
 
-  defter.forEach(item => {
+  notebook.forEach(item => {
     const li = document.createElement('li');
     li.innerHTML = `
       <div class="kelime-defter-item">
-        <strong>${item.kelime}</strong><br>
-        ${item.ceviri} <small>(${item.hedefDil === 'tr' ? 'Türkçe' : 'English'})</small>
+        <strong>${item.word}</strong><br>
+        ${item.translation} <small>(English)</small>
       </div>
       <div>
-        <button class="ses-oku-btn" data-kelime="${item.kelime}">🔊</button>
-        <button class="kelime-sil" data-kelime="${item.kelime}" data-dil="${item.hedefDil}">Sil</button>
+        <button class="ses-oku-btn" data-word="${item.word}">🔊</button>
+        <button class="kelime-sil" data-word="${item.word}" data-lang="${item.targetLang}">Delete</button>
       </div>
     `;
-    liste.appendChild(li);
+    list.appendChild(li);
   });
 
-  // Sesli oku butonları
+  // Speak buttons
   document.querySelectorAll('.ses-oku-btn').forEach(btn => {
-    btn.onclick = () => sesliOku(btn.dataset.kelime);
+    btn.onclick = () => speak(btn.dataset.word);
   });
 
-  // Sil butonları
+  // Delete buttons
   document.querySelectorAll('.kelime-sil').forEach(btn => {
     btn.onclick = () => {
-      defterdenSil(btn.dataset.kelime, btn.dataset.dil);
-      defteriListele();
+      removeWord(btn.dataset.word, btn.dataset.lang);
+      renderWordList();
     };
   });
 }
 
-export function defterSayisiniGuncelle() {
-  const defter = JSON.parse(localStorage.getItem(DEFTER_KEY) || '[]');
-  const sayiEl = document.getElementById('defter-sayi');
-  if (sayiEl) {
-    sayiEl.textContent = defter.length;
+function speak(text) {
+  // Simple text-to-speech wrapper or import from another util if it exists
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fi-FI'; // Finnish
+    window.speechSynthesis.speak(utterance);
   }
 }
 
-export function defteriTemizle() {
-  if (confirm('Defterdeki tüm kelimeleri silmek istediğine emin misin?')) {
-    localStorage.removeItem(DEFTER_KEY);
-    defterSayisiniGuncelle();
-    defteriListele();
+export function updateWordCount() {
+  const notebook = JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
+  const countEl = document.getElementById('defter-sayi');
+  if (countEl) {
+    countEl.textContent = notebook.length;
+  }
+}
+
+export function clearNotebook() {
+  if (confirm('Are you sure you want to delete all words from your notebook?')) {
+    localStorage.removeItem(NOTEBOOK_KEY);
+    updateWordCount();
+    renderWordList();
   }
 }

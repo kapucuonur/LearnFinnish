@@ -1,5 +1,4 @@
-// Flashcard Component
-import { kelimeleriGetir } from '../services/storage.js';
+import { getWords } from '../services/storage.js';
 
 export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev) {
     const container = document.getElementById('flashcard-container');

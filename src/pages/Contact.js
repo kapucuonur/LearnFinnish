@@ -1,63 +1,63 @@
 export class ContactPage {
-    constructor() {
-        this.translations = {
-            tr: {
-                title: 'İletişim',
-                subtitle: 'Bizimle İletişime Geçin',
-                intro: 'Sorularınız, önerileriniz veya geri bildirimleriniz için bize ulaşabilirsiniz. Size en kısa sürede dönüş yapacağız.',
-                info: {
-                    title: 'İletişim Bilgileri',
-                    email: 'E-posta',
-                    phone: 'Telefon',
-                    location: 'Konum'
-                },
-                form: {
-                    title: 'Mesaj Gönderin',
-                    name: 'Adınız',
-                    email: 'E-posta Adresiniz',
-                    subject: 'Konu',
-                    message: 'Mesajınız',
-                    send: 'Gönder',
-                    success: 'Mesajınız başarıyla gönderildi!',
-                    error: 'Bir hata oluştu. Lütfen doğrudan e-posta gönderin.'
-                },
-                support: {
-                    title: 'Destek',
-                    text: 'Teknik destek veya hesap sorunları için lütfen e-posta gönderin. Genellikle 24 saat içinde yanıt veriyoruz.'
-                }
-            },
-            en: {
-                title: 'Contact',
-                subtitle: 'Get in Touch',
-                intro: 'Feel free to reach out to us with your questions, suggestions, or feedback. We will get back to you as soon as possible.',
-                info: {
-                    title: 'Contact Information',
-                    email: 'Email',
-                    phone: 'Phone',
-                    location: 'Location'
-                },
-                form: {
-                    title: 'Send a Message',
-                    name: 'Your Name',
-                    email: 'Your Email',
-                    subject: 'Subject',
-                    message: 'Your Message',
-                    send: 'Send',
-                    success: 'Your message has been sent successfully!',
-                    error: 'An error occurred. Please send an email directly.'
-                },
-                support: {
-                    title: 'Support',
-                    text: 'For technical support or account issues, please send an email. We typically respond within 24 hours.'
-                }
-            }
-        };
-    }
+  constructor() {
+    this.translations = {
+      tr: {
+        title: 'İletişim',
+        subtitle: 'Bizimle İletişime Geçin',
+        intro: 'Sorularınız, önerileriniz veya geri bildirimleriniz için bize ulaşabilirsiniz. Size en kısa sürede dönüş yapacağız.',
+        info: {
+          title: 'İletişim Bilgileri',
+          email: 'E-posta',
+          phone: 'Telefon',
+          location: 'Konum'
+        },
+        form: {
+          title: 'Mesaj Gönderin',
+          name: 'Adınız',
+          email: 'E-posta Adresiniz',
+          subject: 'Konu',
+          message: 'Mesajınız',
+          send: 'Gönder',
+          success: 'Mesajınız başarıyla gönderildi!',
+          error: 'Bir hata oluştu. Lütfen doğrudan e-posta gönderin.'
+        },
+        support: {
+          title: 'Destek',
+          text: 'Teknik destek veya hesap sorunları için lütfen e-posta gönderin. Genellikle 24 saat içinde yanıt veriyoruz.'
+        }
+      },
+      en: {
+        title: 'Contact',
+        subtitle: 'Get in Touch',
+        intro: 'Feel free to reach out to us with your questions, suggestions, or feedback. We will get back to you as soon as possible.',
+        info: {
+          title: 'Contact Information',
+          email: 'Email',
+          phone: 'Phone',
+          location: 'Location'
+        },
+        form: {
+          title: 'Send a Message',
+          name: 'Your Name',
+          email: 'Your Email',
+          subject: 'Subject',
+          message: 'Your Message',
+          send: 'Send',
+          success: 'Your message has been sent successfully!',
+          error: 'An error occurred. Please send an email directly.'
+        },
+        support: {
+          title: 'Support',
+          text: 'For technical support or account issues, please send an email. We typically respond within 24 hours.'
+        }
+      }
+    };
+  }
 
-    render(lang = 'tr') {
-        const t = this.translations[lang];
+  render() {
+    const t = this.translations['en'];
 
-        return `
+    return `
       <div class="legal-page">
         <div class="legal-header">
           <h1>${t.title}</h1>
@@ -120,27 +120,28 @@ export class ContactPage {
         </div>
       </div>
     `;
+  }
+
+  attachEventListeners() {
+    const form = document.getElementById('contact-form');
+    // Since the 'lang' parameter was removed, we default to 'en' for translations
+    const t = this.translations['en'];
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contact-name').value;
+        const email = document.getElementById('contact-email').value;
+        const subject = document.getElementById('contact-subject').value;
+        const message = document.getElementById('contact-message').value;
+
+        // Create mailto link
+        const mailtoLink = `mailto:kapucuonur@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+        window.location.href = mailtoLink;
+
+        form.reset();
+        alert(t.form.success);
+      });
     }
-
-    attachEventListeners(lang = 'tr') {
-        const form = document.getElementById('contact-form');
-        const t = this.translations[lang];
-
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const name = document.getElementById('contact-name').value;
-                const email = document.getElementById('contact-email').value;
-                const subject = document.getElementById('contact-subject').value;
-                const message = document.getElementById('contact-message').value;
-
-                // Create mailto link
-                const mailtoLink = `mailto:kapucuonur@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-                window.location.href = mailtoLink;
-
-                form.reset();
-                alert(t.form.success);
-            });
-        }
-    }
+  }
 }

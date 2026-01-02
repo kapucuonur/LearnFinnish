@@ -1,5 +1,4 @@
 // PWA Install Component
-import { getCurrentLang } from './LanguageSwitcher.js';
 
 let deferredPrompt;
 
@@ -8,9 +7,8 @@ export function initPWAInstall() {
         e.preventDefault();
         deferredPrompt = e;
 
-        const currentLang = getCurrentLang();
         const installBtn = document.createElement('button');
-        installBtn.textContent = currentLang === 'tr' ? 'Uygulamayı Yükle' : 'Install App';
+        installBtn.textContent = 'Install App';
         installBtn.id = 'pwa-install-btn';
         installBtn.style.cssText = `
       position: fixed;

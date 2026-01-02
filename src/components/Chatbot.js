@@ -1,24 +1,8 @@
 // Basic Help Chatbot Component
 
 const helpResponses = {
-    tr: {
-        greeting: "Merhaba! 👋 LearnFinnish'e hoş geldiniz! Size nasıl yardımcı olabilirim?",
-        help: `İşte yapabilecekleriniz:
-• 📖 Yeni hikaye üret - Fince hikayeler okuyun
-• 🎴 Flashcardlar - Kelimeleri pratik yapın
-• 📚 Kelime Defteri - Öğrendiğiniz kelimeleri kaydedin
-• 🌙 Karanlık mod - Göz yorgunluğunu azaltın
-• ⭐ Premium - Sınırsız erişim
-
-Bir soru sorun veya "nasıl" ile başlayan bir şey yazın!`,
-        story: "Yeni hikaye üretmek için konuyu yazın ve 'Hikaye Üret' butonuna tıklayın. Hikayedeki kelimelere tıklayarak çevirilerini görebilirsiniz!",
-        flashcard: "Flashcardları kullanmak için önce kelime defterinize kelime eklemelisiniz. Sonra 'Flashcardlar' sekmesine tıklayın ve pratik yapmaya başlayın!",
-        premium: "Premium üyelikle sınırsız hikaye ve flashcard erişimi kazanın! Sadece ayda 49 TL.",
-        default: "Üzgünüm, bunu tam anlayamadım. 'yardım' yazarak neler yapabileceğinizi görebilirsiniz!"
-    },
-    en: {
-        greeting: "Hello! 👋 Welcome to LearnFinnish! How can I help you?",
-        help: `Here's what you can do:
+    greeting: "Hello! 👋 Welcome to LearnFinnish! How can I help you?",
+    help: `Here's what you can do:
 • 📖 Generate stories - Read Finnish stories
 • 🎴 Flashcards - Practice vocabulary
 • 📚 Word Notebook - Save learned words
@@ -26,11 +10,10 @@ Bir soru sorun veya "nasıl" ile başlayan bir şey yazın!`,
 • ⭐ Premium - Unlimited access
 
 Ask a question or type "how" to get started!`,
-        story: "To generate a new story, type a topic and click 'Generate Story'. Click on words in the story to see their translations!",
-        flashcard: "To use flashcards, first add words to your notebook. Then click the 'Flashcards' tab and start practicing!",
-        premium: "With Premium membership, get unlimited stories and flashcards! Only $4.99/month.",
-        default: "Sorry, I didn't quite understand that. Type 'help' to see what I can do!"
-    }
+    story: "To generate a new story, type a topic and click 'Generate Story'. Click on words in the story to see their translations!",
+    flashcard: "To use flashcards, first add words to your notebook. Then click the 'Flashcards' tab and start practicing!",
+    premium: "With Premium membership, get unlimited stories and flashcards! Only $4.99/month.",
+    default: "Sorry, I didn't quite understand that. Type 'help' to see what I can do!"
 };
 
 export function initChatbot() {
@@ -45,11 +28,6 @@ export function initChatbot() {
 
     let isOpen = false;
 
-    // Get current language from document
-    function getCurrentLang() {
-        return document.documentElement.lang || 'tr';
-    }
-
     // Toggle chat window
     chatButton.addEventListener('click', () => {
         isOpen = !isOpen;
@@ -57,8 +35,7 @@ export function initChatbot() {
         chatButton.classList.toggle('hidden', isOpen);
 
         if (isOpen && chatMessages.children.length === 0) {
-            const lang = getCurrentLang();
-            addMessage(helpResponses[lang].greeting, 'bot');
+            addMessage(helpResponses.greeting, 'bot');
         }
     });
 
@@ -81,8 +58,7 @@ export function initChatbot() {
 
         // Get response
         setTimeout(() => {
-            const lang = getCurrentLang();
-            const response = getResponse(message, lang);
+            const response = getResponse(message);
             addMessage(response, 'bot');
         }, 500);
     }
@@ -109,22 +85,21 @@ export function initChatbot() {
     }
 
     // Get response based on message
-    function getResponse(message, lang) {
+    function getResponse(message) {
         const msg = message.toLowerCase();
-        const responses = helpResponses[lang];
 
-        if (msg.includes('yardım') || msg.includes('help')) {
-            return responses.help;
-        } else if (msg.includes('hikaye') || msg.includes('story')) {
-            return responses.story;
-        } else if (msg.includes('flashcard') || msg.includes('kart')) {
-            return responses.flashcard;
-        } else if (msg.includes('premium') || msg.includes('ücret')) {
-            return responses.premium;
-        } else if (msg.includes('nasıl') || msg.includes('how')) {
-            return responses.help;
+        if (msg.includes('help')) {
+            return helpResponses.help;
+        } else if (msg.includes('story')) {
+            return helpResponses.story;
+        } else if (msg.includes('flashcard') || msg.includes('card')) {
+            return helpResponses.flashcard;
+        } else if (msg.includes('premium') || msg.includes('price') || msg.includes('cost')) {
+            return helpResponses.premium;
+        } else if (msg.includes('how')) {
+            return helpResponses.help;
         } else {
-            return responses.default;
+            return helpResponses.default;
         }
     }
 }

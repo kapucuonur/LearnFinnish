@@ -1,5 +1,5 @@
 import { kelimeyiCevir } from '../services/api.js';
-import { deftereEkle } from '../services/storage.js';
+import { addWord } from '../services/storage.js';
 
 const hikayeAlani = document.getElementById('hikaye-alani');
 const popup = document.getElementById('ceviri-popup');
@@ -70,10 +70,12 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-      // Popup'ı aç ve yükleniyor mesajı
-      ceviriIcerik.innerHTML = `<div style="padding: 20px 0; font-size: 1.1em;">${hedefDil === 'tr' ? 'Çeviriliyor...' : 'Translating...'}</div>`;
+      // Popup open and loading message
+      ceviriIcerik.innerHTML = `<div style="padding: 20px 0; font-size: 1.1em;">Translating...</div>`;
       popup.classList.remove('hidden');
       overlay.classList.remove('hidden');
+
+      // ... positioning logic ... (skipping for brevity in replace, effectively I should just target the specific lines)
 
       // Position popup near the clicked word
       popup.style.position = 'absolute';
@@ -113,9 +115,9 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
 
         const translation = await kelimeyiCevir(original, hedefDil, contextSentence);
 
-        // Sesli okuma butonu
+        // Listen button
         const audioBtn = document.createElement('button');
-        audioBtn.innerHTML = '🔊 ' + (hedefDil === 'tr' ? 'Dinle' : 'Listen');
+        audioBtn.innerHTML = '🔊 Listen';
         audioBtn.style.display = 'inline-block';
         audioBtn.style.margin = '10px 5px';
         audioBtn.style.padding = '10px 20px';
@@ -143,9 +145,9 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
           sesliOku(original);
         };
 
-        // Deftere Ekle butonu
+        // Add to notebook button
         const defterBtn = document.createElement('button');
-        defterBtn.innerHTML = '📖 ' + (hedefDil === 'tr' ? 'Deftere Ekle' : 'Add to Notebook');
+        defterBtn.innerHTML = '📖 Add to Notebook';
         defterBtn.style.display = 'inline-block';
         defterBtn.style.margin = '10px 5px';
         defterBtn.style.padding = '10px 20px';
@@ -164,27 +166,32 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
           defterBtn.style.transform = 'translateY(-2px)';
         };
         defterBtn.onmouseout = () => {
-          defterBtn.style.background = '#006064';
+          if (defterBtn.innerHTML.includes('Added')) {
+            defterBtn.style.background = '#4caf50';
+          } else {
+            defterBtn.style.background = '#006064';
+          }
           defterBtn.style.transform = 'translateY(0)';
         };
 
         defterBtn.onclick = (e) => {
           e.stopPropagation();
-          deftereEkle(original, translation, hedefDil);
-          defterBtn.innerHTML = '✓ ' + (hedefDil === 'tr' ? 'Eklendi!' : 'Added!');
+          addWord(original, translation, 'en');
+          defterBtn.innerHTML = '✓ Added!';
           defterBtn.style.background = '#4caf50';
+
           setTimeout(() => {
-            defterBtn.innerHTML = '📖 ' + (hedefDil === 'tr' ? 'Deftere Ekle' : 'Add to Notebook');
+            defterBtn.innerHTML = '📖 Add to Notebook';
             defterBtn.style.background = '#006064';
           }, 2000);
         };
 
-        // Popup içeriği — kelime, çeviri ve butonlar
+        // Popup content — word, translation and buttons
         ceviriIcerik.innerHTML = `
           <div style="margin-bottom: 15px;">
             <strong style="font-size: 1.8em; display: block; margin-bottom: 8px; color: #006064;">${original}</strong>
             <span style="font-size: 1.5em; display: block; margin-bottom: 5px; color: #333;">${translation}</span>
-            <small style="color: #666; display: block;">(${hedefDil === 'tr' ? 'Türkçe' : 'English'})</small>
+            <small style="color: #666; display: block;">(English)</small>
           </div>
           <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
           </div>
@@ -194,10 +201,10 @@ export function kelimeEventiEkle(hedefDil = 'tr') {
         buttonContainer.appendChild(audioBtn);
         buttonContainer.appendChild(defterBtn);
 
-        // Otomatik sesli oku
+        // Auto speak
         sesliOku(original);
       } catch (err) {
-        ceviriIcerik.innerHTML = `<div style="color: #d32f2f; padding: 20px 0;">${hedefDil === 'tr' ? 'Hata oluştu' : 'Error occurred'}</div>`;
+        ceviriIcerik.innerHTML = `<div style="color: #d32f2f; padding: 20px 0;">Error occurred</div>`;
       }
     };
   });

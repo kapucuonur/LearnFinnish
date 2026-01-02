@@ -9,13 +9,13 @@ const urlsToCache = [
   '/manifest.json'
 ];
 
-// Install - Cache'e dosyaları ekle
+// Install - Add files to cache
 self.addEventListener('install', (event) => {
   console.log('Service Worker: Installing...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Service Worker: Cache açıldı');
+        console.log('Service Worker: Cache opened');
         // Add files one by one to handle errors gracefully
         return Promise.allSettled(
           urlsToCache.map(url =>
@@ -27,16 +27,16 @@ self.addEventListener('install', (event) => {
         );
       })
       .then(() => {
-        console.log('Service Worker: Dosyalar cache\'e eklendi');
+        console.log('Service Worker: Files cached');
         return self.skipWaiting();
       })
       .catch((error) => {
-        console.error('Service Worker: Cache hatası:', error);
+        console.error('Service Worker: Cache error:', error);
       })
   );
 });
 
-// Activate - Eski cache'leri temizle
+// Activate - Clean up old caches
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];
 
@@ -45,33 +45,33 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (!cacheWhitelist.includes(cacheName)) {
-            console.log('Eski cache siliniyor:', cacheName);
+            console.log('Old cache being removed:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
     })
   );
-  // Yeni SW tüm sekmeleri kontrol etsin
+  // Control all clients immediately
   self.clients.claim();
 });
 
-// Fetch - Cache'den veya ağdan al
+// Fetch - Serve from cache or network
 self.addEventListener('fetch', event => {
-  // Sadece GET isteklerini cache'le (POST vs. hariç)
+  // Only cache GET requests
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
-        // Cache'de varsa onu döndür
+        // Return cached response if exists
         if (cachedResponse) {
           return cachedResponse;
         }
 
-        // Yoksa ağdan al ve cache'e ekle (stale-while-revalidate stratejisi)
+        // Fetch from network and cache (stale-while-revalidate strategy)
         return fetch(event.request).then(networkResponse => {
-          // Geçersiz yanıtları cache'leme
+          // Don't cache invalid responses
           if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
             return networkResponse;
           }
@@ -84,7 +84,7 @@ self.addEventListener('fetch', event => {
 
           return networkResponse;
         }).catch(() => {
-          // Ağ hatası durumunda offline fallback (isteğe bağlı)
+          // Offline fallback (optional)
           // return caches.match('/offline.html');
         });
       })

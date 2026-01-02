@@ -31,15 +31,13 @@ export async function checkPremiumStatus(userId) {
 }
 
 // Create checkout session and redirect to Stripe
-export async function createCheckoutSession(currentLang) {
+export async function createCheckoutSession() {
   const user = auth.currentUser;
 
   if (!user) {
     return {
       success: false,
-      error: currentLang === 'tr'
-        ? 'Ödeme yapmak için önce giriş yapmalısınız!'
-        : 'Please sign in to make a payment!'
+      error: 'Please sign in to make a payment!'
     };
   }
 
@@ -76,23 +74,19 @@ export async function createCheckoutSession(currentLang) {
     console.error('Checkout error:', error);
     return {
       success: false,
-      error: currentLang === 'tr'
-        ? `Ödeme hatası: ${error.message}`
-        : `Payment error: ${error.message}`
+      error: `Payment error: ${error.message}`
     };
   }
 }
 
 // Handle payment success/cancel from URL params
-export function handlePaymentCallback(currentLang) {
+export function handlePaymentCallback() {
   const urlParams = new URLSearchParams(window.location.search);
   const paymentStatus = urlParams.get('payment');
 
   if (paymentStatus === 'success') {
     showPaymentMessage(
-      currentLang === 'tr'
-        ? '🎉 Ödeme başarılı! Premium özellikler aktif edildi.'
-        : '🎉 Payment successful! Premium features activated.',
+      '🎉 Payment successful! Premium features activated.',
       'success'
     );
     // Clear URL params
@@ -100,9 +94,7 @@ export function handlePaymentCallback(currentLang) {
     return true;
   } else if (paymentStatus === 'cancelled') {
     showPaymentMessage(
-      currentLang === 'tr'
-        ? 'Ödeme iptal edildi.'
-        : 'Payment cancelled.',
+      'Payment cancelled.',
       'info'
     );
     // Clear URL params

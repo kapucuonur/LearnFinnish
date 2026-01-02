@@ -1,5 +1,5 @@
 // Word Notebook Component
-import { defteriListele, defteriTemizle } from '../services/storage.js';
+import { renderWordList, clearNotebook } from '../services/storage.js';
 import { getCurrentLang } from './LanguageSwitcher.js';
 import { initFlashcards, reloadFlashcards } from './Flashcard.js';
 
@@ -41,7 +41,7 @@ export function initTabs() {
         hikayeAlani.classList.add('hidden');
         flashcardAlani.classList.add('hidden');
         defterAlani.classList.remove('hidden');
-        defteriListele();
+        renderWordList();
     });
 }
 
@@ -57,8 +57,8 @@ export function initNotebookClear() {
             : 'Are you sure you want to clear all words from your notebook?';
 
         if (confirm(confirmMsg)) {
-            defteriTemizle();
-            defteriListele();
+            clearNotebook();
+            renderWordList();
             // Reload flashcards after clearing notebook
             reloadFlashcards();
         }

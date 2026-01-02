@@ -9,7 +9,7 @@ import { initUsageLimitModal } from './components/UsageLimitModal.js';
 import { initThemeToggle } from './components/ThemeToggle.js';
 import { initChatbot } from './components/Chatbot.js';
 import { initializeStripe, handlePaymentCallback } from './services/payment.js';
-import { defterSayisiniGuncelle } from './services/storage.js';
+import { updateWordCount } from './services/storage.js';
 import { updateTranslations, getCurrentLanguage } from './utils/i18n.js';
 import { STRIPE_PUBLISHABLE_KEY } from './config/constants.js';
 import { Router } from './router.js';
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateTranslations();
 
     // Update word notebook counter
-    defterSayisiniGuncelle();
+    updateWordCount();
 
     // Update usage indicators
     await updateUsageIndicators();

@@ -4,17 +4,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Only POST allowed' });
   }
 
-  const { kelime, hedefDil, context } = req.body;
+  const { text, context } = req.body;
+  const targetLanguage = 'English'; // Force English
 
   try {
-    // Determine target language for the prompt
-    const targetLanguage = hedefDil === 'tr' ? 'Turkish' : 'English';
-
     // Create a prompt that asks for ONLY the word's translation in context
-    const prompt = context && context.length > kelime.length
+    const prompt = context && context.length > text.length
       ? `Given this Finnish sentence: "${context}"
 
-Translate ONLY the word "${kelime}" to ${targetLanguage} based on how it's used in this sentence.
+Translate ONLY the word "${text}" to ${targetLanguage} based on how it's used in this sentence.
 
 Rules:
 - Provide ONLY the translation (1-3 words maximum)
@@ -45,7 +43,7 @@ Translation:`;
       const errorText = await geminiRes.text();
       console.error('Gemini API error:', errorText);
       return res.status(500).json({
-        translation: hedefDil === 'tr' ? 'Çeviri hatası' : 'Translation error',
+        translation: 'Translation error',
         details: errorText
       });
     }
