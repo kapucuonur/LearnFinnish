@@ -37,6 +37,7 @@ export function initAuthSection() {
     // Auth state observer
     onAuthStateChanged(auth, (user) => {
         const billingBtn = document.getElementById('billing-portal-btn');
+        const stripeLinks = document.querySelectorAll('a[href^="https://buy.stripe.com"]');
 
         if (user) {
             loginBtn.style.display = 'none';
@@ -54,6 +55,12 @@ export function initAuthSection() {
                 }
             }
 
+            // SMART STRIPE LINKS: Attach User ID so we know who paid!
+            stripeLinks.forEach(link => {
+                const baseUrl = link.href.split('?')[0]; // Clean existing params if any
+                link.href = `${baseUrl}?client_reference_id=${user.uid}&prefilled_email=${encodeURIComponent(user.email)}`;
+            });
+
             // Keep premium section visible - user might not be premium yet
             if (premiumInfo) premiumInfo.style.display = 'block';
         } else {
@@ -62,6 +69,11 @@ export function initAuthSection() {
             loginBtn.textContent = 'Sign In';
             userInfo.classList.add('hidden');
             if (premiumInfo) premiumInfo.style.display = 'block';
+
+            // Reset Stripe links on logout
+            stripeLinks.forEach(link => {
+                link.href = link.href.split('?')[0];
+            });
         }
     });
 }
