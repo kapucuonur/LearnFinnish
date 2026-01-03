@@ -300,24 +300,57 @@
   <script>
     // 🚑 EMERGENCY CACHE CLEAR & SERVICE WORKER KILLER
     // This script fixes the "App only works in Incognito" issue by removing the old offline cache.
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function (registrations) {
-        for (let registration of registrations) {
-          registration.unregister().then(function () {
-            console.log('🚨 Old Service Worker unregistered successfully.');
-            // Optional: Reload if we found and removed one, to ensure fresh content
-            // window.location.reload(); 
-          });
+    // AUTOMATIC MODE: Runs on every page load
+    async function nukeCache() {
+      console.log('💥 NUKING CACHE...');
+
+      if ('serviceWorker' in navigator) {
+        try {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (const registration of registrations) {
+            await registration.unregister();
+            console.log('🚨 Service Worker unregistered.');
+          }
+        } catch (e) { console.error(e); }
+      }
+
+      if ('caches' in window) {
+        try {
+          const names = await caches.keys();
+          for (const name of names) {
+            await caches.delete(name);
+            console.log('🚨 Cache Deleted:', name);
+          }
+        } catch (e) { console.error(e); }
+      }
+
+      alert('App Updated! Reloading...');
+      window.location.reload(true);
+    }
+
+    // MANUAL MODE: Triple Click on Logo
+    let clickCount = 0;
+    const logo = document.querySelector('.app-logo');
+    if (logo) {
+      logo.style.cursor = 'pointer';
+      logo.title = "Triple click to reset app";
+      logo.addEventListener('click', () => {
+        clickCount++;
+        console.log('Logo Click:', clickCount);
+        if (clickCount === 3) {
+          nukeCache();
+          clickCount = 0;
         }
+        // Reset counter after 1 second
+        setTimeout(() => clickCount = 0, 1000);
       });
     }
 
-    if ('caches' in window) {
-      caches.keys().then(function (names) {
-        for (let name of names) {
-          caches.delete(name).then(function () {
-            console.log('🚨 Old Cache Storage deleted:', name);
-          });
+    // Run automatic cleanup silently
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
         }
       });
     }
