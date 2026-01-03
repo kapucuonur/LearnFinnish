@@ -31,8 +31,8 @@ export function initUsageLimitModal() {
         </div>
         
         <div class="modal-actions">
-            <a href="https://buymeacoffee.com/onurkapucu" target="_blank" class="btn btn-premium btn-block">
-                Go Premium (Monthly $4.99)
+            <a href="https://buy.stripe.com/00waEX4D95ai0In6qv9oc00" target="_blank" class="btn btn-premium btn-block">
+                Go Premium (Monthly €5.00)
             </a>
             <button class="btn btn-text close-modal-btn">Maybe Later</button>
         </div>

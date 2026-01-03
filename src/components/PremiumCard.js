@@ -7,17 +7,12 @@ export function initPremiumCard() {
     const premiumToggle = document.getElementById('premium-toggle');
     const premiumBanner = document.getElementById('premium-banner');
 
-    // Premium button click handler
-    if (premiumBtn) {
-        premiumBtn.addEventListener('click', async () => {
-            const currentLang = 'en';
-            const result = await createCheckoutSession(currentLang);
+    if (!premiumBtn) return;
 
-            if (!result.success && result.error) {
-                alert(result.error);
-            }
-        });
-    }
+    // Use direct Stripe Payment Link
+    premiumBtn.addEventListener('click', () => {
+        window.open('https://buy.stripe.com/00waEX4D95ai0In6qv9oc00', '_blank');
+    });
 
     // Premium banner toggle
     if (premiumToggle && premiumBanner) {
