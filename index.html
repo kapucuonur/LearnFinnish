@@ -297,6 +297,31 @@
       document.getElementById('cookie-banner').style.display = 'none';
     });
   </script>
+  <script>
+    // 🚑 EMERGENCY CACHE CLEAR & SERVICE WORKER KILLER
+    // This script fixes the "App only works in Incognito" issue by removing the old offline cache.
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister().then(function () {
+            console.log('🚨 Old Service Worker unregistered successfully.');
+            // Optional: Reload if we found and removed one, to ensure fresh content
+            // window.location.reload(); 
+          });
+        }
+      });
+    }
+
+    if ('caches' in window) {
+      caches.keys().then(function (names) {
+        for (let name of names) {
+          caches.delete(name).then(function () {
+            console.log('🚨 Old Cache Storage deleted:', name);
+          });
+        }
+      });
+    }
+  </script>
 </body>
 
 </html>
