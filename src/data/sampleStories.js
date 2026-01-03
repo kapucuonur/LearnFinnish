@@ -241,6 +241,27 @@ Itsenäisyyspäivä 6. joulukuuta on kansallinen juhlapäivä. Suomalaiset kunni
 Pääsiäinen on myös tärkeä juhla. Lapset pukeutuvat noidiksi ja kiertävät naapurustossa jakamassa pajunoksilla tervehdyksiä. Vastineeksi he saavat makeisia. Pääsiäisenä syödään myös mämmiä, perinteistä ruisleipäpuuroa.
 
 Nämä perinteet ovat osa suomalaista elämäntapaa ja niitä juhlitaan sukupolvesta toiseen.`
+    },
+    {
+        id: "revontulet",
+        title: "Revontulien yö",
+        titleEn: "Night of the Northern Lights",
+        level: "B1",
+        category: "Luonto",
+        categoryEn: "Nature",
+        story: `Talvella Lappi on taianomainen paikka. Ville ja Elena matkustivat Rovaniemelle nähdäkseen revontulet. Tämä oli heidän unelmansa pitkään aikaan. 
+
+"Toivottavasti taivas on kirkas tänä yönä," Elena sanoi katsoessaan ikkunasta ulos.
+
+Ilta oli kylmä ja pimeä, mutta tähdet loistivat kirkkaasti. He pukivat päälleen lämpimät haalarit ja lähtivät kävelemään pois kaupungin valoista. Revontulien näkeminen vaatii kärsivällisyyttä ja pimeyttä.
+
+Yhtäkkiä taivaalle ilmestyi vihreä valokaari. Se liikkui hitaasti ja muutti muotoaan. "Katso! Tuolla ne ovat!" Ville kuiskasi innoissaan.
+
+Valot voimistuivat ja alkoivat tanssia taivaalla. Vihreän lisäksi näkyi purppuraa ja hieman punaista. Se oli uskomaton näky, kuin luonnon oma ilotulitus.
+
+"Tämä on kauneinta mitä olen koskaan nähnyt," Elena huokasi.
+
+He seisoivat lumessa pitkään ja ihailivat luonnonnäytelmää. Pakkanen nipisteli poskia, mutta he eivät välittäneet. Tällaiset hetket muistaa koko loppuelämän.`
     }
 ];
 
