@@ -121,3 +121,299 @@ html {
     background-color: var(--color-primary-light);
     color: var(--color-text-inverse);
 }
+
+/* ============================================
+   iOS SAFARI OPTIMIZATIONS
+   ============================================ */
+
+:root {
+    --vh: 1vh;
+}
+
+/* iOS viewport fix */
+body {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+    -webkit-overflow-scrolling: touch;
+}
+
+/* iOS input zoom'u engelle */
+input,
+textarea,
+select,
+button {
+    font-size: 16px !important;
+    /* 16px altı iOS'ta zoom yapar */
+}
+
+/* iOS'ta sticky header sorunu */
+.app-header {
+    position: -webkit-sticky;
+    position: sticky;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+}
+
+/* iOS'ta touch feedback */
+button,
+a,
+.tab-btn,
+.nav-link {
+    -webkit-tap-highlight-color: rgba(0, 96, 100, 0.2);
+    touch-action: manipulation;
+}
+
+/* iOS'ta scroll performance */
+.content-area,
+.card,
+#chat-messages {
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+}
+
+/* iOS Safari için safe area */
+body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* ============================================
+   ADSENSE OPTIMIZATIONS
+   ============================================ */
+
+/* Reklam container'ları */
+.ad-container {
+    display: block;
+    margin: 30px auto;
+    max-width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* AdSense placeholder styling */
+.adsbygoogle {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    min-height: 250px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* AdSense loading state */
+.adsbygoogle:empty::before {
+    content: '📢';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.3;
+}
+
+.adsbygoogle:empty::after {
+    content: 'Advertisement';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Premium kullanıcılar için reklamları gizle */
+body.premium .ad-container,
+body.premium .adsbygoogle {
+    display: none !important;
+}
+
+/* Mobile için responsive ads */
+@media (max-width: 768px) {
+    .adsbygoogle {
+        min-height: 200px;
+        margin: 15px auto;
+        border-radius: 8px;
+    }
+
+    .ad-container {
+        margin: 20px auto;
+    }
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    /* Header responsiveness */
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .header-nav {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* Touch-friendly buttons */
+    .btn,
+    button,
+    a.btn {
+        min-height: 44px;
+        /* iOS minimum touch target */
+        padding: 12px 20px;
+    }
+
+    /* Input fields */
+    .input,
+    input[type="text"],
+    textarea {
+        min-height: 44px;
+        padding: 12px 16px;
+    }
+
+    /* Modal/Popup touch friendly */
+    #translation-popup,
+    #chat-window {
+        max-width: 95vw;
+        max-height: 85vh;
+    }
+
+    /* Tabs için touch friendly */
+    .tab-btn {
+        min-height: 48px;
+        padding: 12px 16px;
+    }
+}
+
+/* ============================================
+   IPHONE X+ NOTCH SUPPORT
+   ============================================ */
+
+@supports (padding: max(0px)) {
+    .app-header {
+        padding-left: max(15px, env(safe-area-inset-left));
+        padding-right: max(15px, env(safe-area-inset-right));
+    }
+
+    .app-footer {
+        padding-left: max(15px, env(safe-area-inset-left));
+        padding-right: max(15px, env(safe-area-inset-right));
+        padding-bottom: max(15px, env(safe-area-inset-bottom));
+    }
+
+    #cookie-banner {
+        padding-bottom: max(15px, env(safe-area-inset-bottom));
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration */
+.card,
+.btn,
+.tab-btn,
+.flashcard-container {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   DARK MODE ADSENSE FIX
+   ============================================ */
+
+body.dark-theme .adsbygoogle {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+body.dark-theme .adsbygoogle:empty::after {
+    color: #666;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+/* Skeleton loading for ads */
+@keyframes adPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.adsbygoogle[data-ad-status="unfilled"] {
+    animation: adPulse 2s ease-in-out infinite;
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Focus styles for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+
+    .btn,
+    .card {
+        border: 2px solid currentColor;
+    }
+}
+
+/* ============================================
+   PRINT STYLES (Hide ads when printing)
+   ============================================ */
+
+@media print {
+
+    .ad-container,
+    .adsbygoogle,
+    #chat-button,
+    #cookie-banner {
+        display: none !important;
+    }
+}
