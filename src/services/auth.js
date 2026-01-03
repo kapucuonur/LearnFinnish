@@ -7,6 +7,12 @@ import {
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyABTl3pLxVHJKa3RCOz1ZgheKbNs-NbjfM",
@@ -20,6 +26,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+const db = getFirestore(app); // Initialize Firestore
 export const provider = new GoogleAuthProvider();
 
 
@@ -37,12 +44,30 @@ function getErrorMessage(error) {
   return errorMessages[error.code] || errorMessages['default'];
 }
 
-// Enhanced sign in with error handling
+// Enhanced sign in with error handling and DB Sync
 async function signInWithGoogle() {
   try {
     const result = await signInWithPopup(auth, provider);
-    console.log('Login successful:', result.user.displayName);
-    return { success: true, user: result.user };
+    const user = result.user;
+
+    // SAVE USER TO DATABASE (Firestore)
+    // This ensures every logged-in user exists in the 'users' collection
+    try {
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        lastLogin: serverTimestamp(),
+        // We do NOT overwrite 'isPremium' here to avoid removing it
+      }, { merge: true });
+      console.log('User synced to Firestore:', user.uid);
+    } catch (dbError) {
+      console.error('Error saving user to Firestore:', dbError);
+      // We continue even if DB save fails, as Auth is successful
+    }
+
+    console.log('Login successful:', user.displayName);
+    return { success: true, user: user };
   } catch (error) {
     console.error('Firebase Auth Error:', error);
     const errorMessage = getErrorMessage(error);
@@ -62,7 +87,7 @@ async function signOutUser() {
   }
 }
 
-// Hata yakalama için
+// Auth State Observer
 onAuthStateChanged(auth, (user) => { }, (error) => {
   console.error('Firebase Auth Error:', error);
 });
