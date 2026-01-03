@@ -329,21 +329,21 @@
     min-height: 120px;
 }
 
-/* Footer */
-.app-footer {
+/* Footer (Scoped to legal pages to prevent global override) */
+.legal-page .app-footer {
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
     padding: var(--space-xl) 0;
     margin-top: var(--space-xxl);
 }
 
-.footer-container {
+.legal-page .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--space-md);
 }
 
-.footer-links {
+.legal-page .footer-links {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -351,24 +351,24 @@
     margin-bottom: var(--space-lg);
 }
 
-.footer-links a {
+.legal-page .footer-links a {
     color: var(--color-text-secondary);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
-.footer-links a:hover {
+.legal-page .footer-links a:hover {
     color: var(--color-primary);
 }
 
-.footer-copy {
+.legal-page .footer-copy {
     text-align: center;
     color: var(--color-text-secondary);
     font-size: 0.9rem;
 }
 
-.footer-copy p {
+.legal-page .footer-copy p {
     margin: 0;
 }
 
