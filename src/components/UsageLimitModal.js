@@ -32,7 +32,7 @@ export function initUsageLimitModal() {
         
         <div class="modal-actions">
             <a href="https://buy.stripe.com/00waEX4D95ai0In6qv9oc00" target="_blank" class="btn btn-premium btn-block">
-                Go Premium (Monthly €5.00)
+                🚀 Upgrade to Premium - €5.00/mo
             </a>
             <button class="btn btn-text close-modal-btn">Maybe Later</button>
         </div>
