@@ -12,6 +12,7 @@ import { initializeStripe, handlePaymentCallback } from './services/payment.js';
 import { updateWordCount } from './services/storage.js';
 import { STRIPE_PUBLISHABLE_KEY } from './config/constants.js';
 import { Router } from './router.js';
+import './utils/premium-ads-ios.js'; // Auto-runs initialization logic
 
 // Initialize application when DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
