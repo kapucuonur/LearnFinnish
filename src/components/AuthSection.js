@@ -36,11 +36,24 @@ export function initAuthSection() {
 
     // Auth state observer
     onAuthStateChanged(auth, (user) => {
+        const billingBtn = document.getElementById('billing-portal-btn');
+
         if (user) {
             loginBtn.style.display = 'none';
             loginBtn.disabled = false;
             userInfo.classList.remove('hidden');
             userName.textContent = `Welcome, ${user.displayName || user.email}!`;
+
+            // Smart Billing Button Logic
+            if (billingBtn) {
+                const billingLink = billingBtn.getAttribute('href');
+                if (billingLink === '#' || !billingLink) {
+                    billingBtn.style.display = 'none'; // Hide if not configured
+                } else {
+                    billingBtn.style.display = 'inline-block'; // Show if configured
+                }
+            }
+
             // Keep premium section visible - user might not be premium yet
             if (premiumInfo) premiumInfo.style.display = 'block';
         } else {
