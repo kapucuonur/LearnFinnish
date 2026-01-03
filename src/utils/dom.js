@@ -327,6 +327,12 @@ export function addWordEvents(targetLang = 'en') {
         notebookBtn.onclick = (e) => {
           e.stopPropagation();
           addWord(original, translation, 'en');
+
+          // Award XP
+          import('../services/gamification.js').then(({ addXP }) => {
+            addXP(10, 'Word Added');
+          });
+
           notebookBtn.innerHTML = '✓ Added!';
           notebookBtn.style.background = '#4caf50';
 

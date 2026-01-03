@@ -42,5 +42,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Update usage indicators
     await updateUsageIndicators();
 
+    // Initialize Gamification UI
+    const { getGamificationStats } = await import('./services/gamification.js');
+    const { initDailyQuiz } = await import('./components/DailyQuiz.js');
+
+    initDailyQuiz();
+
+    function updateGamificationUI() {
+        const stats = getGamificationStats();
+        const display = document.getElementById('xp-display');
+        const levelEl = document.getElementById('user-level');
+        const barEl = document.getElementById('xp-progress-bar');
+
+        if (display && levelEl && barEl) {
+            display.classList.remove('hidden');
+            levelEl.textContent = stats.level;
+            barEl.style.width = `${stats.progress}%`;
+            display.title = `${stats.xp} XP (Next Level: ${stats.nextLevelXP} XP)`;
+        }
+    }
+
+    // Initial update
+    updateGamificationUI();
+
+    // Listen for updates
+    window.addEventListener('gamification-update', () => {
+        updateGamificationUI();
+    });
+
     console.log('✅ LearnFinnish initialized successfully!');
 });

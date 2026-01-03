@@ -38,8 +38,16 @@
 
       <div class="header-right">
         <nav class="header-nav">
+          <button id="start-quiz-btn" class="nav-link btn-text">📝 Daily Quiz</button>
           <a href="/blog/" id="blog-nav-link" class="nav-link">📚 Blog</a>
         </nav>
+
+        <div id="xp-display" class="xp-display hidden">
+          <span class="level-badge">Lvl <span id="user-level">1</span></span>
+          <div class="xp-bar-container">
+            <div id="xp-progress-bar" class="xp-progress-bar" style="width: 0%"></div>
+          </div>
+        </div>
 
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
           <span class="theme-icon">🌙</span>

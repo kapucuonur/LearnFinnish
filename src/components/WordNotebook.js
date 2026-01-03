@@ -99,6 +99,11 @@ export function initWordNotebook() {
             if (flashcardWords.length > 0) {
                 currentCardIndex++;
                 showCurrentCard();
+
+                // Award XP for review
+                import('../services/gamification.js').then(({ addXP }) => {
+                    addXP(5, 'Flashcard Reviewed');
+                });
             }
         });
     }

@@ -38,6 +38,10 @@ export function initStoryDisplay() {
             // Increment usage count on successful generation
             incrementStoryCount();
             updateUsageIndicators();
+
+            // Award XP
+            const { addXP } = await import('../services/gamification.js');
+            addXP(50, 'Story Generated');
         } catch (err) {
             alert('Error: ' + err.message);
         }
