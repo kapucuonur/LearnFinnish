@@ -232,22 +232,33 @@ export function addWordEvents(targetLang = 'en') {
 
       // ... positioning logic ... (skipping for brevity in replace, effectively I should just target the specific lines)
 
-      // Position popup near the clicked word
-      popup.style.position = 'absolute';
-      popup.style.top = `${rect.bottom + scrollTop + 10}px`;
-      popup.style.left = `${rect.left + scrollLeft}px`;
-      popup.style.transform = 'none';
+      // Position popup
+      // Check if mobile (width < 768px)
+      if (window.innerWidth < 768) {
+        // Mobile: Center fixed on screen
+        popup.style.position = 'fixed';
+        popup.style.top = '50%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.width = '90%'; // Use CSS max-width for upper bound
+      } else {
+        // Desktop: Position near the word
+        popup.style.position = 'absolute';
+        popup.style.top = `${rect.bottom + scrollTop + 10}px`;
+        popup.style.left = `${rect.left + scrollLeft}px`;
+        popup.style.transform = 'none';
 
-      // Adjust if popup goes off-screen
-      setTimeout(() => {
-        const popupRect = popup.getBoundingClientRect();
-        if (popupRect.right > window.innerWidth) {
-          popup.style.left = `${window.innerWidth - popupRect.width - 20}px`;
-        }
-        if (popupRect.bottom > window.innerHeight + scrollTop) {
-          popup.style.top = `${rect.top + scrollTop - popupRect.height - 10}px`;
-        }
-      }, 10);
+        // Adjust if popup goes off-screen
+        setTimeout(() => {
+          const popupRect = popup.getBoundingClientRect();
+          if (popupRect.right > window.innerWidth) {
+            popup.style.left = `${window.innerWidth - popupRect.width - 20}px`;
+          }
+          if (popupRect.bottom > window.innerHeight + scrollTop) {
+            popup.style.top = `${rect.top + scrollTop - popupRect.height - 10}px`;
+          }
+        }, 10);
+      }
 
       try {
         // Find the sentence containing this word for context

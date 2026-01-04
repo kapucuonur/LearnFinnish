@@ -3,8 +3,9 @@
 > **A modern, AI-powered progressive web application designed to help you learn Finnish vocabulary naturally through interactive stories.**
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-2.0.0-green.svg)
+![Version](https://img.shields.io/badge/version-2.1.0-green.svg)
 ![Status](https://img.shields.io/badge/status-live-brightgreen.svg)
+![SaaS](https://img.shields.io/badge/SaaS-Ready-orange.svg)
 
 ## 🌐 Live Application
 
@@ -14,6 +15,11 @@
 ---
 
 ## 🚀 Key Features
+
+### 💎 Premium SaaS Membership
+- **Smart Stripe Integration**: Automatically links your Google Login to Stripe payments.
+- **Instant Activation**: Premium features (Unlimited stories, TTS) unlock immediately upon payment.
+- **Database Persistence**: User premium status is seamlessly synced to Firestore.
 
 ### 📚 AI-Powered Story Generation
 - **Context-Aware**: Generates unique, B1-level stories (250-500 words) on any topic you choose.
@@ -32,6 +38,7 @@
 - **Instant Lookup**: Double-click any word in the story to see its meaning instantly.
 
 ### 📝 Integrated Learning Tools
+- **Gamification**: Earn XP, level up, and maintain streaks.
 - **Word Notebook**: Save vocabulary with a single click.
 - **Flashcards**: Review your saved words with an interactive flashcard system (Front/Back/Next/Shuffle).
 - **Progress Tracking**: Track how many words you've learned.
@@ -55,13 +62,24 @@
 - **Endpoints**:
     - `/api/story`: Orchestrates Gemini 1.5 Flash requests.
     - `/api/translate`: Manages Hybrid Translation logic.
+    - `/api/webhook`: Handles Stripe events securely.
     - `/api/tts`: Secure proxy for Google TTS streaming.
 
 **Services**
 - **Authentication**: Firebase Auth (Google Sign-In)
-- **Database**: Firebase Firestore (User data)
+- **Database**: Firebase Firestore (User data & Premium status)
 - **Payment**: Stripe Integration (Premium subscriptions)
 - **Hosting**: Vercel
+
+---
+
+## ❓ Troubleshooting
+
+**App Stuck / Not Updating on Mobile?**
+We implemented a **Manual Kill Switch** for aggressive caching issues (common on iOS):
+1.  Open the app.
+2.  Triple-click quickly on the **"LearnFinnish"** logo in the header.
+3.  The app will force-clear all Service Workers and Caches, then reload.
 
 ---
 
@@ -115,6 +133,7 @@
     ```env
     GEMINI_API_KEY=your_gemini_key
     FIREBASE_CONFIG=your_firebase_config
+    STRIPE_SECRET_KEY=your_stripe_key
     ```
 
 4.  **Run Locally**
