@@ -46,21 +46,101 @@ export function renderWordList() {
 
   notebook.forEach(item => {
     const li = document.createElement('li');
+    const safeWord = item.word.replace(/'/g, "&apos;"); // Prevent breaking HTML
+    const hasExample = !!item.example;
+
+    // Create unique ID for the example container
+    const exampleId = `example-${item.word.replace(/\s+/g, '-')}`;
+
     li.innerHTML = `
       <div class="word-notebook-item">
-        <div>
-          <strong>${item.word}</strong>
-          <span>${item.translation}</span>
+        <div class="word-info">
+          <div class="word-header">
+            <strong>${item.word}</strong>
+            <span class="word-translation">${item.translation}</span>
+          </div>
+          <div id="${exampleId}" class="word-example ${hasExample ? '' : 'hidden'}">
+             ${hasExample ? `
+                <div class="example-content">
+                    <p class="fi-sentence">"${item.example.sentence}"</p>
+                    <p class="en-translation">${item.example.translation}</p>
+                </div>
+             ` : ''}
+          </div>
         </div>
-        <button class="word-delete" data-word="${item.word}" data-lang="${item.targetLang}">Delete</button>
+        <div class="word-actions">
+           <button class="btn-icon word-example-btn" data-word="${safeWord}" data-lang="${item.targetLang}" title="Show Example">
+             💡
+           </button>
+           <button class="btn-icon text-danger word-delete" data-word="${safeWord}" data-lang="${item.targetLang}" title="Delete">
+             🗑️
+           </button>
+        </div>
       </div>
     `;
     list.appendChild(li);
   });
 
-  // Speak buttons
+  // Speak buttons (if any exist, though current HTML doesn't generate them in this version)
   document.querySelectorAll('.ses-oku-btn').forEach(btn => {
     btn.onclick = () => speak(btn.dataset.word);
+  });
+
+  // Example Buttons Logic
+  document.querySelectorAll('.word-example-btn').forEach(btn => {
+    btn.onclick = async (e) => {
+      const word = btn.dataset.word;
+      const lang = btn.dataset.lang;
+      const containerId = `example-${word.replace(/\s+/g, '-')}`;
+      const container = document.getElementById(containerId);
+
+      // If already visible and has content, just toggle
+      if (container.classList.contains('hidden') === false && container.innerHTML.trim() !== '') {
+        container.classList.add('hidden');
+        return;
+      }
+
+      // If hidden but has content (from previous load), show it
+      if (buttonHasExample(word, lang)) {
+        container.classList.remove('hidden');
+        return;
+      }
+
+      // Fetch new example
+      btn.disabled = true;
+      btn.innerHTML = '⏳'; // Loading spinner
+
+      try {
+        const res = await fetch('/api/generate-example', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ word })
+        });
+
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        // Save to storage
+        saveExampleToWord(word, lang, data);
+
+        // Update UI
+        container.innerHTML = `
+                <div class="example-content">
+                    <p class="fi-sentence">"${data.sentence}"</p>
+                    <p class="en-translation">${data.translation}</p>
+                </div>
+            `;
+        container.classList.remove('hidden');
+
+      } catch (err) {
+        console.error(err);
+        alert('Failed to generate example. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '💡';
+      }
+    };
   });
 
   // Delete buttons
@@ -70,6 +150,24 @@ export function renderWordList() {
       renderWordList();
     };
   });
+}
+
+function saveExampleToWord(wordText, targetLang, exampleData) {
+  const notebook = getWords();
+  // Decode wordText if it was encoded for HTML attribute, but here it comes from dataset which is decoded
+  // data-word in HTML is standard string.
+  const index = notebook.findIndex(k => k.word === wordText && k.targetLang === targetLang);
+
+  if (index !== -1) {
+    notebook[index].example = exampleData;
+    localStorage.setItem(NOTEBOOK_KEY, JSON.stringify(notebook));
+  }
+}
+
+function buttonHasExample(wordText, targetLang) {
+  const notebook = getWords();
+  const item = notebook.find(k => k.word === wordText && k.targetLang === targetLang);
+  return item && !!item.example;
 }
 
 function speak(text) {
