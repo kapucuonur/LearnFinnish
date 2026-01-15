@@ -9,9 +9,10 @@ export function initPremiumCard() {
 
     if (!premiumBtn) return;
 
-    // Use direct Stripe Payment Link
-    premiumBtn.addEventListener('click', () => {
-        window.open('https://buy.stripe.com/00waEX4D95ai0In6qv9oc00', '_blank');
+    // Navigate to internal Premium Content page
+    premiumBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.hash = 'premium-content';
     });
 
     // Premium banner toggle

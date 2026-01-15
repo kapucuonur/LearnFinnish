@@ -2,6 +2,7 @@ import { AboutPage } from './pages/About.js';
 import { ContactPage } from './pages/Contact.js';
 
 import { TermsPage } from './pages/Terms.js';
+import { PremiumContentPage } from './pages/PremiumContent.js';
 
 export class Router {
     constructor() {
@@ -9,15 +10,15 @@ export class Router {
             '': 'home',
             'about': 'about',
             'contact': 'contact',
-
-            'terms': 'terms'
+            'terms': 'terms',
+            'premium-content': 'premium-content'
         };
 
         this.pages = {
             about: new AboutPage(),
             contact: new ContactPage(),
-
-            terms: new TermsPage()
+            terms: new TermsPage(),
+            'premium-content': new PremiumContentPage()
         };
 
         this.currentPage = null;
@@ -55,7 +56,7 @@ export class Router {
         this.currentPage = 'home';
     }
 
-    showPage(pageName) {
+    async showPage(pageName) {
         const lang = 'en'; // Force English
         const page = this.pages[pageName];
 
@@ -96,11 +97,22 @@ export class Router {
 
         // Update modal content
         const modalBody = modal.querySelector('.legal-modal-body');
-        modalBody.innerHTML = page.render(lang);
 
-        // Show modal
+        // Show loading state if needed (optional, could be added later)
+        modalBody.innerHTML = '<div style="padding: 20px; text-align: center;">Loading...</div>';
+
+        // Show modal immediately so user sees something happening
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; // Prevent background scroll
+
+        try {
+            // Await render in case it's async
+            const content = await page.render(lang);
+            modalBody.innerHTML = content;
+        } catch (error) {
+            console.error('Error rendering page:', error);
+            modalBody.innerHTML = '<div style="padding: 20px; text-align: center; color: red;">Error loading content. Please try again.</div>';
+        }
 
         // Attach event listeners for contact page
         if (pageName === 'contact' && page.attachEventListeners) {
