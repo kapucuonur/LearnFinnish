@@ -202,6 +202,56 @@ export class PremiumContentPage {
                         padding-top: 2rem;
                         border-top: 1px solid #f3f4f6;
                     }
+                    .resource-card {
+                        background: white;
+                        border-radius: 20px;
+                        padding: 1.5rem;
+                        box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 10px -2px rgba(0, 0, 0, 0.01);
+                        border: 1px solid rgba(0,0,0,0.03);
+                        transition: transform 0.3s ease;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+
+                    .resource-card:hover {
+                        transform: translateY(-5px);
+                    }
+
+                    .resource-card h4 {
+                        font-size: 1.1rem;
+                        font-weight: 700;
+                        color: #1f2937;
+                        margin-bottom: 0.5rem;
+                        margin-top: 0;
+                    }
+
+                    .resource-card p {
+                        color: #666;
+                        font-size: 0.95rem;
+                        margin-bottom: 1.5rem;
+                        line-height: 1.5;
+                    }
+
+                    .go-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: #006064;
+                        color: white;
+                        font-weight: 600;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 12px;
+                        text-decoration: none;
+                        transition: all 0.2s ease;
+                        text-align: center;
+                    }
+
+                    .go-btn:hover {
+                        background: #00838f;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(0, 96, 100, 0.2);
+                    }
                 </style>
                 ${content}
             </div>
@@ -273,6 +323,17 @@ export class PremiumContentPage {
                         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/show/4xApnaeGa0cOjKxaiUKrGr?utm_source=generator&t=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     </div>
                 </div>
+
+                <!-- Second Spotify Section -->
+                <div class="media-card">
+                    <div class="media-header">
+                        <span class="media-tag tag-audio">Podcast</span>
+                        <h3 class="media-title">Advanced Finnish Listening</h3>
+                    </div>
+                    <div class="media-embed" style="padding-bottom: 0; height: 352px;">
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/show/4sGoFvQUHdo4ND6hwjKxzj?utm_source=generator&t=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                </div>
                 
                  <!-- Another Video Section -->
                 <div class="media-card">
@@ -283,6 +344,16 @@ export class PremiumContentPage {
                     <div class="media-embed">
                         <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE?si=Placeholder" title="Pronunciation Secrets" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </div>
+                </div>
+
+                <!-- Yle Areena Section -->
+                <div class="resource-card">
+                    <h4>Yle Areena: News / Program</h4>
+                    <p>You can watch this program on Yle Areena.</p>
+                    
+                    <a href="https://areena.yle.fi/1-65257531" target="_blank" class="go-btn">
+                       Watch on Yle Areena
+                    </a>
                 </div>
             </div>
 
