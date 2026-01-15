@@ -1,5 +1,5 @@
 import { auth } from '../services/auth.js';
-import { checkPremiumStatus } from '../services/payment.js';
+import { getDetailedPremiumStatus } from '../services/payment.js';
 
 export class PremiumContentPage {
     constructor() {
@@ -19,9 +19,14 @@ export class PremiumContentPage {
         } else {
             // Show loading state while checking premium status
             try {
-                const isPremium = await checkPremiumStatus(currentUser.uid);
+                const { isPremium, isTrial } = await getDetailedPremiumStatus(currentUser.uid);
+
                 if (isPremium) {
-                    content = this.renderPremiumContent();
+                    if (isTrial) {
+                        content = this.renderTrialRestrictedPrompt();
+                    } else {
+                        content = this.renderPremiumContent();
+                    }
                 } else {
                     content = this.renderUpgradePrompt();
                 }
@@ -266,6 +271,22 @@ export class PremiumContentPage {
                 <p class="lock-text">Please sign in to access exclusive Finnish learning content, including advanced video guides and podcasts.</p>
                 <button onclick="document.querySelector('.legal-modal-close').click(); setTimeout(() => document.querySelector('#login-btn')?.click(), 300);" class="btn-upgrade" style="cursor: pointer; border: none; width: 100%;">
                     Sign In to Continue
+                </button>
+            </div>
+        `;
+    }
+
+    renderTrialRestrictedPrompt() {
+        return `
+            <div class="lock-screen">
+                <span class="lock-icon">⏳</span>
+                <h2 class="lock-title">Trial Period Restriction</h2>
+                <p class="lock-text">The Premium Lounge (Videos & Podcasts) is exclusively available to full Premium members. It will unlock automatically once your trial period ends and your full subscription begins.</p>
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ffeeba; color: #856404;">
+                    <strong>Note:</strong> You are currently in the 7-day free trial period.
+                </div>
+                <button onclick="document.querySelector('.legal-modal-close').click();" class="btn-upgrade" style="background: #6c757d; box-shadow: none;">
+                    Close
                 </button>
             </div>
         `;

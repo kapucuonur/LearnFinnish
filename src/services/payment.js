@@ -17,22 +17,35 @@ export function initializeStripe(publishableKey) {
 
 // Check if user is premium
 export async function checkPremiumStatus(userId) {
+  const status = await getDetailedPremiumStatus(userId);
+  return status.isPremium;
+}
+
+// Get detailed premium status (including trial information)
+export async function getDetailedPremiumStatus(userId) {
   try {
     // Admin bypass
     const currentUser = auth.currentUser;
     if (currentUser && currentUser.email === 'onurbenn@gmail.com') {
       console.log('Admin access granted');
-      return true;
+      return { isPremium: true, isTrial: false };
     }
 
     const userDoc = await getDoc(doc(db, 'users', userId));
     if (userDoc.exists()) {
-      return userDoc.data().isPremium || false;
+      const data = userDoc.data();
+      const isPremium = data.isPremium || false;
+      // Check for common trial indicators from Stripe/backend
+      const isTrial = data.subscriptionStatus === 'trialing' ||
+        data.isTrial === true ||
+        (data.plan && data.plan.toLowerCase().includes('trial'));
+
+      return { isPremium, isTrial };
     }
-    return false;
+    return { isPremium: false, isTrial: false };
   } catch (error) {
     console.error('Error checking premium status:', error);
-    return false;
+    return { isPremium: false, isTrial: false };
   }
 }
 
