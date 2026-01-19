@@ -112,10 +112,83 @@ function speakText(text) {
 }
 
 export function writeStory(text, targetElement = storyArea) {
+  // Clear previous content
   targetElement.innerHTML = '';
 
+  // Store text on the element for toggling later
+  targetElement.dataset.fullText = text;
+
+  // Default: Render Paragraph Mode
+  renderParagraphMode(text, targetElement);
+}
+
+function renderParagraphMode(text, targetElement) {
+  targetElement.innerHTML = '';
+
+  // Create container for paragraph text
+  const paragraphContainer = document.createElement('div');
+  paragraphContainer.className = 'story-text-container';
+
+  // Existing paragraph rendering logic
+  const parts = text.split(/(\s+|[.,!?;:()"'-])/).filter(p => p !== '');
+
+  parts.forEach(part => {
+    if (/^\s+$|[.,!?;:()"'-]/.test(part)) {
+      if (part.includes('\n')) {
+        paragraphContainer.appendChild(document.createElement('br'));
+        if (part.split('\n').length > 2) paragraphContainer.appendChild(document.createElement('br'));
+      } else {
+        paragraphContainer.appendChild(document.createTextNode(part));
+      }
+    } else {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = part;
+
+      // Context menu logic (will be attached globally or here)
+      // Note: addWordEvents handles the clicks later, but dblclick is specific
+      span.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        speakText(part.trim());
+      });
+
+      paragraphContainer.appendChild(span);
+    }
+  });
+
+  targetElement.appendChild(paragraphContainer);
+
+  // Add Toggle Button
+  const toggleContainer = document.createElement('div');
+  toggleContainer.className = 'practice-mode-toggle';
+
+  const toggleBtn = document.createElement('button');
+  toggleBtn.className = 'btn-practice-toggle';
+  toggleBtn.innerHTML = '🎙️ Start Speaking Practice';
+  toggleBtn.onclick = () => {
+    renderSentenceMode(text, targetElement);
+  };
+
+  toggleContainer.appendChild(toggleBtn);
+  targetElement.appendChild(toggleContainer);
+
+  // Re-attach word click events
+  addWordEvents('en');
+}
+
+function renderSentenceMode(text, targetElement) {
+  targetElement.innerHTML = '';
+
+  // Back Button
+  const backBtn = document.createElement('button');
+  backBtn.className = 'btn-practice-back';
+  backBtn.innerHTML = '⬅ Back to Reading';
+  backBtn.onclick = () => {
+    renderParagraphMode(text, targetElement);
+  };
+  targetElement.appendChild(backBtn);
+
   // 1. Split text into sentences (keeping delimiters)
-  // Match sentences ending with . ! ? followed by space or end of string
   const sentences = text.match(/[^.!?]+[.!?]+(\s+|$)/g) || [text];
 
   sentences.forEach((sentence, index) => {
@@ -136,13 +209,10 @@ export function writeStory(text, targetElement = storyArea) {
         span.className = 'word';
         span.textContent = part;
 
-        // Double click to read word only
         span.addEventListener('dblclick', (e) => {
           e.stopPropagation();
           speakText(part.trim());
         });
-
-        // Single click event is handled by addWordEvents later
 
         textSpan.appendChild(span);
       }
@@ -231,9 +301,8 @@ export function writeStory(text, targetElement = storyArea) {
     targetElement.appendChild(sentenceContainer);
   });
 
-  // Re-add Audio Control Panel for the whole text (optional, keeping it for full story playback if needed)
-  // ... (Removed the global control panel to reduce clutter, as per new sentence-based design)
-  // If user wants full story read, they can just use the listen buttons.
+  // Re-attach word click events for new elements
+  addWordEvents('en');
 }
 
 export function addWordEvents(targetLang = 'en') {
