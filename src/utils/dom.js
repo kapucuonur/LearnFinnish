@@ -112,102 +112,128 @@ function speakText(text) {
 }
 
 export function writeStory(text, targetElement = storyArea) {
-  const parts = text.split(/(\s+|[.,!?;:()"'-])/).filter(p => p !== '');
-
   targetElement.innerHTML = '';
 
-  parts.forEach(part => {
-    if (/^\s+$|[.,!?;:()"'-]/.test(part)) {
-      if (part.includes('\n')) {
-        targetElement.appendChild(document.createElement('br'));
-        if (part.split('\n').length > 2) targetElement.appendChild(document.createElement('br')); // Double break for multiple newlines
+  // 1. Split text into sentences (keeping delimiters)
+  // Match sentences ending with . ! ? followed by space or end of string
+  const sentences = text.match(/[^.!?]+[.!?]+(\s+|$)/g) || [text];
+
+  sentences.forEach((sentence, index) => {
+    const sentenceContainer = document.createElement('div');
+    sentenceContainer.className = 'sentence-container';
+
+    // 2. Render Words for Translation (Existing Logic)
+    const textSpan = document.createElement('div');
+    textSpan.className = 'sentence-text';
+
+    const parts = sentence.trim().split(/(\s+|[.,!?;:()"'-])/).filter(p => p !== '');
+
+    parts.forEach(part => {
+      if (/^\s+$|[.,!?;:()"'-]/.test(part)) {
+        textSpan.appendChild(document.createTextNode(part));
       } else {
-        targetElement.appendChild(document.createTextNode(part));
+        const span = document.createElement('span');
+        span.className = 'word';
+        span.textContent = part;
+
+        // Double click to read word only
+        span.addEventListener('dblclick', (e) => {
+          e.stopPropagation();
+          speakText(part.trim());
+        });
+
+        // Single click event is handled by addWordEvents later
+
+        textSpan.appendChild(span);
       }
-    } else {
-      const span = document.createElement('span');
-      span.className = 'word';
-      span.textContent = part;
+    });
 
-      // Double click to read word only
-      span.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
-        speakText(part.trim());
-      });
+    sentenceContainer.appendChild(textSpan);
 
-      targetElement.appendChild(span);
-    }
+    // 3. Action Bar (Listen, Record, Playback)
+    const actionBar = document.createElement('div');
+    actionBar.className = 'sentence-actions';
+
+    // --- Listen Button (AI) ---
+    const listenBtn = document.createElement('button');
+    listenBtn.className = 'action-btn btn-listen';
+    listenBtn.innerHTML = '🔊 Listen';
+    listenBtn.onclick = () => {
+      ttsPlayer.play(sentence.trim());
+    };
+
+    // --- Record Button (User) ---
+    const recordBtn = document.createElement('button');
+    recordBtn.className = 'action-btn btn-record';
+    recordBtn.innerHTML = '🎙️ Record';
+
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let audioUrl = null;
+    let playbackAudio = null;
+
+    // --- Playback Button (User Recording) ---
+    const playbackBtn = document.createElement('button');
+    playbackBtn.className = 'action-btn btn-playback';
+    playbackBtn.innerHTML = '▶️ My Recording';
+    playbackBtn.style.display = 'none';
+
+    playbackBtn.onclick = () => {
+      if (audioUrl) {
+        playbackAudio = new Audio(audioUrl);
+        playbackAudio.play();
+      }
+    };
+
+    recordBtn.onclick = async () => {
+      if (recordBtn.classList.contains('recording')) {
+        // STOP RECORDING
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+        }
+        recordBtn.classList.remove('recording');
+        recordBtn.innerHTML = '🎙️ Record';
+      } else {
+        // START RECORDING
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = (event) => {
+            audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            audioUrl = URL.createObjectURL(audioBlob);
+            playbackBtn.style.display = 'inline-flex'; // Show playback button
+            stream.getTracks().forEach(track => track.stop()); // Stop mic
+          };
+
+          mediaRecorder.start();
+          recordBtn.classList.add('recording');
+          recordBtn.innerHTML = '⏹️ Stop';
+          playbackBtn.style.display = 'none'; // Hide previous recording
+
+        } catch (err) {
+          console.error('Microphone access denied:', err);
+          alert('Microphone access is required to record your voice.');
+        }
+      }
+    };
+
+    actionBar.appendChild(listenBtn);
+    actionBar.appendChild(recordBtn);
+    actionBar.appendChild(playbackBtn);
+
+    sentenceContainer.appendChild(actionBar);
+    targetElement.appendChild(sentenceContainer);
   });
 
-  // Audio Control Panel
-  const controlPanel = document.createElement('div');
-  controlPanel.className = 'audio-controls';
-  controlPanel.style.marginTop = '30px';
-  controlPanel.style.display = 'flex';
-  controlPanel.style.gap = '15px';
-  controlPanel.style.justifyContent = 'center';
-
-  // Helper to create control buttons
-  const createBtn = (text, onClick, bgColor = '#006064') => {
-    const btn = document.createElement('button');
-    btn.innerHTML = text;
-    btn.style.padding = '12px 24px';
-    btn.style.background = bgColor;
-    btn.style.color = 'white';
-    btn.style.border = 'none';
-    btn.style.borderRadius = '12px';
-    btn.style.fontSize = '1.1em';
-    btn.style.cursor = 'pointer';
-    btn.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
-    btn.style.transition = 'all 0.2s';
-    btn.onclick = onClick;
-
-    btn.onmouseover = () => { if (!btn.disabled) btn.style.transform = 'translateY(-2px)'; };
-    btn.onmouseout = () => { if (!btn.disabled) btn.style.transform = 'translateY(0)'; };
-
-    return btn;
-  };
-
-  const playBtn = createBtn('▶️ Read Aloud', () => ttsPlayer.play(text), '#2e7d32');
-  const pauseBtn = createBtn('⏸️ Pause', () => ttsPlayer.pause(), '#f57c00');
-  const stopBtn = createBtn('⏹️ Stop', () => ttsPlayer.stop(), '#d32f2f');
-  const resumeBtn = createBtn('▶️ Resume', () => ttsPlayer.resume(), '#2e7d32');
-
-  // Initial Visibility
-  pauseBtn.style.display = 'none';
-  stopBtn.style.display = 'none';
-  resumeBtn.style.display = 'none';
-
-  // Subscribe to state changes
-  ttsPlayer.onStateChange = (state) => {
-    if (!state.isPlaying) {
-      // Stopped
-      playBtn.style.display = 'block';
-      pauseBtn.style.display = 'none';
-      stopBtn.style.display = 'none';
-      resumeBtn.style.display = 'none';
-    } else if (state.isPaused) {
-      // Paused
-      playBtn.style.display = 'none';
-      pauseBtn.style.display = 'none';
-      stopBtn.style.display = 'block';
-      resumeBtn.style.display = 'block';
-    } else {
-      // Playing
-      playBtn.style.display = 'none';
-      pauseBtn.style.display = 'block';
-      stopBtn.style.display = 'block';
-      resumeBtn.style.display = 'none';
-    }
-  };
-
-  controlPanel.appendChild(playBtn);
-  controlPanel.appendChild(resumeBtn);
-  controlPanel.appendChild(pauseBtn);
-  controlPanel.appendChild(stopBtn);
-
-  targetElement.appendChild(document.createElement('br'));
-  targetElement.appendChild(controlPanel);
+  // Re-add Audio Control Panel for the whole text (optional, keeping it for full story playback if needed)
+  // ... (Removed the global control panel to reduce clutter, as per new sentence-based design)
+  // If user wants full story read, they can just use the listen buttons.
 }
 
 export function addWordEvents(targetLang = 'en') {
