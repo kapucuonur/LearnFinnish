@@ -23,8 +23,8 @@ export function initStoryDisplay() {
 
         try {
             const topic = topicInput.value.trim();
-            const story = await generateStory(topic);
-            writeStory(story);
+            const { story, vocabulary } = await generateStory(topic);
+            writeStory(story, undefined, vocabulary); // undefined targElem (uses default), vocabulary passed
             addWordEvents('en'); // Force English
 
             // Scroll to story area after content loads

@@ -17,7 +17,8 @@ export async function generateStory(topic) {
     }
 
     const data = await response.json();
-    return data.story;
+    // Return full object: { story: "...", vocabulary: { ... } }
+    return data;
   } catch (error) {
     console.error('API Error:', error);
     throw error;

@@ -111,12 +111,19 @@ function speakText(text) {
   audio.play();
 }
 
-export function writeStory(text, targetElement = storyArea) {
+// Vocabulary Cache
+let currentVocabulary = {};
+
+export function writeStory(text, targetElement = storyArea, vocabulary = {}) {
   // Clear previous content
   targetElement.innerHTML = '';
 
   // Store text on the element for toggling later
   targetElement.dataset.fullText = text;
+
+  // Store vocabulary
+  currentVocabulary = vocabulary || {};
+  console.log("Hybrid Model: Loaded vocabulary:", currentVocabulary);
 
   // Default: Render Paragraph Mode
   renderParagraphMode(text, targetElement);
@@ -309,41 +316,57 @@ export function addWordEvents(targetLang = 'en') {
   document.querySelectorAll('.word').forEach(word => {
     word.onclick = async (event) => {
       const original = word.textContent.trim();
+      const cleanWord = original.replace(/[.,!?;:()"'-]/g, '').toLowerCase();
 
       // Get word position for popup placement
       const rect = word.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-      // Popup open and loading message
-      translationContent.innerHTML = `
-        <div class="loading-state">
-           <div class="spinner"></div>
-           <p>Translating <strong>${original}</strong>...</p>
-        </div>
-      `;
+      // Hybrid Model Check
+      let translation = null;
+      let isInstant = false;
+
+      // 1. Check Cache
+      if (currentVocabulary && currentVocabulary[cleanWord]) {
+        translation = currentVocabulary[cleanWord];
+        isInstant = true;
+        console.log(`Hybrid Model: Instant hit for '${cleanWord}' -> '${translation}'`);
+      } else if (currentVocabulary) {
+        // Try finding case-insensitive key
+        const key = Object.keys(currentVocabulary).find(k => k.toLowerCase() === cleanWord);
+        if (key) {
+          translation = currentVocabulary[key];
+          isInstant = true;
+        }
+      }
+
+      // 2. Show UI (Loading or Instant)
+      if (!isInstant) {
+        translationContent.innerHTML = `
+            <div class="loading-state">
+               <div class="spinner"></div>
+               <p>Translating <strong>${original}</strong>...</p>
+            </div>
+          `;
+      }
+
       popup.classList.remove('hidden');
       overlay.classList.remove('hidden');
 
-      // ... positioning logic ... (skipping for brevity in replace, effectively I should just target the specific lines)
-
-      // Position popup
-      // Check if mobile (width < 768px)
+      // 3. Position Popup
       if (window.innerWidth < 768) {
-        // Mobile: Center fixed on screen
         popup.style.position = 'fixed';
         popup.style.top = '50%';
         popup.style.left = '50%';
         popup.style.transform = 'translate(-50%, -50%)';
-        popup.style.width = '90%'; // Use CSS max-width for upper bound
+        popup.style.width = '90%';
       } else {
-        // Desktop: Position near the word
         popup.style.position = 'absolute';
         popup.style.top = `${rect.bottom + scrollTop + 10}px`;
         popup.style.left = `${rect.left + scrollLeft}px`;
         popup.style.transform = 'none';
 
-        // Adjust if popup goes off-screen
         setTimeout(() => {
           const popupRect = popup.getBoundingClientRect();
           if (popupRect.right > window.innerWidth) {
@@ -356,26 +379,23 @@ export function addWordEvents(targetLang = 'en') {
       }
 
       try {
-        // Find the sentence containing this word for context
-        const allText = storyArea.textContent;
-        const sentences = allText.match(/[^.!?]+[.!?]+/g) || [allText];
-
-        // Find which sentence contains this word
-        let contextSentence = '';
-        for (const sentence of sentences) {
-          if (sentence.includes(original)) {
-            contextSentence = sentence.trim();
-            break;
+        // 4. Fetch Translation if needed
+        if (!isInstant) {
+          const allText = storyArea.textContent;
+          const sentences = allText.match(/[^.!?]+[.!?]+/g) || [allText];
+          let contextSentence = '';
+          for (const sentence of sentences) {
+            if (sentence.includes(original)) {
+              contextSentence = sentence.trim();
+              break;
+            }
           }
+          if (!contextSentence) contextSentence = allText.substring(0, 200);
+
+          translation = await translateWord(original, contextSentence);
         }
 
-        // If no sentence found, use the whole text (fallback)
-        if (!contextSentence) {
-          contextSentence = allText.substring(0, 200); // First 200 chars
-        }
-
-        const translation = await translateWord(original, contextSentence);
-
+        // 5. Render Result
         // Listen button
         const audioBtn = document.createElement('button');
         audioBtn.innerHTML = '🔊 Listen';
@@ -406,7 +426,7 @@ export function addWordEvents(targetLang = 'en') {
           speakText(original);
         };
 
-        // Add to notebook button
+        // Notebook button
         const notebookBtn = document.createElement('button');
         notebookBtn.innerHTML = '📖 Add to Notebook';
         notebookBtn.style.display = 'inline-block';
@@ -439,7 +459,6 @@ export function addWordEvents(targetLang = 'en') {
           e.stopPropagation();
           addWord(original, translation, 'en');
 
-          // Award XP
           import('../services/gamification.js').then(({ addXP }) => {
             addXP(10, 'Word Added');
           });
@@ -453,8 +472,6 @@ export function addWordEvents(targetLang = 'en') {
           }, 2000);
         };
 
-        // Popup content — word, translation and buttons
-        // Popup content — word, translation and buttons
         translationContent.innerHTML = `
           <div style="margin-bottom: 15px;">
             <strong style="font-size: 1.8em; display: block; margin-bottom: 8px; color: #006064;">${original}</strong>
@@ -469,10 +486,11 @@ export function addWordEvents(targetLang = 'en') {
         buttonContainer.appendChild(audioBtn);
         buttonContainer.appendChild(notebookBtn);
 
-        // Auto speak
         speakText(original);
+
       } catch (err) {
-        translationContent.innerHTML = `<div style="color: #d32f2f; padding: 20px 0;">Error occurred</div>`;
+        console.error(err);
+        translationContent.innerHTML = `<div style="color: #d32f2f; padding: 20px 0;">Error: ${err.message}</div>`;
       }
     };
   });
