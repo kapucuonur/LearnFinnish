@@ -1,3 +1,4 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -13,30 +14,19 @@ export default async function handler(req, res) {
     const prompt = `Write a simple Finnish example sentence (B1 level) using the word "${word}". Also provide the English translation. Return ONLY JSON in this format: { "sentence": "Finnish sentence here", "translation": "English translation here" }. Do not add any markdown formatting.`;
 
     try {
-        const geminiRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }]
-                })
-            }
-        );
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-        if (!geminiRes.ok) {
-            throw new Error('Gemini API failed');
-        }
-
-        const data = await geminiRes.json();
-        let text = data.candidates[0].content.parts[0].text.trim();
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        let text = response.text().trim();
 
         // Clean up if the model returns markdown code blocks
         text = text.replace(/```json/g, '').replace(/```/g, '').trim();
 
-        const result = JSON.parse(text);
+        const finalResult = JSON.parse(text);
 
-        return res.status(200).json(result);
+        return res.status(200).json(finalResult);
 
     } catch (error) {
         console.error('Example generation error:', error);

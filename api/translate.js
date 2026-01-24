@@ -1,4 +1,6 @@
 // api/translate.js - Hybrid Translation: Gemini (Primary) -> MyMemory (Fallback)
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST allowed' });
@@ -43,30 +45,19 @@ async function translateWithGemini(text, context) {
     ? `Given Finnish sentence: "${context}". Translate ONLY word "${text}" to ${targetLanguage}. No explanations.`
     : `Translate Finnish word "${text}" to ${targetLanguage}. Output ONLY the translation.`;
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-    }
-  );
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-  if (!response.ok) {
-    const errText = await response.text();
-    // Throw error to trigger fallback
-    throw new Error(`Gemini status ${response.status}: ${errText}`);
-  }
-
-  const data = await response.json();
-  let result = data.candidates[0].content.parts[0].text.trim();
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  let translation = response.text().trim();
 
   // Clean up
-  result = result.replace(/^["']|["']$/g, '').replace(/\.$/, '').trim();
+  translation = translation.replace(/^["']|["']$/g, '').replace(/\.$/, '').trim();
 
   // Validate length
-  if (result.length > 50) result = result.split(/\s+/).slice(0, 3).join(' ');
-  return result;
+  if (translation.length > 50) translation = translation.split(/\s+/).slice(0, 3).join(' ');
+  return translation;
 }
 
 async function translateWithMyMemory(text) {
