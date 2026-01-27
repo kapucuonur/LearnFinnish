@@ -52,7 +52,7 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
     // Back: Translation + Example Translation (Target Language)
 
     const exampleHtml = word.example ?
-        `<div class="card-example" style="margin-top:20px; font-weight: 500; color: #006064; font-size:1rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px;">"${word.example}"</div>`
+        `<div class="card-example" style="margin-top:20px; font-weight: 500; color: white; font-size:1rem; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;">"${word.example}"</div>`
         : '';
 
     const exampleTranslationHtml = word.exampleTranslation ?
