@@ -8,30 +8,56 @@ export default async function handler(req, res) {
 
   const { topic } = req.body;
 
-  // Generate a prompt from the topic
-  const prompt = topic && topic.trim()
-    ? `Write a Finnish story (250-500 words, B1 level) about: ${topic}. Make it engaging and use common vocabulary suitable for learners. 
-       Also, identify 15-20 difficult or interesting B1-level words (nouns, verbs, adjectives) from the story and provide their English translations.
-       
-       RETURN ONLY VALID JSON in the following format:
-       {
-         "story": "The full story text here...",
-         "vocabulary": {
-           "word1": "translation1",
-           "word2": "translation2"
-         }
-       }`
-    : `Write a Finnish story (250-500 words, B1 level) about everyday life in Finland. Make it engaging and use common vocabulary suitable for learners.
-       Also, identify 15-20 difficult or interesting B1-level words (nouns, verbs, adjectives) from the story and provide their English translations.
-       
-       RETURN ONLY VALID JSON in the following format:
-       {
-         "story": "The full story text here...",
-         "vocabulary": {
-           "word1": "translation1",
-           "word2": "translation2"
-         }
-       }`;
+  // Dynamic Guidelines for Variety
+  const STYLES = [
+    "Dialogue-heavy: Focus on a conversation between two characters.",
+    "First-person perspective: Write as if you are the main character telling a personal story.",
+    "Descriptive and atmospheric: Focus on the setting, weather, and sensory details.",
+    "Fast-paced action: Keep sentences shorter and focus on movement and events.",
+    "A diary entry or letter: Write it as a personal note from one person to another.",
+    "A news report style: Write it as if reporting on a local event."
+  ];
+
+  const GENRES = [
+    "Everyday Life (fixing something, shopping, cooking)",
+    "Small Mystery (looking for a lost item, strange noise)",
+    "Comedy (a misunderstanding, a funny mistake)",
+    "Work/School Life (a meeting, a presentation, a difficult task)",
+    "Travel/Adventure (a trip to the forest, visiting a new city)",
+    "Friendship/Social (meeting a friend, a party)"
+  ];
+
+  // Random Selection
+  const randomStyle = STYLES[Math.floor(Math.random() * STYLES.length)];
+  const randomGenre = GENRES[Math.floor(Math.random() * GENRES.length)];
+
+  // baseTopic logic
+  const baseTopic = (topic && topic.trim()) ? topic : "a surprising event in everyday life";
+
+  const prompt = `Write a unique Finnish story (250-500 words, B1 level) about: ${baseTopic}.
+  
+  CRITICAL INSTRUCTIONS FOR VARIETY:
+  - **Genre**: ${randomGenre}
+  - **Style**: ${randomStyle}
+  - **Creativity**: Do NOT start with "Olipa kerran" or generic openings. Jump straight into the scene.
+  - **Structure**: Ensure the story has a clear beginning, middle, and end, but vary the paragraph structure.
+  
+  LANGUAGE REQUIREMENTS:
+  - Level: B1 (Intermediate) - Accessible but not childish.
+  - Vocabulary: Use common but interesting vocabulary suitable for learners.
+  
+  TASK:
+  1. Write the story following the Style and Genre above.
+  2. Identify 15-20 difficult or interesting B1-level words (nouns, verbs, adjectives) from the text.
+  
+  RETURN ONLY VALID JSON in the following format:
+  {
+    "story": "The full story text here...",
+    "vocabulary": {
+      "word1": "English translation",
+      "word2": "English translation"
+    }
+  }`;
 
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);

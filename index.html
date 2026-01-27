@@ -154,52 +154,100 @@
       </div>
       -->
 
-      <div class="sample-stories-section">
-        <div class="section-header">
-          <h2 class="section-title">Sample Stories</h2>
-          <p class="section-subtitle">
-            Practice with ready-made B1 level stories
-          </p>
-        </div>
 
-        <div id="sample-stories-grid" class="sample-stories-grid">
-          <div class="loading-placeholder" style="grid-column: 1/-1; text-align: center; padding: 30px; color: #666;">
-            <div style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
-            <p style="font-weight: 500;">Starting up the language engine...</p>
-            <p style="font-size: 0.85em; opacity: 0.8;">(This might take about 30 seconds if the server was sleeping)
-            </p>
+
+      <!-- NEW NAVIGATION GRID -->
+      <div class="nav-grid-container" style="margin-top: 30px; margin-bottom: 20px;">
+        <div class="nav-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+          <button id="btn-vocab" class="nav-card-btn active">
+            <span class="nav-icon">📚</span>
+            <span class="nav-label">Vocabulary</span>
+          </button>
+          <button id="btn-phrases" class="nav-card-btn">
+            <span class="nav-icon">💬</span>
+            <span class="nav-label">Phrases</span>
+          </button>
+          <button id="btn-video" class="nav-card-btn">
+            <span class="nav-icon">📺</span>
+            <span class="nav-label">Video / Podcast</span>
+          </button>
+          <button id="btn-samples" class="nav-card-btn">
+            <span class="nav-icon">📖</span>
+            <span class="nav-label">Sample Stories</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. VOCABULARY AREA -->
+      <div id="vocabulary-area" class="content-area card"
+        style="background: transparent; border: none; box-shadow: none; padding: 0;">
+        <!-- Categories View -->
+        <div id="vocab-categories" class="phrases-categories-grid"></div>
+
+        <!-- Player View (Hidden by default) -->
+        <div id="vocab-player" class="hidden"
+          style="background: var(--surface); padding: 20px; border-radius: 16px; box-shadow: var(--shadow-md);">
+          <div class="phrases-header" style="display: flex; align-items: center; margin-bottom: 20px;">
+            <button id="vocab-back" class="btn btn-secondary btn-sm" style="margin-right: 15px;">← Back</button>
+            <h2 id="vocab-title" style="margin:0;">Topic Title</h2>
+          </div>
+
+          <div id="vocab-flashcard-container" class="flashcard-container"></div>
+
+          <div class="flashcard-controls">
+            <button id="vocab-prev" class="btn btn-secondary">← Previous</button>
+            <button id="vocab-flip" class="btn btn-primary">Flip Card</button>
+            <button id="vocab-next" class="btn btn-secondary">Next →</button>
           </div>
         </div>
       </div>
 
-      <div class="tabs-container">
-        <div class="tabs">
-          <button id="tab-story" class="tab-btn active">
-            <span class="tab-icon">📖</span>
-            <span class="tab-label">Story</span>
-          </button>
-          <button id="tab-phrases" class="tab-btn">
-            <span class="tab-icon">💬</span>
-            <span class="tab-label">Phrases</span>
-          </button>
-          <button id="tab-flashcard" class="tab-btn">
-            <span class="tab-icon">🎴</span>
-            <span class="tab-label">Flashcards</span>
-          </button>
-          <button id="tab-notebook" class="tab-btn">
-            <span class="tab-icon">📚</span>
-            <span class="tab-label">My Words (<span id="notebook-count">0</span>)</span>
-          </button>
+      <!-- 4. SAMPLE STORIES AREA -->
+      <div id="sample-stories-area" class="content-area hidden">
+        <div class="sample-stories-section">
+          <div class="section-header">
+            <h2 class="section-title">Sample Stories</h2>
+            <p class="section-subtitle">
+              Practice with ready-made B1 level stories
+            </p>
+          </div>
+
+          <div id="sample-stories-grid" class="sample-stories-grid">
+            <div class="loading-placeholder" style="grid-column: 1/-1; text-align: center; padding: 30px; color: #666;">
+              <div style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
+              <p style="font-weight: 500;">Starting up the language engine...</p>
+              <p style="font-size: 0.85em; opacity: 0.8;">(This might take about 30 seconds if the server was sleeping)
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div id="story-area" class="content-area card">
+      <!-- 3. PREMIUM CONTENT AREA (Video/Podcast) -->
+      <div id="premium-area" class="content-area card hidden">
+        <div style="text-align:center; padding: 40px;">
+          <h2>👑 Premium Lounge</h2>
+          <p>Watch videos and listen to podcasts to improve your listening skills.</p>
+
+          <div style="margin-top:20px; padding:20px; background:rgba(0,0,0,0.05); border-radius:12px;">
+            <h3>📺 Video Library</h3>
+            <p>Coming soon...</p>
+          </div>
+
+          <div style="margin-top:20px; padding:20px; background:rgba(0,0,0,0.05); border-radius:12px;">
+            <h3>🎧 Podcast Series</h3>
+            <p>Coming soon...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENERATED STORY AREA (Result of Top Button) -->
+      <!-- Moved here so it shows up when generating -->
+      <div id="story-area" class="content-area card hidden" style="margin-top: 30px;">
         <div class="empty-state">
           <div class="empty-icon">📖</div>
-          <h3>No story generated yet</h3>
-          <p>
-            Click the button above to generate a new story
-          </p>
+          <h3>Generated Story</h3>
+          <p>Your AI generated story will appear here.</p>
         </div>
       </div>
 
