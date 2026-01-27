@@ -191,10 +191,17 @@
       <div id="vocabulary-area" class="content-area card hidden"
         style="background: transparent; border: none; box-shadow: none; padding: 0;">
         <!-- Categories View -->
-        <div id="vocab-categories" class="phrases-categories-grid"></div>
+        <div id="vocab-categories" class="categories-grid">
+          <!-- Categories injected by JS -->
+        </div>
+
+        <div id="vocab-parts" class="parts-grid hidden"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; max-width: 600px; margin: 0 auto;">
+          <!-- Parts injected by JS -->
+        </div>
 
         <!-- Player View (Hidden by default) -->
-        <div id="vocab-player" class="hidden"
+        <div id="vocab-player" class="center-content hidden">
           style="background: var(--surface); padding: 20px; border-radius: 16px; box-shadow: var(--shadow-md);">
           <div class="phrases-header" style="display: flex; align-items: center; margin-bottom: 20px;">
             <button id="vocab-back" class="btn btn-secondary btn-sm" style="margin-right: 15px;">← Back</button>
