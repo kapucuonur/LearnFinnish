@@ -131,6 +131,27 @@ html {
 
 :root {
     --vh: 1vh;
+    --header-active-height: 74px;
+    /* Approximate height of Main Header */
+}
+
+/* Sticky Section Header Utility */
+.sticky-section-header {
+    position: sticky;
+    top: var(--header-active-height);
+    z-index: 10;
+    /* Below Main Header (z-sticky usually higher) */
+    background: var(--surface, #ffffff);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: -10px;
+    /* Counteract padding to keep flow */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.sticky-section-header.is-stuck {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* iOS viewport fix */

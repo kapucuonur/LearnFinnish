@@ -114,7 +114,7 @@ function speakText(text) {
 // Vocabulary Cache
 let currentVocabulary = {};
 
-export function writeStory(text, targetElement = storyArea, vocabulary = {}) {
+export function writeStory(text, targetElement = storyArea, vocabulary = {}, topic = '') {
   // Clear previous content
   targetElement.innerHTML = '';
 
@@ -125,8 +125,24 @@ export function writeStory(text, targetElement = storyArea, vocabulary = {}) {
   currentVocabulary = vocabulary || {};
   console.log("Hybrid Model: Loaded vocabulary:", currentVocabulary);
 
-  // Default: Render Paragraph Mode
-  renderParagraphMode(text, targetElement);
+  // Render Sticky Header if topic exists
+  if (topic) {
+    const header = document.createElement('div');
+    header.className = 'story-header sticky-section-header';
+    header.style.marginBottom = '20px'; // Add some spacing
+    // Capitalize topic
+    const displayTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
+    header.innerHTML = `<h3 style="margin:0; font-size: 1.2rem; color: var(--color-primary);">📄 ${displayTopic}</h3>`;
+    targetElement.appendChild(header);
+  }
+
+  // Create content container to hold the text modes
+  const contentContainer = document.createElement('div');
+  contentContainer.className = 'story-content-wrapper';
+  targetElement.appendChild(contentContainer);
+
+  // Default: Render Paragraph Mode into the content container
+  renderParagraphMode(text, contentContainer);
 }
 
 function renderParagraphMode(text, targetElement) {

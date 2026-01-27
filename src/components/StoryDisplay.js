@@ -33,7 +33,7 @@ export function initStoryDisplay() {
             }
 
             // Write story to DOM
-            writeStory(story, undefined, vocabulary); // undefined targElem (uses default), vocabulary passed
+            writeStory(story, undefined, vocabulary, topic); // undefined targElem (uses default), vocabulary passed, topic passed
             addWordEvents('en'); // Force English
 
             // Show story area (if hidden)
