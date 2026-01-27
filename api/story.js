@@ -134,13 +134,33 @@ export default async function handler(req, res) {
 
     // Superior Fallback Mechanism
     // If AI fails, return a pre-written high-quality B1 story to ensure UX continuity.
+    // Superior Fallback Mechanism
+    // If AI fails, return a pre-written high-quality B1 story to ensure UX continuity.
     const backups = [
       {
         story: "Matti myöhästyi junasta. Se oli katastrofi, koska hänellä oli tärkeä työhaastattelu Helsingissä. Asemalla oli kylmä ja tuuli puhalsi kovaa. Hän katsoi kelloaan; seuraava juna tulisi vasta tunnin kuluttua. Matti päätti mennä asemakahvilaan. Siellä hän tapasi vanhan ystävänsä, Liisan, jota hän ei ollut nähnyt vuosiin. Liisa kertoi, että hänen yrityksensä etsii uutta työntekijää. Se oli onnekas sattuma! Matti ei päässyt haastatteluun, mutta hän sai ehkä vielä paremman mahdollisuuden.",
         vocabulary: { "myöhästyä": "to be late", "katastrofi": "catastrophe", "työhaastattelu": "job interview", "tuulla": "to be windy", "päättää": "to decide", "sattuma": "coincidence", "mahdollisuus": "opportunity" }
+      },
+      {
+        story: "Anna halusi leipoa korvapuusteja, mutta hänellä ei ollut tarpeeksi sokeria. Hän päätti mennä lähikauppaan. Ulkona satoi lunta, ja maisema oli kaunis. Kaupassa oli paljon ihmisiä, koska oli perjantai-ilta. Anna löysi sokerin, mutta sitten hän näki herkullisia suklaalevyjä. Hän osti sokerin lisäksi kolme levyä suklaata. Kotona hän unohti leipoa ja söi suklaata sohvalla katsellen elokuvaa. Se oli täydellinen ilta.",
+        vocabulary: { "leipoa": "to bake", "lähikauppa": "local shop", "sataa lunta": "to snow", "maisema": "landscape", "herkullinen": "delicious", "suklaalevy": "chocolate bar", "unohtaa": "to forget" }
+      },
+      {
+        story: "Pekka oli torilla ostamassa tuoreita vihanneksia. Aurinko paistoi, ja lokit kirkuivat taivaalla. Hän halusi ostaa mansikoita, mutta ne olivat hyvin kalliita. Myyjä sanoi: 'Nämä ovat Suomen parhaita mansikoita!' Pekka maistoi yhtä ja se oli todella makea. Hän osti kaksi litraa. Sitten hän meni kahville toriteltalle. Hän joi kahvia ja söi lihapiirakan. Tämä on paras tapa aloittaa kesäaamu, Pekka ajatteli.",
+        vocabulary: { "tori": "market square", "vihannes": "vegetable", "lokki": "seagull", "kirkua": "to scream/screech", "kallis": "expensive", "maistaa": "to taste", "lihapiirakka": "meat pie" }
+      },
+      {
+        story: "Sauna on suomalaisille pyhä paikka. Joka lauantai Jorman perhe lämmittää saunan mökillä. Ensin he hakevat vettä järvestä ja pilkkovat polttopuita. Kun sauna on kuuma, he heittävät löylyä kiukaalle. Lämpö rentouttaa lihaksia raskaan työviikon jälkeen. Rohkeimmat käyvät uimassa kylmässä järvessä. Saunan jälkeen he paistavat makkaraa nuotiolla ja juovat kylmää juomaa. Hiljaisuus ja luonto ovat parasta lääkettä stressiin.",
+        vocabulary: { "pyhä": "holy/sacred", "lämmittää": "to heat up", "pilkkoa": "to chop", "polttopuu": "firewood", "löyly": "sauna steam", "kiuas": "sauna stove", "lihas": "muscle", "nuotio": "campfire" }
+      },
+      {
+        story: "Maija oli uusi työntekijä isossa yrityksessä. Ensimmäisenä päivänä hän oli hyvin hermostunut. Hän ei tiennyt, missä kahvihuone oli. Hän kysyi kohteliaasti kollegaltaan, Jukalta. Jukka oli ystävällinen ja näytti tien. Kahvihuoneessa kaikki puhuivat jääkiekosta. Maija ei tiennyt mitään jääkiekosta, mutta hän kuunteli kiinnostuneena. Lopulta hän sanoi: 'Minä pidän enemmän jalkapallosta.' Kaikki nauroivat, ja jää suli. Maija tunsi itsensä tervetulleeksi.",
+        vocabulary: { "työntekijä": "employee", "hermostunut": "nervous", "kohteliaasti": "politely", "kollega": "colleague", "jääkiekko": "ice hockey", "jää": "ice", "tervetullut": "welcome" }
       }
     ];
-    const backup = backups[0];
+
+    // Select a random backup story
+    const backup = backups[Math.floor(Math.random() * backups.length)];
 
     return res.status(200).json(backup);
   }
