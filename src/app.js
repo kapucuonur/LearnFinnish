@@ -201,4 +201,37 @@ function setupNavigation() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
+
+    // 4. Mobile Menu Toggle Logic
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const headerMenu = document.getElementById('header-menu');
+
+    if (mobileMenuToggle && headerMenu) {
+        mobileMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent closing immediately
+            headerMenu.classList.toggle('menu-open');
+
+            // Toggle hamburger animation
+            const isExpanded = headerMenu.classList.contains('menu-open');
+            mobileMenuToggle.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (headerMenu.classList.contains('menu-open') &&
+                !headerMenu.contains(e.target) &&
+                !mobileMenuToggle.contains(e.target)) {
+                headerMenu.classList.remove('menu-open');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close menu when clicking a link inside
+        headerMenu.querySelectorAll('a, button').forEach(link => {
+            link.addEventListener('click', () => {
+                headerMenu.classList.remove('menu-open');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
 }
