@@ -152,7 +152,53 @@ function setupNavigation() {
 
             // Show Story Area
             const storyArea = document.getElementById('story-area');
-            if (storyArea) storyArea.classList.remove('hidden');
+            if (storyArea) {
+                storyArea.classList.remove('hidden');
+                // Scroll to story area for desktop
+                storyArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    }
+
+    // --- MOBILE UI LOGIC ---
+
+    // 1. FAB Open Modal
+    const fabBtn = document.getElementById('mobile-generate-fab');
+    const mobileModal = document.getElementById('mobile-story-modal');
+    if (fabBtn && mobileModal) {
+        fabBtn.addEventListener('click', () => {
+            mobileModal.classList.remove('hidden');
+        });
+    }
+
+    // 2. Close Modal Button
+    const closeModalBtn = document.getElementById('close-mobile-modal');
+    if (closeModalBtn && mobileModal) {
+        closeModalBtn.addEventListener('click', () => {
+            mobileModal.classList.add('hidden');
+        });
+    }
+
+    // 3. Logo Reset Logic
+    const appLogo = document.querySelector('.app-logo');
+    if (appLogo) {
+        appLogo.style.cursor = 'pointer';
+        appLogo.addEventListener('click', () => {
+            // Reset active states
+            document.querySelectorAll('.nav-card-btn').forEach(b => b.classList.remove('active'));
+
+            // Hide all content areas
+            allAreas.forEach(areaId => {
+                const el = document.getElementById(areaId);
+                if (el) el.classList.add('hidden');
+            });
+
+            // Hide Story Area too
+            const storyArea = document.getElementById('story-area');
+            if (storyArea) storyArea.classList.add('hidden');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 }

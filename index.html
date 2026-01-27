@@ -127,7 +127,7 @@
   <main class="app-main">
     <div class="container">
 
-      <div class="card story-card">
+      <div class="card story-card desktop-only">
         <div class="card-header">
           <h2 class="card-title">Generate New Story</h2>
           <p class="card-subtitle">
@@ -445,6 +445,29 @@
   </div>
 
   <div class="overlay hidden"></div>
+
+  <!-- MOBILE FAB (Floating Action Button) -->
+  <button id="mobile-generate-fab" class="mobile-fab" aria-label="Generate Story">
+    <span class="fab-icon">✨</span>
+    <span class="fab-label">Generate</span>
+  </button>
+
+  <!-- MOBILE STORY GENERATOR MODAL -->
+  <div id="mobile-story-modal" class="mobile-story-modal hidden">
+    <div class="modal-header">
+      <h3>Generate Story</h3>
+      <button id="close-mobile-modal" class="close-modal-btn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="input-group-mobile">
+        <input type="text" id="mobile-topic" class="input mobile-input" placeholder="Topic (e.g. Travel, Food)...">
+        <button id="mobile-generate-btn" class="btn btn-primary btn-block btn-lg">
+          Generate Story 🚀
+        </button>
+      </div>
+      <p class="modal-hint">Enter a topic or leave blank for a random story.</p>
+    </div>
+  </div>
 
   <!-- Stripe - Lazy Load -->
   <script>

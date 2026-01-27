@@ -5,12 +5,12 @@ import { canGenerateStory, incrementStoryCount } from '../services/usageLimits.j
 import { showUsageLimitModal } from './UsageLimitModal.js';
 
 export function initStoryDisplay() {
-    const button = document.getElementById('generate-story');
-    const topicInput = document.getElementById('topic');
+    const desktopBtn = document.getElementById('generate-story');
+    const desktopInput = document.getElementById('topic');
+    const mobileBtn = document.getElementById('mobile-generate-btn');
+    const mobileInput = document.getElementById('mobile-topic');
 
-    if (!button || !topicInput) return;
-
-    button.addEventListener('click', async () => {
+    const handleGeneration = async (button, inputElement) => {
         // Check usage limit before generating
         const canGenerate = await canGenerateStory();
         if (!canGenerate.allowed) {
@@ -18,22 +18,33 @@ export function initStoryDisplay() {
             return;
         }
 
+        const originalText = button.textContent;
         button.disabled = true;
-        button.textContent = 'Generating story...';
+        button.textContent = 'Generating... ⏳';
 
         try {
-            const topic = topicInput.value.trim();
+            const topic = inputElement.value.trim();
             const { story, vocabulary } = await generateStory(topic);
+
+            // If mobile, close modal first
+            const mobileModal = document.getElementById('mobile-story-modal');
+            if (mobileModal && !mobileModal.classList.contains('hidden')) {
+                mobileModal.classList.add('hidden');
+            }
+
+            // Write story to DOM
             writeStory(story, undefined, vocabulary); // undefined targElem (uses default), vocabulary passed
             addWordEvents('en'); // Force English
 
-            // Scroll to story area after content loads
-            setTimeout(() => {
-                const storyArea = document.getElementById('story-area');
-                if (storyArea) {
+            // Show story area (if hidden)
+            const storyArea = document.getElementById('story-area');
+            if (storyArea) {
+                storyArea.classList.remove('hidden');
+                // Scroll to story area after content loads
+                setTimeout(() => {
                     storyArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 100);
+                }, 100);
+            }
 
             // Increment usage count on successful generation
             incrementStoryCount();
@@ -47,8 +58,16 @@ export function initStoryDisplay() {
         }
 
         button.disabled = false;
-        button.textContent = 'Generate Story';
-    });
+        button.textContent = originalText;
+    };
+
+    if (desktopBtn && desktopInput) {
+        desktopBtn.addEventListener('click', () => handleGeneration(desktopBtn, desktopInput));
+    }
+
+    if (mobileBtn && mobileInput) {
+        mobileBtn.addEventListener('click', () => handleGeneration(mobileBtn, mobileInput));
+    }
 }
 
 // Update usage indicators in the UI
