@@ -84,7 +84,9 @@ function setupNavigation() {
         { id: 'btn-vocab', area: 'vocabulary-area' },
         { id: 'btn-phrases', area: 'phrases-area' },
         { id: 'btn-video', area: 'premium-area' },
-        { id: 'btn-samples', area: 'sample-stories-area' }
+        { id: 'btn-samples', area: 'sample-stories-area' },
+        { id: 'btn-notebook', area: 'notebook-area' },
+        { id: 'btn-flashcards', area: 'flashcard-alani' }
     ];
 
     // All area IDs that should be exclusive
@@ -119,6 +121,11 @@ function setupNavigation() {
                 // Currently it doesn't, but Categories is default view. 
                 // We might need to manually reset the phrases view in PhrasesSection.js if user navigates away.
                 // For now, hiding/showing usually preserves state, which is fine.
+            }
+            if (btnInfo.id === 'btn-flashcards') {
+                // Trigger a refresh/shuffle if needed when entering flashcards
+                const shuffleBtn = document.getElementById('shuffle-cards-btn');
+                if (shuffleBtn) shuffleBtn.click();
             }
         });
     });

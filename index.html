@@ -158,7 +158,8 @@
 
       <!-- NEW NAVIGATION GRID -->
       <div class="nav-grid-container" style="margin-top: 30px; margin-bottom: 20px;">
-        <div class="nav-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+        <div class="nav-grid"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px;">
           <button id="btn-vocab" class="nav-card-btn">
             <span class="nav-icon">📚</span>
             <span class="nav-label">Vocabulary</span>
@@ -174,6 +175,14 @@
           <button id="btn-samples" class="nav-card-btn">
             <span class="nav-icon">📖</span>
             <span class="nav-label">Sample Stories</span>
+          </button>
+          <button id="btn-notebook" class="nav-card-btn">
+            <span class="nav-icon">📓</span>
+            <span class="nav-label">My Notebook</span>
+          </button>
+          <button id="btn-flashcards" class="nav-card-btn">
+            <span class="nav-icon">🎴</span>
+            <span class="nav-label">Practice Cards</span>
           </button>
         </div>
       </div>
