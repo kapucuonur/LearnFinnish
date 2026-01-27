@@ -47,19 +47,30 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
     }
 
     // Support for example sentence (Phrases feature)
-    const exampleHtml = word.example ? `<div class="card-example" style="margin-top:15px; font-style:italic; opacity:0.8; font-size:0.9em;">"${word.example}"</div>` : '';
+    // Structure:
+    // Front: Word + Example (Original Language)
+    // Back: Translation + Example Translation (Target Language)
+
+    const exampleHtml = word.example ?
+        `<div class="card-example" style="margin-top:20px; font-weight: 500; color: #006064; font-size:1rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px;">"${word.example}"</div>`
+        : '';
+
+    const exampleTranslationHtml = word.exampleTranslation ?
+        `<div class="card-example-translation" style="margin-top:15px; font-style:italic; opacity:0.9; font-size:0.95em; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">"${word.exampleTranslation}"</div>`
+        : '';
 
     card.innerHTML = `
         <div class="flashcard-inner">
             <div class="flashcard-front">
                 <div class="card-label">Finnish</div>
                 <div class="card-word">${word.word}</div>
+                ${exampleHtml}
                 <div class="card-hint">Click to flip</div>
             </div>
             <div class="flashcard-back">
                 <div class="card-label">English</div>
                 <div class="card-word">${word.translation}</div>
-                ${exampleHtml}
+                ${exampleTranslationHtml}
             </div>
         </div>
     `;
