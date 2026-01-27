@@ -46,17 +46,27 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
         return;
     }
 
-    // Support for example sentence (Phrases feature)
-    // Structure:
-    // Front: Word + Example (Original Language)
-    // Back: Translation + Example Translation (Target Language)
+    // Support for example sentence (Notebook & Phrases feature)
+    // Structure 1 (Notebook): word.example = { sentence: "...", translation: "..." }
+    // Structure 2 (Phrases): word.example = "...", word.exampleTranslation = "..."
 
-    const exampleHtml = word.example ?
-        `<div class="card-example" style="margin-top:20px; font-weight: 500; color: white; font-size:1rem; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;">"${word.example}"</div>`
+    let exampleText = null;
+    let translationText = null;
+
+    if (word.example && typeof word.example === 'object' && word.example.sentence) {
+        exampleText = word.example.sentence;
+        translationText = word.example.translation;
+    } else {
+        exampleText = word.example;
+        translationText = word.exampleTranslation;
+    }
+
+    const exampleHtml = exampleText ?
+        `<div class="card-example" style="margin-top:20px; font-weight: 500; color: white; font-size:1rem; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;">"${exampleText}"</div>`
         : '';
 
-    const exampleTranslationHtml = word.exampleTranslation ?
-        `<div class="card-example-translation" style="margin-top:15px; font-style:italic; opacity:0.9; font-size:0.95em; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">"${word.exampleTranslation}"</div>`
+    const exampleTranslationHtml = translationText ?
+        `<div class="card-example-translation" style="margin-top:15px; font-style:italic; opacity:0.9; font-size:0.95em; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">"${translationText}"</div>`
         : '';
 
     card.innerHTML = `

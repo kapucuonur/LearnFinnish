@@ -455,21 +455,61 @@ export function addWordEvents(targetLang = 'en') {
           notebookBtn.style.transform = 'translateY(0)';
         };
 
-        notebookBtn.onclick = (e) => {
+        notebookBtn.onclick = async (e) => {
           e.stopPropagation();
-          addWord(original, translation, 'en');
 
-          import('../services/gamification.js').then(({ addXP }) => {
-            addXP(10, 'Word Added');
-          });
+          // Show loading state on button
+          const originalBtnText = notebookBtn.innerHTML;
+          notebookBtn.innerHTML = '⏳ Saving...';
+          notebookBtn.disabled = true;
 
-          notebookBtn.innerHTML = '✓ Added!';
-          notebookBtn.style.background = '#4caf50';
+          try {
+            // 1. Get Context Sentence (Re-using logic from Step 4 or getting it fresh)
+            let contextSentence = '';
+            const allText = storyArea.textContent;
+            const sentences = allText.match(/[^.!?]+[.!?]+/g) || [allText];
+            for (const sentence of sentences) {
+              if (sentence.includes(original)) {
+                contextSentence = sentence.trim();
+                break;
+              }
+            }
+            if (!contextSentence) contextSentence = original; // Fallback
 
-          setTimeout(() => {
-            notebookBtn.innerHTML = '📖 Add to Notebook';
-            notebookBtn.style.background = '#006064';
-          }, 2000);
+            // 2. Translate Context Sentence
+            let sentenceTranslation = '';
+            try {
+              sentenceTranslation = await translateWord(contextSentence);
+            } catch (tErr) {
+              console.warn('Failed to translate context sentence:', tErr);
+              sentenceTranslation = '(Translation unavailable)';
+            }
+
+            // 3. Save to Notebook with Example
+            const exampleData = {
+              sentence: contextSentence,
+              translation: sentenceTranslation
+            };
+
+            addWord(original, translation, 'en', exampleData);
+
+            import('../services/gamification.js').then(({ addXP }) => {
+              addXP(10, 'Word Added');
+            });
+
+            notebookBtn.innerHTML = '✓ Added!';
+            notebookBtn.style.background = '#4caf50';
+          } catch (err) {
+            console.error('Add to notebook failed:', err);
+            notebookBtn.innerHTML = '❌ Error';
+            notebookBtn.style.background = '#d32f2f';
+          } finally {
+            notebookBtn.disabled = false;
+            setTimeout(() => {
+              notebookBtn.innerHTML = '📖 Add to Notebook';
+              notebookBtn.style.background = '#006064';
+            }, 3000);
+          }
         };
 
         translationContent.innerHTML = `

@@ -1,11 +1,12 @@
 const NOTEBOOK_KEY = 'LearnFinnish_words';
 
-export function addWord(word, translation, targetLang) {
+export function addWord(word, translation, targetLang, example = null) {
   const notebook = JSON.parse(localStorage.getItem(NOTEBOOK_KEY) || '[]');
   const newWord = {
     word,
     translation,
     targetLang,
+    example, // { sentence: "...", translation: "..." }
     date: new Date().toISOString()
   };
 
@@ -61,9 +62,9 @@ export function renderWordList() {
           </div>
           <div id="${exampleId}" class="word-example ${hasExample ? '' : 'hidden'}">
              ${hasExample ? `
-                <div class="example-content">
-                    <p class="fi-sentence">"${item.example.sentence}"</p>
-                    <p class="en-translation">${item.example.translation}</p>
+                <div class="example-content" style="margin-top: 8px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 3px solid var(--primary); border-radius: 4px;">
+                    <p class="fi-sentence" style="font-style: italic; font-weight: 500; margin-bottom: 4px;">"${item.example.sentence}"</p>
+                    <p class="en-translation" style="color: #666; font-size: 0.9em;">${item.example.translation}</p>
                 </div>
              ` : ''}
           </div>
