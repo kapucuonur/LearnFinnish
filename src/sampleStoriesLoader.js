@@ -62,17 +62,31 @@ function createStoryCard(story) {
 
 // Load a sample story into the story viewer
 function loadSampleStory(story) {
-  // Switch to story tab
-  const storyTab = document.getElementById('tab-story');
-  if (!storyTab) {
-    console.error('Story tab not found');
+  // 1. Reset Grid Selection
+  document.querySelectorAll('.nav-card-btn').forEach(b => b.classList.remove('active'));
+
+  // 2. Hide all Grid Content Areas
+  // We need to hide vocabulary, phrases, samples, etc.
+  const gridAreas = [
+    'vocabulary-area',
+    'phrases-area',
+    'premium-area',
+    'sample-stories-area',
+    'notebook-area'
+  ];
+
+  gridAreas.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('hidden');
+  });
+
+  // 3. Show Story Area (This is where the story will be rendered)
+  const storyArea = document.getElementById('story-area');
+  if (!storyArea) {
+    console.error('Story area not found!');
     return;
   }
-  storyTab.click();
-
-  // Get the story area
-  const storyArea = document.getElementById('story-area');
-  if (!storyArea) return;
+  storyArea.classList.remove('hidden');
 
   // Clear existing content
   storyArea.innerHTML = '';
