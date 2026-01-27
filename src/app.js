@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('✅ LearnFinnish initialized successfully!');
 });
 
+// Import helper functions
+import { renderWordList } from './services/storage.js';
+import { loadFlashcards } from './components/WordNotebook.js';
+
 function setupNavigation() {
     console.log('Setup Navigation');
     const navButtons = [
@@ -122,10 +126,13 @@ function setupNavigation() {
                 // We might need to manually reset the phrases view in PhrasesSection.js if user navigates away.
                 // For now, hiding/showing usually preserves state, which is fine.
             }
+            if (btnInfo.id === 'btn-notebook') {
+                // Refresh notebook list
+                renderWordList();
+            }
             if (btnInfo.id === 'btn-flashcards') {
-                // Trigger a refresh/shuffle if needed when entering flashcards
-                const shuffleBtn = document.getElementById('shuffle-cards-btn');
-                if (shuffleBtn) shuffleBtn.click();
+                // Initialize flashcards with fresh shuffle
+                loadFlashcards();
             }
         });
     });

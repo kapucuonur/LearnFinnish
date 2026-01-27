@@ -69,7 +69,7 @@ export default async function handler(req, res) {
   const prompt = `
   You are an expert Finnish language teacher and professional storyteller.
   
-  TASK: Write a unique, engaging, and professional short story in Finnish (B1 Intermediate Level).
+  TASK: Write a unique, engaging, and detailed short story in Finnish (B1/B2 Level).
   
   STORY PARAMETERS:
   - **Topic**: ${baseTopic}
@@ -78,16 +78,16 @@ export default async function handler(req, res) {
   - **Protagonist**: ${character}
   - **Tone**: ${tone}
   
-  LANGUAGE GUIDELINES (B1 LEVEL - STRICT):
-  - **Grammar**: Use a mix of tenses (preesens, imperfekti, perfekti). Use proper case endings (inessiivi, elatiivi, genetiivi, partitiivi) correctly. 
-  - **Sentence Structure**: Combine simple sentences with compound sentences (using 'koska', 'vaikka', 'mutta', 'kun'). Avoid overly complex academic sentence structures (himmelirakenteet).
-  - **Vocabulary**: Professional, everyday Finnish. Avoid slang unless essential for the character. Use rich adjectives and precise verbs.
+  LANGUAGE GUIDELINES (STRICT B1/B2 LEVEL):
+  - **Grammar**: You MUST use a mix of tenses (perfekti, pluskvamperfekti) and moods (kondictionaali).
+  - **Sentence Structure**: Avoid simple sentences. Use complex compound sentences with connectors ('koska', 'vaikka', 'jotta', 'siksi että', 'sillä aikaa kun').
+  - **Vocabulary**: Use sophisticated vocabulary suitable for working life and deep conversation. Avoid childish or textbook-simple language.
   
   CONTENT REQUIREMENTS:
-  1.  **NO CLICHÉS**: Do NOT start with "Olipa kerran". Jump straight into the action or dialogue.
-  2.  **Narrative Arc**: The story must have a clear beginning (setup), middle (conflict/action), and end (resolution).
-  3.  **Length**: 300 - 450 words.
-  4.  **Dialogue**: Include at least 2-3 lines of natural dialogue to show interaction.
+  1.  **LENGTH**: STRICTLY 500-800 WORDS. Do not write less.
+  2.  **No Clichés**: Do NOT start with "Olipa kerran". Start in the middle of a scene or dialogue.
+  3.  **Depth**: Describe thoughts, feelings, and sensory details (smells, sounds, lighting).
+  4.  **Dialogue**: Include extensive dialogue that reveals character personality.
   
   OUTPUT FORMAT (JSON ONLY):
   Return a strictly valid JSON object. Do not include markdown formatting like \`\`\`json.
@@ -97,7 +97,7 @@ export default async function handler(req, res) {
     "vocabulary": {
       "FinnishWord1": "English translation (contextual)",
       "FinnishWord2": "English translation (contextual)",
-      ... (Select 12-15 challenging B1-level words from the story)
+      ... (Select 15-20 challenging B1/B2-level words)
     }
   }
   `;
