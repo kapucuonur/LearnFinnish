@@ -8,8 +8,8 @@
 
 .nav-grid {
     display: grid;
-    /* Use auto-fit to span screen, min card width increased to 280px for "big" feel on desktop, smaller on mobile */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* Use auto-fit to span screen, min card width increased to 300px for "big" feel on desktop */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px !important;
 }
 
@@ -21,9 +21,9 @@
     background: var(--surface, #ffffff);
     border: 1px solid rgba(0, 0, 0, 0.08);
     /* Softer border */
-    border-radius: 20px;
+    border-radius: 24px;
     /* More rounded */
-    padding: 35px 20px;
+    padding: 40px 20px;
     /* Bigger padding */
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -31,16 +31,16 @@
     /* Subtle shadow */
     color: var(--text-primary, #333);
     text-align: center;
-    min-height: 160px;
-    /* Taller cards */
+    min-height: 200px;
+    /* MUCH Taller cards */
     position: relative;
     overflow: hidden;
 }
 
 /* Hover Effect - Lift and Glow */
 .nav-card-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 96, 100, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0, 96, 100, 0.15);
     border-color: var(--primary, #006064);
 }
 
@@ -54,15 +54,15 @@
 }
 
 .nav-icon {
-    font-size: 3.5rem;
-    /* Bigger icons */
-    margin-bottom: 15px;
+    font-size: 4.5rem;
+    /* Massive icons */
+    margin-bottom: 20px;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .nav-label {
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     /* Bigger text */
     letter-spacing: 0.5px;
 }
