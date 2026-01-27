@@ -1,8 +1,19 @@
 import { getWords } from '../services/storage.js';
 
-export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev) {
-    const container = document.getElementById('flashcard-container');
-    if (!container) return;
+// export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev) {
+export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev, containerOrId = 'flashcard-container') {
+    let container;
+
+    if (typeof containerOrId === 'string') {
+        container = document.getElementById(containerOrId);
+    } else {
+        container = containerOrId;
+    }
+
+    if (!container) {
+        console.error('Flashcard container not found:', containerOrId);
+        return;
+    }
 
     // Clear container
     container.innerHTML = '';
@@ -12,7 +23,7 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
         container.innerHTML = `
             <div class="empty-flashcard">
                 <div class="empty-icon">🎴</div>
-                <p>No words added yet. Add words to your notebook by clicking on them in the stories!</p>
+                <p>No words available to practice.</p>
             </div>
         `;
         return;
@@ -28,11 +39,15 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
         if (onFlip) onFlip();
     });
 
-    // Valid word check - match storage format
+    // Valid word check - flexible for both formats (storage vs phrases)
+    // Phrases have 'word' and 'translation' properties just like storage items
     if (!word || !word.word || !word.translation) {
         console.error('Invalid word data:', word);
         return;
     }
+
+    // Support for example sentence (Phrases feature)
+    const exampleHtml = word.example ? `<div class="card-example" style="margin-top:15px; font-style:italic; opacity:0.8; font-size:0.9em;">"${word.example}"</div>` : '';
 
     card.innerHTML = `
         <div class="flashcard-inner">
@@ -44,6 +59,7 @@ export function createFlashcard(wordList = [], index = 0, onFlip, onNext, onPrev
             <div class="flashcard-back">
                 <div class="card-label">English</div>
                 <div class="card-word">${word.translation}</div>
+                ${exampleHtml}
             </div>
         </div>
     `;

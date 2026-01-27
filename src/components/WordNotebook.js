@@ -4,9 +4,11 @@ import { createFlashcard, updateProgress } from './Flashcard.js';
 
 export function initWordNotebook() {
     const tabStory = document.getElementById('tab-story');
+    const tabPhrases = document.getElementById('tab-phrases');
     const tabFlashcard = document.getElementById('tab-flashcard');
     const tabNotebook = document.getElementById('tab-notebook');
     const storyArea = document.getElementById('story-area');
+    const phrasesArea = document.getElementById('phrases-area');
     const flashcardAlani = document.getElementById('flashcard-alani');
     const notebookArea = document.getElementById('notebook-area');
 
@@ -28,7 +30,7 @@ export function initWordNotebook() {
     // Helper to show current card
     function showCurrentCard() {
         if (!flashcardWords.length) {
-            createFlashcard([], 0); // Show empty state
+            createFlashcard([], 0, null, null, null, 'flashcard-container'); // Show empty state
             updateProgress(0, 0);
             return;
         }
@@ -42,7 +44,8 @@ export function initWordNotebook() {
             currentCardIndex,
             () => { }, // onFlip
             () => nextBtn.click(), // onNext (not used by card click by default)
-            () => prevBtn.click()  // onPrev
+            () => prevBtn.click(),  // onPrev
+            'flashcard-container'
         );
 
         updateProgress(currentCardIndex + 1, flashcardWords.length);
@@ -54,18 +57,24 @@ export function initWordNotebook() {
 
     tabStory.addEventListener('click', () => {
         tabStory.classList.add('active');
+        if (tabPhrases) tabPhrases.classList.remove('active');
         tabFlashcard.classList.remove('active');
         tabNotebook.classList.remove('active');
+
         storyArea.classList.remove('hidden');
+        if (phrasesArea) phrasesArea.classList.add('hidden');
         flashcardAlani.classList.add('hidden');
         notebookArea.classList.add('hidden');
     });
 
     tabFlashcard.addEventListener('click', () => {
         tabStory.classList.remove('active');
+        if (tabPhrases) tabPhrases.classList.remove('active');
         tabFlashcard.classList.add('active');
         tabNotebook.classList.remove('active');
+
         storyArea.classList.add('hidden');
+        if (phrasesArea) phrasesArea.classList.add('hidden');
         flashcardAlani.classList.remove('hidden');
         notebookArea.classList.add('hidden');
 
@@ -75,9 +84,12 @@ export function initWordNotebook() {
 
     tabNotebook.addEventListener('click', () => {
         tabStory.classList.remove('active');
+        if (tabPhrases) tabPhrases.classList.remove('active');
         tabFlashcard.classList.remove('active');
         tabNotebook.classList.add('active');
+
         storyArea.classList.add('hidden');
+        if (phrasesArea) phrasesArea.classList.add('hidden');
         flashcardAlani.classList.add('hidden');
         notebookArea.classList.remove('hidden');
         renderWordList();

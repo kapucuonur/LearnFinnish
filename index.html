@@ -178,6 +178,10 @@
             <span class="tab-icon">📖</span>
             <span class="tab-label">Story</span>
           </button>
+          <button id="tab-phrases" class="tab-btn">
+            <span class="tab-icon">💬</span>
+            <span class="tab-label">Phrases</span>
+          </button>
           <button id="tab-flashcard" class="tab-btn">
             <span class="tab-icon">🎴</span>
             <span class="tab-label">Flashcards</span>
@@ -224,6 +228,32 @@
           <button id="notebook-clear" class="btn btn-danger">
             Clear Notebook
           </button>
+        </div>
+      </div>
+
+      <div id="phrases-area" class="content-area card hidden"
+        style="background: transparent; border: none; box-shadow: none; padding: 0;">
+        <!-- Categories View -->
+        <div id="phrases-categories" class="phrases-categories-grid"></div>
+
+        <!-- Player View (Hidden by default) -->
+        <div id="phrases-player" class="hidden"
+          style="background: var(--surface); padding: 20px; border-radius: 16px; box-shadow: var(--shadow-md);">
+          <div class="phrases-header" style="display: flex; align-items: center; margin-bottom: 20px;">
+            <button id="phrases-back" class="btn btn-secondary btn-sm" style="margin-right: 15px;">← Back</button>
+            <h2 id="phrases-title" style="margin:0;">Topic Title</h2>
+          </div>
+
+          <div id="phrases-flashcard-container" class="flashcard-container"></div>
+
+          <div class="flashcard-controls">
+            <button id="phrases-prev" class="btn btn-secondary">← Previous</button>
+            <button id="phrases-flip" class="btn btn-primary">Flip Card</button>
+            <button id="phrases-next" class="btn btn-secondary">Next →</button>
+          </div>
+          <p class="keyboard-hint" style="text-align: center; margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
+            Tip: Click card to flip
+          </p>
         </div>
       </div>
 
