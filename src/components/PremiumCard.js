@@ -7,15 +7,15 @@ export function initPremiumCard() {
     const premiumToggle = document.getElementById('premium-toggle');
     const premiumBanner = document.getElementById('premium-banner');
 
-    if (!premiumBtn) return;
+    // 1. Navigate to internal Premium Content page (if button exists)
+    if (premiumBtn) {
+        premiumBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = 'premium-content';
+        });
+    }
 
-    // Navigate to internal Premium Content page
-    premiumBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.hash = 'premium-content';
-    });
-
-    // Premium banner toggle
+    // 2. Premium banner toggle (Independent of premiumBtn)
     if (premiumToggle && premiumBanner) {
         premiumToggle.addEventListener('click', () => {
             premiumBanner.classList.toggle('collapsed');
