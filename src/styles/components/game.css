@@ -1,0 +1,171 @@
+/* Game Section Styles */
+
+#game-area {
+    background: var(--surface, #fff);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+    margin-top: 30px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    min-height: 500px;
+}
+
+.game-ui-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.game-header {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.game-setup-form {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 1rem;
+}
+
+.btn-large {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.loading-spinner {
+    font-size: 1.2rem;
+    color: var(--primary);
+    padding: 3rem;
+    text-align: center;
+}
+
+/* Canvas & HUD */
+.game-hud {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 8px 8px 0 0;
+    font-weight: bold;
+}
+
+#game-canvas {
+    background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+    /* Sky */
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0 0 8px 8px;
+    border: 2px solid #2c3e50;
+}
+
+/* Overlays */
+#game-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.word-toast {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-align: center;
+    animation: popIn 0.3s ease-out;
+}
+
+.word-toast .finnish {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.word-toast .english {
+    font-size: 1rem;
+    color: #ddd;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.game-result {
+    text-align: center;
+    padding: 3rem;
+}
+
+.game-result h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+}
+
+/* Dark Mode Support */
+body.dark-theme #game-area {
+    background: #1e1e1e;
+}
+
+body.dark-theme .game-setup-form {
+    background: #2d2d2d;
+}
+
+body.dark-theme .form-group label {
+    color: #eee;
+}
+
+body.dark-theme #game-canvas {
+    background: linear-gradient(to bottom, #1a237e, #311b92);
+    /* Night Sky */
+    border-color: #555;
+}

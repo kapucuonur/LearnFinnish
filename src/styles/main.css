@@ -32,6 +32,7 @@
 @import url('./components/sentence-reader.css');
 @import url('./components/phrases.css');
 @import url('./components/puzzle.css');
+@import url('./components/game.css');
 @import url('./components/nav-grid.css');
 
 /* Utility Classes */

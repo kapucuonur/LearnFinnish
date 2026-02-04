@@ -11,6 +11,7 @@ import { initUsageLimitModal } from './components/UsageLimitModal.js';
 import { initThemeToggle } from './components/ThemeToggle.js';
 import { initChatbot } from './components/Chatbot.js';
 import { initPuzzleSection } from './components/PuzzleSection.js';
+import { initGameSection } from './components/GameSection.js';
 import { initializeStripe, handlePaymentCallback } from './services/payment.js';
 import { updateWordCount } from './services/storage.js';
 import { STRIPE_PUBLISHABLE_KEY } from './config/constants.js';
@@ -86,6 +87,7 @@ import { loadFlashcards } from './components/WordNotebook.js';
 
 function setupNavigation() {
     console.log('Setup Navigation');
+    // Navigation Logic
     const navButtons = [
         { id: 'btn-vocab', area: 'vocabulary-area' },
         { id: 'btn-phrases', area: 'phrases-area' },
@@ -94,7 +96,8 @@ function setupNavigation() {
         { id: 'btn-notebook', area: 'notebook-area' },
         { id: 'btn-notebook', area: 'notebook-area' },
         { id: 'btn-flashcards', area: 'flashcard-alani' },
-        { id: 'btn-puzzle', area: 'puzzle-area' }
+        { id: 'btn-puzzle', area: 'puzzle-area' },
+        { id: 'btn-game', area: 'game-area' } // New Game Button
     ];
 
     // All area IDs that should be exclusive
