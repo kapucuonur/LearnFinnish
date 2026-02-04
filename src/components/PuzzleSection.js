@@ -1,4 +1,4 @@
-import puzzleData from '../data/crossword.json';
+import { puzzleData } from '../data/puzzleData.js';
 
 export function initPuzzleSection() {
     const puzzleArea = document.getElementById('puzzle-area');
