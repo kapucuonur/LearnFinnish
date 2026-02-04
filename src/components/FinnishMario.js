@@ -5,7 +5,7 @@ import { db } from '../services/firebase.js'; // Placeholder import if using raw
 // Note: In this vanilla app structure, we might need a specific storage helper.
 // For now, I will implement saveScore directly or via a mock helper if db isn't exposed globally.
 
-export async function initFinnishMario() {
+export async function initFinnishMario(topic = "Finnish Vocabulary", difficulty = "B1") {
     const container = document.getElementById('game-area');
     if (!container) return;
 
@@ -13,7 +13,7 @@ export async function initFinnishMario() {
     container.innerHTML = `<div class="loading-spinner">Mushroom Power-Up! Loading Level... 🍄</div>`;
 
     // Fetch Data
-    const words = await aiService.generateGameContent("Finnish Vocabulary", "B1");
+    const words = await aiService.generateGameContent(topic, difficulty);
 
     // Start Game
     new FinnishMarioGame(container, words);
@@ -41,11 +41,11 @@ class FinnishMarioGame {
                 <span>🍄 Finnish Mario</span>
                 <span>Score: <span id="mario-score">0</span></span>
             </div>
-            <canvas id="mario-canvas"></canvas>
+            <canvas id="game-canvas"></canvas>
             <div id="mario-overlay" class="hidden"></div>
         `;
 
-        this.canvas = document.getElementById('mario-canvas');
+        this.canvas = document.getElementById('game-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.canvas.width = 800;
         this.canvas.height = 400;
