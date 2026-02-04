@@ -1,0 +1,162 @@
+/* Crossword Puzzle Styles */
+
+#puzzle-area {
+    background: var(--surface, #fff);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+    margin-top: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.puzzle-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border, #eee);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.puzzle-header h2 {
+    margin: 0;
+    margin-left: 15px;
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+.puzzle-container {
+    display: flex;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .puzzle-container {
+        flex-direction: column;
+    }
+}
+
+.puzzle-left {
+    flex: 2;
+}
+
+.puzzle-right {
+    flex: 1;
+    min-width: 250px;
+}
+
+#puzzle-grid {
+    display: grid;
+    gap: 2px;
+    background: #333;
+    /* Grid lines color */
+    border: 2px solid #333;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.puzzle-cell {
+    background: #222;
+    /* Empty cell color */
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.puzzle-cell[data-has-letter="true"] {
+    background: #fff;
+}
+
+.puzzle-cell.empty {
+    background: #f0f0f0;
+    /* Non-playable area */
+    /* Or keep it transparent/dark if preferred. Traditional apps use black for blocks.
+       Let's stick to standard newspaper style: Start with all black/empty?
+       Wait, usually empty cells (no letter) are black. Cells with letters are white.
+    */
+    background: #222;
+}
+
+.puzzle-input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: transparent;
+    padding: 0;
+    color: #333;
+    outline: none;
+}
+
+.puzzle-input:focus {
+    background: #e3f2fd;
+}
+
+.puzzle-input.highlight {
+    background: #fff9c4;
+    /* Yellowish highlight for current word */
+}
+
+.puzzle-input.correct {
+    color: #2e7d32;
+    background: #e8f5e9;
+}
+
+.puzzle-input.incorrect {
+    color: #c62828;
+    background: #ffebee;
+}
+
+.puzzle-clues-box {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    height: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.puzzle-clues-box h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+#puzzle-clues {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.clue-item {
+    padding: 8px;
+    margin-bottom: 5px;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    border: 1px solid transparent;
+}
+
+.clue-item:hover {
+    background: #e0f7fa;
+    border-color: #b2ebf2;
+}
+
+.puzzle-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

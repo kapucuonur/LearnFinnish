@@ -190,6 +190,10 @@
             <span class="nav-icon">🎴</span>
             <span class="nav-label">Practice Cards</span>
           </button>
+          <button id="btn-puzzle" class="nav-card-btn">
+            <span class="nav-icon">🧩</span>
+            <span class="nav-label">Puzzle</span>
+          </button>
         </div>
       </div>
 
@@ -325,6 +329,34 @@
           <p class="keyboard-hint" style="text-align: center; margin-top: 10px; opacity: 0.7; font-size: 0.9em;">
             Tip: Click card to flip
           </p>
+        </div>
+      </div>
+
+      <!-- 5. PUZZLE AREA -->
+      <div id="puzzle-area" class="content-area card hidden">
+        <div class="puzzle-header">
+          <button id="puzzle-back" class="btn btn-secondary btn-sm" style="margin-right: 15px;">← Back</button>
+          <h2>Finnish Crossword (Work & Daily Life)</h2>
+        </div>
+
+        <div class="puzzle-container">
+          <div class="puzzle-left">
+            <div id="puzzle-grid">
+              <!-- Grid injected by JS -->
+            </div>
+            <div class="puzzle-controls">
+              <button id="puzzle-check-btn" class="btn btn-primary">Check Answers</button>
+            </div>
+          </div>
+
+          <div class="puzzle-right">
+            <div class="puzzle-clues-box">
+              <h3>Clues</h3>
+              <ul id="puzzle-clues">
+                <!-- Clues injected by JS -->
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -10,6 +10,7 @@ import { initPWAInstall } from './components/PWAInstall.js';
 import { initUsageLimitModal } from './components/UsageLimitModal.js';
 import { initThemeToggle } from './components/ThemeToggle.js';
 import { initChatbot } from './components/Chatbot.js';
+import { initPuzzleSection } from './components/PuzzleSection.js';
 import { initializeStripe, handlePaymentCallback } from './services/payment.js';
 import { updateWordCount } from './services/storage.js';
 import { STRIPE_PUBLISHABLE_KEY } from './config/constants.js';
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initPWAInstall();
     initUsageLimitModal();
     initChatbot();
+    initPuzzleSection();
 
     // 2. Setup Navigation
     setupNavigation();
@@ -90,7 +92,9 @@ function setupNavigation() {
         { id: 'btn-video', area: 'premium-area' },
         { id: 'btn-samples', area: 'sample-stories-area' },
         { id: 'btn-notebook', area: 'notebook-area' },
-        { id: 'btn-flashcards', area: 'flashcard-alani' }
+        { id: 'btn-notebook', area: 'notebook-area' },
+        { id: 'btn-flashcards', area: 'flashcard-alani' },
+        { id: 'btn-puzzle', area: 'puzzle-area' }
     ];
 
     // All area IDs that should be exclusive

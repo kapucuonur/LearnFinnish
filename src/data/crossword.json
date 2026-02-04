@@ -1,0 +1,51 @@
+[
+  {
+    "answer": "HAASTATTELU",
+    "clue": "Interview",
+    "startX": 0,
+    "startY": 6,
+    "direction": "horizontal"
+  },
+  {
+    "answer": "TY\u00d6KAVERI",
+    "clue": "Colleague",
+    "startX": 1,
+    "startY": 2,
+    "direction": "vertical"
+  },
+  {
+    "answer": "KOKOUS",
+    "clue": "Meeting",
+    "startX": 3,
+    "startY": 1,
+    "direction": "vertical"
+  },
+  {
+    "answer": "KOKEMUS",
+    "clue": "Experience",
+    "startX": 3,
+    "startY": 3,
+    "direction": "horizontal"
+  },
+  {
+    "answer": "LOMA",
+    "clue": "Vacation",
+    "startX": 7,
+    "startY": 1,
+    "direction": "vertical"
+  },
+  {
+    "answer": "URA",
+    "clue": "Career",
+    "startX": 0,
+    "startY": 9,
+    "direction": "horizontal"
+  },
+  {
+    "answer": "PALKKA",
+    "clue": "Salary",
+    "startX": 5,
+    "startY": 1,
+    "direction": "horizontal"
+  }
+]
