@@ -1,4 +1,4 @@
-import { auth } from '../services/auth.js';
+import { getFirebase } from '../firebase.js';
 import { getDetailedPremiumStatus } from '../services/payment.js';
 
 export class PremiumContentPage {
@@ -7,6 +7,7 @@ export class PremiumContentPage {
     }
 
     async render(lang = 'en') {
+        const { auth } = await getFirebase();
         const currentUser = auth.currentUser;
 
         // Container with loading initially (though router handles async wait, we might want internal states if we move away from router-wait)

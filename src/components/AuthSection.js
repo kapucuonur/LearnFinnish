@@ -1,5 +1,5 @@
-// Auth Section Component - v4.0 (English Only)
-import { auth, signInWithGoogle, signOutUser, onAuthStateChanged } from '../services/auth.js';
+// Auth Section Component - v4.1 (Secure Async)
+import { signInWithGoogle, signOutUser, observeAuthState } from '../services/auth.js';
 
 export function initAuthSection() {
     const loginBtn = document.getElementById('login-btn');
@@ -34,8 +34,9 @@ export function initAuthSection() {
         }
     };
 
-    // Auth state observer
-    onAuthStateChanged(auth, (user) => {
+    // Auth state observer (Async)
+    // We treat this promise as fire-and-forget for component initialization
+    observeAuthState((user) => {
         const billingBtn = document.getElementById('billing-portal-btn');
         const stripeLinks = document.querySelectorAll('a[href^="https://buy.stripe.com"]');
 
@@ -75,5 +76,5 @@ export function initAuthSection() {
                 link.href = link.href.split('?')[0];
             });
         }
-    });
+    }).catch(err => console.error("Auth Observer verification failed:", err));
 }

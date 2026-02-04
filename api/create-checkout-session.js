@@ -29,8 +29,8 @@ export default async function handler(req, res) {
         userId: userId,
         email: email,
       },
-      success_url: `${process.env.NEXT_PUBLIC_URL || 'https://learnfinnish.vercel.app'}/?payment=success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL || 'https://learnfinnish.vercel.app'}/?payment=cancelled`,
+      success_url: `${process.env.NEXT_PUBLIC_URL || process.env.VITE_PUBLIC_URL || 'https://learnfinnish.vercel.app'}/?payment=success`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL || process.env.VITE_PUBLIC_URL || 'https://learnfinnish.vercel.app'}/?payment=cancelled`,
     });
 
     res.status(200).json({ sessionId: session.id });

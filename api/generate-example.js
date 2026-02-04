@@ -14,7 +14,10 @@ export default async function handler(req, res) {
     const prompt = `Write a simple Finnish example sentence (B1 level) using the word "${word}". Also provide the English translation. Return ONLY JSON in this format: { "sentence": "Finnish sentence here", "translation": "English translation here" }. Do not add any markdown formatting.`;
 
     try {
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+        if (!apiKey) throw new Error("Missing Gemini API Key");
+
+        const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
         const result = await model.generateContent(prompt);

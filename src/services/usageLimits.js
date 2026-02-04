@@ -1,5 +1,5 @@
 // Usage Limits Service for Free Users
-import { auth } from './auth.js';
+import { getFirebase } from '../firebase.js';
 import { checkPremiumStatus } from './payment.js';
 
 const USAGE_KEY = 'LearnFinnish_usage';
@@ -48,10 +48,11 @@ function saveUsageData(usage) {
 
 // Check if user is premium (bypass all limits)
 export async function isPremiumUser() {
-    const user = auth.currentUser;
-    if (!user) return false;
-
     try {
+        const { auth } = await getFirebase(); // Secure Init
+        const user = auth.currentUser;
+        if (!user) return false;
+
         return await checkPremiumStatus(user.uid);
     } catch (error) {
         console.error('Error checking premium status:', error);

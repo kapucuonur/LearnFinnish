@@ -15,7 +15,8 @@ export default async function handler(req, res) {
   }
 
   // 1. Try Gemini (Smart, Context-aware) - 1,500 req/day free
-  if (process.env.GEMINI_API_KEY) {
+  const geminiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+  if (geminiKey) {
     try {
       const translation = await translateWithGemini(text, context);
       console.log('Gemini translation success');
@@ -45,7 +46,10 @@ async function translateWithGemini(text, context) {
     ? `Given Finnish sentence: "${context}". Translate ONLY word "${text}" to ${targetLanguage}. No explanations.`
     : `Translate Finnish word "${text}" to ${targetLanguage}. Output ONLY the translation.`;
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+  if (!apiKey) throw new Error("Missing Gemini API Key");
+
+  const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
   const result = await model.generateContent(prompt);

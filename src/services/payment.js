@@ -1,8 +1,6 @@
 // Payment handling with Stripe
-import { auth } from './auth.js';
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const db = getFirestore();
+import { getFirebase } from '../firebase.js';
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 
 // Initialize Stripe (loaded from index.html script)
@@ -24,6 +22,7 @@ export async function checkPremiumStatus(userId) {
 // Get detailed premium status (including trial information)
 export async function getDetailedPremiumStatus(userId) {
   try {
+    const { auth, db } = await getFirebase();
     // Admin bypass
     const currentUser = auth.currentUser;
     if (currentUser && currentUser.email === 'onurbenn@gmail.com') {
@@ -51,6 +50,7 @@ export async function getDetailedPremiumStatus(userId) {
 
 // Create checkout session and redirect to Stripe
 export async function createCheckoutSession() {
+  const { auth } = await getFirebase();
   const user = auth.currentUser;
 
   if (!user) {

@@ -18,16 +18,19 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-        console.error("GEMINI_API_KEY is not defined.");
-        return res.status(500).json({ error: 'Server configuration error' });
+        console.error("DEBUG: API Key is missing. Env Vars found:", Object.keys(process.env));
+        return res.status(500).json({
+            error: 'Configuration Error',
+            details: 'Server API Key is missing. Please check Vercel Environment Variables.'
+        });
     }
 
     try {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-        const prompt = `Generate ${numWords} Finnish words related to "${topic}" at ${diffLevel} level. 
-        Return ONLY a raw JSON array (no markdown code blocks) in this format: 
+        const prompt = `Generate ${numWords} Finnish words related to "${topic}" at ${diffLevel} level.
+        Return ONLY a raw JSON array (no markdown code blocks) in this format:
         [{"word": "FinnishWord", "translation": "EnglishTranslation"}]`;
 
         const result = await model.generateContent(prompt);

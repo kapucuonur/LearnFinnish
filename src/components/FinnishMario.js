@@ -1,26 +1,32 @@
-
 import { aiService } from '../services/ai.js';
-// Assuming a storage service exists, or we mock it
-import { db } from '../services/firebase.js'; // Placeholder import if using raw firebase
-// Note: In this vanilla app structure, we might need a specific storage helper.
-// For now, I will implement saveScore directly or via a mock helper if db isn't exposed globally.
+import { getFirebase } from '../firebase.js'; // Use Secure Async Getter
+import { doc, updateDoc, arrayUnion, increment, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 export async function initFinnishMario(topic = "Finnish Vocabulary", difficulty = "B1") {
+    // ... logic remains same ...
     const container = document.getElementById('game-area');
     if (!container) return;
 
     // Loading State
     container.innerHTML = `<div class="loading-spinner">Mushroom Power-Up! Loading Level... 🍄</div>`;
 
-    // Fetch Data
-    const words = await aiService.generateGameContent(topic, difficulty);
+    try {
+        // Ensure Firebase is ready before starting game flow
+        await getFirebase();
 
-    // Start Game
-    new FinnishMarioGame(container, words);
+        // Fetch Data
+        const words = await aiService.generateGameContent(topic, difficulty);
+
+        // Start Game
+        new FinnishMarioGame(container, words);
+    } catch (e) {
+        container.innerHTML = `<p style="color:red; text-align:center;">Game Error: ${e.message}</p>`;
+    }
 }
 
 class FinnishMarioGame {
     constructor(container, words) {
+        // ... constructor remains same ...
         this.container = container;
         this.words = words;
         this.score = 0;
@@ -34,6 +40,8 @@ class FinnishMarioGame {
 
         this.setup();
     }
+
+    // ... setup, generateLevel, loop, update, draw, rectIntersect remain same...
 
     setup() {
         this.container.innerHTML = `
@@ -145,11 +153,33 @@ class FinnishMarioGame {
         this.saveProgress(c.word);
     }
 
-    saveProgress(word) {
-        // Saving learned word to Firestore (mock or real if firebase is exposed)
-        console.log(`Saving learned word: ${word}`);
-        // Implementation note: In this setup, we'd typically call a service/api
-        // e.g. await db.collection('users').doc(userId).collection('learned').add({ word, date: new Date() });
+    async saveProgress(word) {
+        const { auth, db } = await getFirebase(); // Get Secure Instance
+        const user = auth.currentUser;
+        if (user && user.uid) {
+            try {
+                const userRef = doc(db, "users", user.uid);
+                // Ensure document exists
+                try {
+                    await updateDoc(userRef, {
+                        totalScore: increment(10),
+                        learnedWords: arrayUnion(word)
+                    });
+                } catch (e) {
+                    // Try setting it if update fails
+                    await setDoc(userRef, {
+                        totalScore: increment(10),
+                        learnedWords: arrayUnion(word)
+                    }, { merge: true });
+                }
+
+                console.log(`Saved word: ${word} to Firebase!`);
+            } catch (error) {
+                console.error("Firebase Save Error:", error);
+            }
+        } else {
+            console.log("User not logged in, progress not saved.");
+        }
     }
 
     draw() {
