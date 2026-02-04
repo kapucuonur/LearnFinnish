@@ -6,7 +6,7 @@
     box-shadow: var(--shadow-md);
     padding: 20px;
     margin-top: 30px;
-    max-width: 800px;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -17,13 +17,26 @@
     border-bottom: 1px solid var(--border, #eee);
     padding-bottom: 15px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .puzzle-header h2 {
     margin: 0;
-    margin-left: 15px;
     font-size: 1.5rem;
     color: var(--text-primary);
+    margin-right: auto;
+}
+
+.puzzle-topic-select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--primary);
+    background: var(--surface);
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 .puzzle-container {
@@ -31,7 +44,7 @@
     gap: 30px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     .puzzle-container {
         flex-direction: column;
     }
@@ -39,28 +52,31 @@
 
 .puzzle-left {
     flex: 2;
+    display: flex;
+    flex-direction: column;
 }
 
 .puzzle-right {
     flex: 1;
-    min-width: 250px;
+    min-width: 280px;
 }
 
 #puzzle-grid {
     display: grid;
-    gap: 2px;
-    background: #333;
+    gap: 1px;
+    background: #444;
     /* Grid lines color */
-    border: 2px solid #333;
+    border: 4px solid #444;
     width: 100%;
     aspect-ratio: 1;
-    max-width: 500px;
+    max-width: 550px;
     margin: 0 auto;
+    border-radius: 4px;
 }
 
 .puzzle-cell {
     background: #222;
-    /* Empty cell color */
+    /* Empty/Black cell color */
     position: relative;
     aspect-ratio: 1;
     display: flex;
@@ -73,13 +89,18 @@
 }
 
 .puzzle-cell.empty {
-    background: #f0f0f0;
-    /* Non-playable area */
-    /* Or keep it transparent/dark if preferred. Traditional apps use black for blocks.
-       Let's stick to standard newspaper style: Start with all black/empty?
-       Wait, usually empty cells (no letter) are black. Cells with letters are white.
-    */
     background: #222;
+}
+
+.cell-number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.65rem;
+    line-height: 1;
+    color: #333;
+    pointer-events: none;
+    font-weight: bold;
 }
 
 .puzzle-input {
@@ -87,13 +108,14 @@
     height: 100%;
     border: none;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: bold;
     text-transform: uppercase;
     background: transparent;
     padding: 0;
     color: #333;
     outline: none;
+    z-index: 2;
 }
 
 .puzzle-input:focus {
@@ -101,35 +123,57 @@
 }
 
 .puzzle-input.highlight {
-    background: #fff9c4;
-    /* Yellowish highlight for current word */
+    background: #FFF9C4;
+    /* Light Yellow */
+}
+
+/* Revealed hint style */
+.puzzle-input.hint-revealed {
+    animation: flashHint 1s ease-out;
+    background: #fff59d;
+}
+
+@keyframes flashHint {
+    0% {
+        background: #ffeb3b;
+        transform: scale(1.1);
+    }
+
+    100% {
+        background: #fff;
+        transform: scale(1);
+    }
 }
 
 .puzzle-input.correct {
     color: #2e7d32;
     background: #e8f5e9;
+    /* Light Green */
 }
 
 .puzzle-input.incorrect {
     color: #c62828;
     background: #ffebee;
+    /* Light Red */
 }
 
 .puzzle-clues-box {
     background: #f9f9f9;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 12px;
     height: 100%;
-    max-height: 500px;
+    max-height: 600px;
     overflow-y: auto;
+    border: 1px solid var(--border);
 }
 
 .puzzle-clues-box h3 {
     margin-top: 0;
     font-size: 1.1rem;
     border-bottom: 2px solid var(--primary);
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    color: var(--primary-dark);
 }
 
 #puzzle-clues {
@@ -139,24 +183,126 @@
 }
 
 .clue-item {
-    padding: 8px;
-    margin-bottom: 5px;
+    padding: 10px;
+    margin-bottom: 8px;
     background: #fff;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.2s;
+    font-size: 0.95rem;
+    transition: all 0.2s;
     border: 1px solid transparent;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .clue-item:hover {
     background: #e0f7fa;
     border-color: #b2ebf2;
+    transform: translateX(2px);
+}
+
+.direction-badge {
+    display: inline-block;
+    font-size: 0.75em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #eee;
+    color: #666;
+    margin-left: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .puzzle-controls {
-    margin-top: 20px;
+    margin-top: 25px;
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-hint {
+    background-color: #ffb74d;
+    /* Orange/Gold for Hint */
+    color: white;
+}
+
+.btn-hint:hover {
+    background-color: #ffa726;
+}
+
+/* Success Animation Pulse */
+.success-pulse {
+    animation: successPulse 0.5s ease-in-out 3;
+    background-color: #4caf50 !important;
+    transform: scale(1.1);
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Dark Mode Overrides */
+body.dark-theme .puzzle-cell.empty {
+    background: #111;
+}
+
+body.dark-theme #puzzle-grid {
+    background: #555;
+    border-color: #555;
+}
+
+body.dark-theme .puzzle-cell[data-has-letter="true"] {
+    background: #2d2d2d;
+}
+
+body.dark-theme .puzzle-input {
+    color: #fff;
+}
+
+body.dark-theme .puzzle-input:focus {
+    background: #37474f;
+}
+
+body.dark-theme .puzzle-input.highlight {
+    background: #4a4a35;
+    /* Dark yellow-ish */
+}
+
+body.dark-theme .puzzle-clues-box {
+    background: #1e1e1e;
+    border-color: #333;
+}
+
+body.dark-theme .clue-item {
+    background: #2d2d2d;
+    color: #eee;
+}
+
+body.dark-theme .clue-item:hover {
+    background: #37474f;
+    border-color: var(--primary);
+}
+
+body.dark-theme .cell-number {
+    color: #aaa;
+}
+
+body.dark-theme .puzzle-input.correct {
+    background: rgba(46, 125, 50, 0.3);
+    color: #81c784;
+}
+
+body.dark-theme .puzzle-input.incorrect {
+    background: rgba(198, 40, 40, 0.3);
+    color: #e57373;
 }

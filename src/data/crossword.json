@@ -1,51 +1,195 @@
-[
-  {
-    "answer": "HAASTATTELU",
-    "clue": "Interview",
-    "startX": 0,
-    "startY": 6,
-    "direction": "horizontal"
-  },
-  {
-    "answer": "TY\u00d6KAVERI",
-    "clue": "Colleague",
-    "startX": 1,
-    "startY": 2,
-    "direction": "vertical"
-  },
-  {
-    "answer": "KOKOUS",
-    "clue": "Meeting",
-    "startX": 3,
-    "startY": 1,
-    "direction": "vertical"
-  },
-  {
-    "answer": "KOKEMUS",
-    "clue": "Experience",
-    "startX": 3,
-    "startY": 3,
-    "direction": "horizontal"
-  },
-  {
-    "answer": "LOMA",
-    "clue": "Vacation",
-    "startX": 7,
-    "startY": 1,
-    "direction": "vertical"
-  },
-  {
-    "answer": "URA",
-    "clue": "Career",
-    "startX": 0,
-    "startY": 9,
-    "direction": "horizontal"
-  },
-  {
-    "answer": "PALKKA",
-    "clue": "Salary",
-    "startX": 5,
-    "startY": 1,
-    "direction": "horizontal"
-  }
-]
+Generating puzzle for Work...
+Generating puzzle for Animals...
+Generating puzzle for Culture...
+Generating puzzle for Food...
+{
+  "Work": [
+    {
+      "answer": "HAASTATTELU",
+      "clue": "Interview",
+      "startX": 0,
+      "startY": 8,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "TY\u00d6PAIKKA",
+      "clue": "Workplace",
+      "startX": 2,
+      "startY": 0,
+      "direction": "vertical"
+    },
+    {
+      "answer": "LOMA",
+      "clue": "Vacation",
+      "startX": 5,
+      "startY": 5,
+      "direction": "vertical"
+    },
+    {
+      "answer": "POMO",
+      "clue": "Boss",
+      "startX": 4,
+      "startY": 6,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "URA",
+      "clue": "Career",
+      "startX": 0,
+      "startY": 4,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "PALKKA",
+      "clue": "Salary",
+      "startX": 2,
+      "startY": 3,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "TY\u00d6KAVERI",
+      "clue": "Colleague",
+      "startX": 2,
+      "startY": 0,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "KOKOUS",
+      "clue": "Meeting",
+      "startX": 0,
+      "startY": 0,
+      "direction": "vertical"
+    }
+  ],
+  "Animals": [
+    {
+      "answer": "HEVONEN",
+      "clue": "Horse",
+      "startX": 2,
+      "startY": 8,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "KOIRA",
+      "clue": "Dog",
+      "startX": 5,
+      "startY": 7,
+      "direction": "vertical"
+    },
+    {
+      "answer": "K\u00c4\u00c4RME",
+      "clue": "Snake",
+      "startX": 3,
+      "startY": 3,
+      "direction": "vertical"
+    },
+    {
+      "answer": "KISSA",
+      "clue": "Cat",
+      "startX": 3,
+      "startY": 3,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "KARHU",
+      "clue": "Bear",
+      "startX": 7,
+      "startY": 2,
+      "direction": "vertical"
+    },
+    {
+      "answer": "LEHM\u00c4",
+      "clue": "Cow",
+      "startX": 5,
+      "startY": 5,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "KALA",
+      "clue": "Fish",
+      "startX": 7,
+      "startY": 2,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "SUSI",
+      "clue": "Wolf",
+      "startX": 4,
+      "startY": 0,
+      "direction": "vertical"
+    },
+    {
+      "answer": "LINTU",
+      "clue": "Bird",
+      "startX": 0,
+      "startY": 1,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "LAMMAS",
+      "clue": "Sheep",
+      "startX": 0,
+      "startY": 1,
+      "direction": "vertical"
+    }
+  ],
+  "Culture": [
+    {
+      "answer": "ITSEN\u00c4ISYYS",
+      "clue": "Independence",
+      "startX": 7,
+      "startY": 0,
+      "direction": "vertical"
+    },
+    {
+      "answer": "KALEVALA",
+      "clue": "National Epic",
+      "startX": 4,
+      "startY": 3,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "RUISLEIP\u00c4",
+      "clue": "Rye Bread",
+      "startX": 1,
+      "startY": 0,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "SAUNA",
+      "clue": "Finnish steam bath",
+      "startX": 7,
+      "startY": 7,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "M\u00d6KKI",
+      "clue": "Cottage",
+      "startX": 3,
+      "startY": 6,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "MUUMIT",
+      "clue": "Moomins",
+      "startX": 3,
+      "startY": 6,
+      "direction": "vertical"
+    },
+    {
+      "answer": "SISU",
+      "clue": "Grit/Determination",
+      "startX": 0,
+      "startY": 7,
+      "direction": "horizontal"
+    },
+    {
+      "answer": "SIBELIUS",
+      "clue": "Famous Composer",
+      "startX": 1,
+      "startY": 2,
+      "direction": "vertical"
+    }
+  ],
+  "Food": []
+}
