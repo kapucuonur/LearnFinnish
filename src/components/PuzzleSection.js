@@ -1,25 +1,16 @@
-// import puzzleData from '../data/crossword.json' with { type: 'json' }; // Removed for compatibility
+import puzzleData from '../data/crossword.json';
 
-let puzzleData = null;
-
-export async function initPuzzleSection() {
+export function initPuzzleSection() {
     const puzzleArea = document.getElementById('puzzle-area');
     if (!puzzleArea) return;
 
-    // Fetch data if not loaded
+    // --- State ---
+    // Ensure puzzleData is valid
     if (!puzzleData) {
-        try {
-            const resp = await fetch('/src/data/crossword.json');
-            if (!resp.ok) throw new Error('Failed to load puzzle data');
-            puzzleData = await resp.json();
-        } catch (e) {
-            console.error("Puzzle data load error:", e);
-            document.getElementById('puzzle-grid').innerHTML = '<p style="color:white; padding:20px;">Error loading puzzles. Please try reloading.</p>';
-            return;
-        }
+        console.error("Puzzle data not loaded");
+        return;
     }
 
-    // --- State ---
     let currentTopic = Object.keys(puzzleData)[0]; // Default to first topic
     let currentWords = puzzleData[currentTopic];
     let inputsGrid = []; // [y][x] -> input element
