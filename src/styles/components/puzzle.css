@@ -306,3 +306,59 @@ body.dark-theme .puzzle-input.incorrect {
     background: rgba(198, 40, 40, 0.3);
     color: #e57373;
 }
+
+/* Mobile Optimizations */
+@media (max-width: 600px) {
+    #puzzle-area {
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 12px;
+    }
+
+    .puzzle-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .puzzle-header h2 {
+        font-size: 1.25rem;
+        text-align: center;
+    }
+
+    .puzzle-topic-select {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    /* Grid Optimization for Small Screens */
+    #puzzle-grid {
+        border-width: 2px;
+        max-width: 100%;
+        /* Ensure it fits container */
+    }
+
+    .puzzle-input {
+        font-size: 0.9rem;
+        /* Smaller font for letters */
+    }
+
+    .cell-number {
+        font-size: 0.5rem;
+        top: 1px;
+        left: 1px;
+    }
+
+    .puzzle-clues-box {
+        max-height: 250px;
+        /* Reduce height on mobile */
+    }
+
+    .clue-item {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+}
