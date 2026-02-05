@@ -346,10 +346,20 @@ body.dark-theme .puzzle-input.incorrect {
         margin: 0 auto;
     }
 
-    .puzzle-input {
+    /* Specific selector to override global input styles */
+    #puzzle-grid .puzzle-input {
         /* Dynamic font size: scales between 12px and 16px roughly */
         font-size: clamp(0.7rem, 2.5vw, 1rem);
-        padding: 0;
+
+        /* Tesing Strict resets for global styles */
+        min-height: 0 !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        height: 100%;
+        width: 100%;
+        line-height: normal;
+        border-radius: 0;
     }
 
     .cell-number {
