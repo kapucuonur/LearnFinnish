@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
     const { topic, difficulty, level, count } = req.query;
 
-    const numWords = count || 10;
+    const numWords = count || 25;
     const diffLevel = level || difficulty || 'A1';
 
     if (!topic) {

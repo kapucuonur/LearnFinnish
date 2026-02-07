@@ -60,13 +60,17 @@ class FinnishMarioGame {
 
     setup() {
         this.container.innerHTML = `
-            <div class="game-hud" style="background:#d32f2f;">
+            <div class="game-hud" style="background:#d32f2f; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
                 <span>🍄 Finnish Mario</span>
                 <span>Score: <span id="mario-score">0</span></span>
+                <button id="exit-game-btn" style="background: #fff; color: #d32f2f; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">Exit</button>
             </div>
             <canvas id="game-canvas"></canvas>
             <div id="mario-overlay" class="hidden"></div>
         `;
+
+        // Exit Button Listener
+        document.getElementById('exit-game-btn').addEventListener('click', () => this.exitGame());
 
         this.canvas = document.getElementById('game-canvas');
         this.ctx = this.canvas.getContext('2d');
@@ -78,11 +82,57 @@ class FinnishMarioGame {
 
         // Inputs
         this.keys = {};
-        window.addEventListener('keydown', e => this.keys[e.code] = true);
-        window.addEventListener('keyup', e => this.keys[e.code] = false);
+        this.handleKeyDown = e => this.keys[e.code] = true;
+        this.handleKeyUp = e => this.keys[e.code] = false;
+
+        window.addEventListener('keydown', this.handleKeyDown);
+        window.addEventListener('keyup', this.handleKeyUp);
 
         // Start
         this.gameLoop = requestAnimationFrame(this.loop.bind(this));
+    }
+
+    exitGame() {
+        if (this.gameLoop) cancelAnimationFrame(this.gameLoop);
+
+        // Remove Listeners
+        window.removeEventListener('keydown', this.handleKeyDown);
+        window.removeEventListener('keyup', this.handleKeyUp);
+
+        // Restore Main Menu
+        this.container.innerHTML = `
+            <div class="game-intro">
+                <h2>🇫🇮 Finnish Mario (Run & Learn)</h2>
+                <p>Collect Gold Words! 🍄</p>
+                <div class="game-settings">
+                    <label>Topic</label>
+                    <select id="game-topic">
+                        <option>Food</option>
+                        <option>Travel</option>
+                        <option>Numbers</option>
+                        <option>Animals</option>
+                    </select>
+
+                    <label>Difficulty</label>
+                    <select id="game-difficulty">
+                        <option>Beginner (A1)</option>
+                        <option>Intermediate (B1)</option>
+                    </select>
+                    
+                    <button id="start-game-btn" class="btn btn-primary btn-large">Start Adventure 🚀</button>
+                </div>
+            </div>
+        `;
+
+        // Re-attach Start Button Listener (since we overwrote HTML)
+        // We can call the exported init function from GameSection if accessible, 
+        // or just manually re-attach if we import logic differently. 
+        // Best approach: Reload component logic.
+        if (window.initGameSection) {
+            window.initGameSection();
+        } else {
+            location.reload(); // Fallback if init reference lost
+        }
     }
 
     generateLevel() {
