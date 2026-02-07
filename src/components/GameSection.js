@@ -11,10 +11,16 @@ export function initGameSection() {
 
     const startBtn = document.getElementById('start-game-btn');
     if (startBtn) {
-        // Remove old listeners to prevent duplicates if re-run
+        // Remove old listeners (if function is accessible, otherwise cloning is safer but can break references)
+        // Using a fresh clone to ensure clean state
         const newBtn = startBtn.cloneNode(true);
         startBtn.parentNode.replaceChild(newBtn, startBtn);
-        newBtn.addEventListener('click', startGame);
+
+        newBtn.addEventListener('click', () => {
+            console.log("🚀 Start Button Clicked!");
+            // alert("Starting Game..."); // Optional debug
+            startGame();
+        });
         console.log("GameSection: Event Listener Attached.");
     } else {
         console.error("GameSection: Start Button not found!");
