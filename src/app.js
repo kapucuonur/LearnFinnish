@@ -19,20 +19,57 @@ import { Router } from './router.js';
 import './utils/premium-ads-ios.js';
 
 // Initialize application when DOM is ready
+// Initialize application when DOM is ready
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Initialize all components
-    initThemeToggle();
-    initAuthSection();
-    initPremiumCard();
-    initStoryDisplay();
-    initWordNotebook();
-    initPhrasesSection();
-    initVocabularySection(); // New
-    initNotebookClear();
-    initPWAInstall();
-    initUsageLimitModal();
-    initChatbot();
-    initPuzzleSection();
+    console.log("🚀 App.js: DOMContentLoaded");
+    // alert("DEBUG: App.js Starting..."); // Uncomment if needed, but console first
+
+    try {
+        // 1. Initialize all components
+        console.log("Init: ThemeToggle");
+        initThemeToggle();
+
+        console.log("Init: AuthSection");
+        initAuthSection();
+
+        console.log("Init: PremiumCard");
+        initPremiumCard();
+
+        console.log("Init: StoryDisplay");
+        initStoryDisplay();
+
+        console.log("Init: WordNotebook");
+        initWordNotebook();
+
+        console.log("Init: PhrasesSection");
+        initPhrasesSection();
+
+        console.log("Init: VocabularySection");
+        initVocabularySection();
+
+        console.log("Init: NotebookClear");
+        initNotebookClear();
+
+        console.log("Init: PWAInstall");
+        initPWAInstall();
+
+        console.log("Init: UsageLimitModal");
+        initUsageLimitModal();
+
+        console.log("Init: Chatbot");
+        initChatbot();
+
+        console.log("Init: PuzzleSection");
+        initPuzzleSection();
+
+        console.log("Init: GameSection (Run & Learn)");
+        initGameSection();
+        console.log("✅ GameSection Initialized Call Complete");
+
+    } catch (error) {
+        console.error("❌ CRITICAL INITIALIZATION ERROR:", error);
+        alert(`CRITICAL APP ERROR: ${error.message}`);
+    }
 
     // 2. Setup Navigation
     setupNavigation();
