@@ -164,7 +164,28 @@ class FinnishMarioGame {
     collectCoin(c) {
         this.score += 100;
         document.getElementById('mario-score').textContent = this.score;
-        alert(`Translation: ${c.translation}`); // As requested in "Collision -> Show alert"
+
+        // Show Translation Overlay instead of Alert
+        const overlay = document.getElementById('mario-overlay');
+        if (overlay) {
+            overlay.innerHTML = `
+                <div style="background: rgba(0,0,0,0.8); color: #fff; padding: 20px; border-radius: 10px; text-align: center;">
+                    <h2 style="margin:0; color: #ffeb3b;">${c.word}</h2>
+                    <p style="margin:5px 0 0; font-size: 1.2em;">${c.translation}</p>
+                </div>
+            `;
+            overlay.classList.remove('hidden');
+            overlay.style.display = 'flex';
+            overlay.style.justifyContent = 'center';
+            overlay.style.alignItems = 'center';
+
+            // Hide after 2 seconds
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                overlay.style.display = 'none';
+            }, 2000);
+        }
+
         this.saveProgress(c.word);
     }
 
