@@ -108,7 +108,7 @@ export default async function handler(req, res) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash", // Updated to latest efficient model
+      model: "gemini-2.5-flash", // Updated to latest efficient model
       generationConfig: {
         responseMimeType: "application/json",
         temperature: 0.85, // Slightly higher for more creativity

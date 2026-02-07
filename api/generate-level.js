@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
     try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
         const prompt = `Generate ${numWords} Finnish words related to "${topic}" at ${diffLevel} level.
         Return ONLY a raw JSON array (no markdown code blocks) in this format:
