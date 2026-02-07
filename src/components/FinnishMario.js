@@ -3,23 +3,38 @@ import { getFirebase } from '../firebase.js'; // Use Secure Async Getter
 import { doc, updateDoc, arrayUnion, increment, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 export async function initFinnishMario(topic = "Finnish Vocabulary", difficulty = "B1") {
+    console.log(`🍄 initFinnishMario called with topic: ${topic}, difficulty: ${difficulty}`);
     // ... logic remains same ...
     const container = document.getElementById('game-area');
-    if (!container) return;
+    if (!container) {
+        console.error("❌ Game Area container not found!");
+        return;
+    }
 
     // Loading State
     container.innerHTML = `<div class="loading-spinner">Mushroom Power-Up! Loading Level... 🍄</div>`;
+    console.log("🍄 Loading spinner set.");
 
     try {
         // Ensure Firebase is ready before starting game flow
+        console.log("🍄 Awaiting getFirebase()...");
         await getFirebase();
+        console.log("✅ Firebase initialized.");
 
         // Fetch Data
+        console.log("🍄 Fetching game content via aiService...");
         const words = await aiService.generateGameContent(topic, difficulty);
+        console.log("✅ Game content received:", words);
+
+        if (!words || words.length === 0) {
+            throw new Error("No words generated.");
+        }
 
         // Start Game
+        console.log("🍄 Starting FinnishMarioGame instance...");
         new FinnishMarioGame(container, words);
     } catch (e) {
+        console.error("❌ initFinnishMario Crash:", e);
         container.innerHTML = `<p style="color:red; text-align:center;">Game Error: ${e.message}</p>`;
     }
 }
