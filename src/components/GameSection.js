@@ -13,7 +13,6 @@ export function initGameSection() {
 
     const startBtn = document.getElementById('start-game-btn');
     if (startBtn) {
-        console.log("✅ GameSection: Start button found.");
         // Remove old listeners (if function is accessible, otherwise cloning is safer but can break references)
         // Using a fresh clone to ensure clean state
         const newBtn = startBtn.cloneNode(true);
@@ -21,29 +20,23 @@ export function initGameSection() {
 
         newBtn.addEventListener('click', () => {
             console.log("🚀 Start Button Clicked!");
-            alert("🚀 Button CLICKED! Attempting to start game..."); // Visible feedback
             startGame();
         });
-        console.log("GameSection: Event Listener Attached.");
     } else {
-        console.error("❌ GameSection: Start Button NOT found!");
-        alert("CRITICAL ERROR: 'Start Adventure' button missing from page!"); // Visible feedback
+        console.error("GameSection: Start Button not found!");
     }
 
     async function startGame() {
-        console.log("👉 startGame() function called");
         const topic = document.getElementById('game-topic').value;
         const difficulty = document.getElementById('game-difficulty').value;
-        console.log(`🎮 Starting Game with Topic: ${topic}, Difficulty: ${difficulty}`);
+        console.log(`🎮 Starting Game: ${topic} (${difficulty})`);
 
         // Launch FinnishMario Engine
         try {
-            console.log("Calling initFinnishMario...");
             await initFinnishMario(topic, difficulty);
-            console.log("✅ initFinnishMario returned.");
         } catch (error) {
-            console.error("❌ Error during initFinnishMario:", error);
-            alert("Game failed to start. See console for details.");
+            console.error("Error starting game:", error);
+            alert("Game failed to start. Please try refreshing the page.");
         }
     }
 }
