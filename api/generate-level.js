@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 
         const prompt = `Generate ${numWords} Finnish words related to "${topic}" at ${diffLevel} level.
         Return ONLY a raw JSON array (no markdown code blocks) in this format:
-        [{"word": "FinnishWord", "translation": "EnglishTranslation"}]`;
+        [{"word": "FinnishWord", "translation": "EnglishTranslation", "example_sentence": "A simple Finnish sentence using the word."}]`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;

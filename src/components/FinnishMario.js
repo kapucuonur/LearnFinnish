@@ -168,10 +168,13 @@ class FinnishMarioGame {
         // Show Translation Overlay instead of Alert
         const overlay = document.getElementById('mario-overlay');
         if (overlay) {
+            const sentence = c.example_sentence || "No example available.";
             overlay.innerHTML = `
-                <div style="background: rgba(0,0,0,0.8); color: #fff; padding: 20px; border-radius: 10px; text-align: center;">
-                    <h2 style="margin:0; color: #ffeb3b;">${c.word}</h2>
-                    <p style="margin:5px 0 0; font-size: 1.2em;">${c.translation}</p>
+                <div style="background: rgba(0,0,0,0.9); color: #fff; padding: 25px; border-radius: 15px; text-align: center; border: 2px solid #ffd700; max-width: 80%;">
+                    <h2 style="margin:0; color: #ffd700; font-size: 2em; text-transform: uppercase;">${c.word}</h2>
+                    <p style="margin:10px 0 5px; font-size: 1.4em; font-weight: bold;">${c.translation}</p>
+                    <hr style="border: 0; border-top: 1px solid #555; margin: 10px 0;">
+                    <p style="margin:0; font-style: italic; color: #aaa;">"${sentence}"</p>
                 </div>
             `;
             overlay.classList.remove('hidden');
@@ -179,11 +182,11 @@ class FinnishMarioGame {
             overlay.style.justifyContent = 'center';
             overlay.style.alignItems = 'center';
 
-            // Hide after 2 seconds
+            // Hide after 3.5 seconds (longer to read sentence)
             setTimeout(() => {
                 overlay.classList.add('hidden');
                 overlay.style.display = 'none';
-            }, 2000);
+            }, 3500);
         }
 
         this.saveProgress(c.word);
