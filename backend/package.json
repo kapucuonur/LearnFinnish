@@ -1,0 +1,19 @@
+{
+  "name": "learn-finnish-backend",
+  "version": "1.0.0",
+  "description": "Self-hosted Express backend for LearnFinnish (migrated from Vercel serverless functions)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
+    "stripe": "^14.0.0"
+  }
+}
