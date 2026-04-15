@@ -1,6 +1,9 @@
+name: learn-finnish-api
+
 services:
   api:
     build: .
+    container_name: learn-finnish-api
     ports:
       - "4000:4000"
     env_file:
