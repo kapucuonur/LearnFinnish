@@ -57,8 +57,9 @@
 - **State Management**: Reactive custom events and LocalStorage
 - **Audio**: Custom `GoogleTTSPlayer` class with audio buffering
 
-**Backend (Serverless)**
-- **Runtime**: Node.js (Vercel Functions)
+**Backend (Hybrid Architecture)**
+- **Serverless**: Node.js (Vercel Functions) for lightweight deployment.
+- **Self-Hosted (Docker)**: Express.js backend containerized for custom servers (e.g., Raspberry Pi 5).
 - **Endpoints**:
     - `/api/story`: Orchestrates Gemini 1.5 Flash requests.
     - `/api/translate`: Manages Hybrid Translation logic.
@@ -105,6 +106,11 @@ We implemented a **Manual Kill Switch** for aggressive caching issues (common on
 │   ├── story.js         # AI Story Generation
 │   ├── translate.js     # Hybrid Translation Service
 │   └── tts.js           # Audio Proxy
+├── /backend             # Self-Hosted Express Backend (Docker/Raspberry Pi)
+│   ├── /routes          # API Routes mirroring Vercel functions
+│   ├── server.js        # Express Server Entry Point
+│   ├── Dockerfile       # Container Configuration
+│   └── docker-compose.yml # Orchestration Stack
 ├── /src
 │   ├── /components      # UI Components (Flashcard, StoryDisplay, etc.)
 │   ├── /services        # Business Logic (Auth, API, Storage)
@@ -136,12 +142,19 @@ We implemented a **Manual Kill Switch** for aggressive caching issues (common on
     STRIPE_SECRET_KEY=your_stripe_key
     ```
 
-4.  **Run Locally**
+4.  **Run Locally (Frontend)**
     ```bash
     npm start
     # or
     python3 -m http.server 3000
     ```
+
+5.  **Run Backend Locally (Docker via Pi/Server)**
+    ```bash
+    cd backend
+    docker-compose up -d --build
+    ```
+    *The Express API will be accessible on `http://localhost:4000`.*
 
 ---
 
