@@ -149,12 +149,22 @@ We implemented a **Manual Kill Switch** for aggressive caching issues (common on
     python3 -m http.server 3000
     ```
 
-5.  **Run Backend Locally (Docker via Pi/Server)**
-    ```bash
-    cd backend
-    docker-compose up -d --build
-    ```
-    *The Express API will be accessible on `http://localhost:4000`.*
+---
+
+## 🌍 Self-Hosting (Docker & Raspberry Pi 5)
+
+This project's backend is entirely self-hosted on a custom Raspberry Pi 5 server architecture using Docker Compose. It is exposed publicly via a Cloudflare Tunnel — no open router ports required.
+
+### 1. Docker Compose Setup
+
+A `Dockerfile` and `docker-compose.yml` are included in the repository's `backend/` directory. The compose file spins up:
+- The **Express Application** (API) served on port `4000`.
+
+Start the backend service with:
+```bash
+cd backend
+docker compose up -d --build
+```
 
 ---
 
