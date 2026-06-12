@@ -89,7 +89,7 @@ export default async function handler(req, res) {
   STORY WRITING RULES:
   1. MAXIMUM 300 WORDS — count carefully and stop.
   2. Write in natural, everyday B1 Finnish. Short sentences. Common words.
-  3. Include 2 short dialogue lines (e.g. "Hei!", hän sanoi.).
+  3. Include 2 short dialogue lines using smart quotes or dashes (e.g. ”Hei!”, hän sanoi. or - Hei!, hän sanoi. — DO NOT use raw straight double quotes ").
   4. Do NOT start with "Olipa kerran".
   5. Structure: exactly 3 paragraphs separated by \\n\\n.
   6. First paragraph: set the scene (2-3 sentences).
