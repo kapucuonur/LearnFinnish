@@ -46,6 +46,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Setup Navigation
     setupNavigation();
 
+    // 2.5 Show Sample Stories by default
+    const btnSamples = document.getElementById('btn-samples');
+    if (btnSamples) {
+        btnSamples.click();
+    }
+
     // 3. Initialize router for legal pages
     const router = new Router();
 
