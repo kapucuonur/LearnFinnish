@@ -146,6 +146,7 @@ export default async function handler(req, res) {
         },
         temperature: 0.5,
         maxOutputTokens: 2048,
+        thinkingConfig: { thinkingBudget: 0 },
       },
       safetySettings: [
         { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
