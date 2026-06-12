@@ -90,10 +90,10 @@ router.post('/', async (req, res) => {
   2. Write in natural, everyday B1 Finnish. Short sentences. Common words.
   3. Include 2 short dialogue lines using smart quotes or dashes (e.g. ”Hei!”, hän sanoi. or - Hei!, hän sanoi. — DO NOT use raw straight double quotes ").
   4. Do NOT start with "Olipa kerran".
-  5. Structure: exactly 3 paragraphs separated by \\n\\n.
-  6. First paragraph: set the scene (2-3 sentences).
-  7. Second paragraph: the main event with dialogue (3-4 sentences).
-  8. Third paragraph: brief resolution (2-3 sentences). STOP HERE.
+  5. Structure: Return the story as an array of exactly 3 strings (each representing a paragraph) inside the "paragraphs" field.
+  6. First paragraph (paragraphs[0]): set the scene (2-3 sentences).
+  7. Second paragraph (paragraphs[1]): the main event with dialogue (3-4 sentences).
+  8. Third paragraph (paragraphs[2]): brief resolution (2-3 sentences). STOP HERE.
 
   VOCABULARY SELECTION:
   - Select 12-16 vocabulary words/phrases from the story.
@@ -112,9 +112,10 @@ router.post('/', async (req, res) => {
         responseSchema: {
           type: 'OBJECT',
           properties: {
-            story: { 
-              type: 'STRING',
-              description: 'The B1 level Finnish story. Word count MUST be between 250 and 300 words. Must have exactly 3 paragraphs separated by \\n\\n.'
+            paragraphs: {
+              type: 'ARRAY',
+              items: { type: 'STRING' },
+              description: 'Exactly 3 paragraphs of the story. Word count of the combined paragraphs MUST be between 250 and 300 words.'
             },
             vocabulary: {
               type: 'ARRAY',
@@ -140,7 +141,7 @@ router.post('/', async (req, res) => {
               }
             }
           },
-          required: ['story', 'vocabulary']
+          required: ['paragraphs', 'vocabulary']
         },
         temperature: 0.5,
         maxOutputTokens: 2048,
@@ -170,10 +171,11 @@ router.post('/', async (req, res) => {
       });
     }
 
-    let storyText = parsed.story || '';
-    if (storyText) {
-      storyText = truncateToWords(storyText, 320);
+    let storyText = '';
+    if (parsed.paragraphs && Array.isArray(parsed.paragraphs)) {
+      storyText = parsed.paragraphs.join('\n\n');
     }
+    storyText = truncateToWords(storyText, 320);
 
     res.status(200).json({
       story: storyText,
