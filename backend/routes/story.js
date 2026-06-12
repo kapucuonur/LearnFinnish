@@ -181,7 +181,7 @@ router.post('/', async (req, res) => {
     });
   } catch (error) {
     console.error('Story Generation Error:', error);
-    res.status(500).json({ error: 'Failed to generate story' });
+    res.status(500).json({ error: 'Failed to generate story', details: error.message, stack: error.stack });
   }
 });
 
