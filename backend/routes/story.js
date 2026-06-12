@@ -75,7 +75,7 @@ router.post('/', async (req, res) => {
   const prompt = `
   You are a Finnish language teacher writing a SHORT story for B1 learners.
 
-  ⚠️ CRITICAL RULE: The story MUST be between 250 and 300 words. STOP writing at 300 words.
+  ⚠️ CRITICAL RULE: The story MUST be between 250 and 300 words.
   ⚠️ DO NOT write more than 300 words. Count your words as you write.
 
   STORY PARAMETERS:
@@ -86,7 +86,7 @@ router.post('/', async (req, res) => {
   - Tone: ${tone}
 
   STORY WRITING RULES:
-  1. ⛔ MAXIMUM 300 WORDS — count carefully and stop.
+  1. MAXIMUM 300 WORDS — count carefully and stop.
   2. Write in natural, everyday B1 Finnish. Short sentences. Common words.
   3. Include 2 short dialogue lines (e.g. "Hei!", hän sanoi.).
   4. Do NOT start with "Olipa kerran".
@@ -96,18 +96,8 @@ router.post('/', async (req, res) => {
   8. Third paragraph: brief resolution (2-3 sentences). STOP HERE.
 
   VOCABULARY SELECTION:
-  - Pick 12-14 key B1 words/phrases from the story text.
-  - For each, give English translation and word type.
-  - Word types: "verb", "noun", "adjective", "phrase", "adverb"
-
-  OUTPUT FORMAT (JSON ONLY, no markdown, no code blocks):
-  {
-    "story": "paragraph1\\n\\nparagraph2\\n\\nparagraph3",
-    "vocabulary": {
-      "FinnishWord": { "translation": "English meaning", "type": "verb" },
-      "toinen sana": { "translation": "English meaning", "type": "noun" }
-    }
-  }
+  - Select 12-16 vocabulary words/phrases from the story.
+  - Prioritize single words (verbs, nouns, adjectives, adverbs) over long phrases, so they highlight correctly in the text.
   `;
 
   try {
@@ -119,21 +109,70 @@ router.post('/', async (req, res) => {
       model: 'gemini-2.5-flash',
       generationConfig: {
         responseMimeType: 'application/json',
+        responseSchema: {
+          type: 'OBJECT',
+          properties: {
+            story: { 
+              type: 'STRING',
+              description: 'The B1 level Finnish story. Word count MUST be between 250 and 300 words. Must have exactly 3 paragraphs separated by \\n\\n.'
+            },
+            vocabulary: {
+              type: 'ARRAY',
+              description: '12-16 vocabulary words/phrases highlighted from the story.',
+              items: {
+                type: 'OBJECT',
+                properties: {
+                  finnish: { 
+                    type: 'STRING',
+                    description: 'The EXACT word or phrase as written in the story (lowercased, e.g. \"kahvilassa\" if the story contains \"kahvilassa\", NOT the dictionary form \"kahvila\").'
+                  },
+                  translation: { 
+                    type: 'STRING',
+                    description: 'English translation of the word, including a hint to its dictionary form if inflected.'
+                  },
+                  type: { 
+                    type: 'STRING', 
+                    enum: ['verb', 'noun', 'adjective', 'phrase', 'adverb'],
+                    description: 'Grammatical type.'
+                  }
+                },
+                required: ['finnish', 'translation', 'type']
+              }
+            }
+          },
+          required: ['story', 'vocabulary']
+        },
         temperature: 0.5,
         maxOutputTokens: 1200,
       },
     });
 
     const result = await model.generateContent(prompt);
-    const text = result.response.text().replace(/```json|```/g, '').trim();
+    const text = result.response.text().trim();
     const parsed = JSON.parse(text);
 
-    // Server-side safety net: hard truncate if AI ignored the word limit
-    if (parsed.story) {
-      parsed.story = truncateToWords(parsed.story, 320);
+    // Convert structured vocabulary array to dictionary expected by frontend
+    const vocabularyObj = {};
+    if (parsed.vocabulary && Array.isArray(parsed.vocabulary)) {
+      parsed.vocabulary.forEach(item => {
+        if (item.finnish) {
+          vocabularyObj[item.finnish.toLowerCase()] = {
+            translation: item.translation || '',
+            type: item.type || 'noun'
+          };
+        }
+      });
     }
 
-    res.status(200).json(parsed);
+    let storyText = parsed.story || '';
+    if (storyText) {
+      storyText = truncateToWords(storyText, 320);
+    }
+
+    res.status(200).json({
+      story: storyText,
+      vocabulary: vocabularyObj
+    });
   } catch (error) {
     console.error('Story Generation Error:', error);
     res.status(500).json({ error: 'Failed to generate story' });
