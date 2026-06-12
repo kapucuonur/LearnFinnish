@@ -58,21 +58,41 @@ router.post('/', async (req, res) => {
   const baseTopic = topic?.trim() || "a turning point in someone's life";
 
   const prompt = `
-  You are an expert Finnish language teacher and professional storyteller.
-  TASK: Write a unique, engaging, and detailed short story in Finnish (B1/B2 Level).
+  You are an expert Finnish language teacher and a natural storyteller.
+  TASK: Write a short, engaging story in Finnish at B1 level (CEFR).
+
   STORY PARAMETERS:
   - Topic: ${baseTopic}
   - Genre: ${genre}
   - Setting: ${setting}
   - Protagonist: ${character}
   - Tone: ${tone}
+
   CONTENT REQUIREMENTS:
-  1. LENGTH: STRICTLY 500-800 WORDS.
-  2. No Clichés: Do NOT start with "Olipa kerran".
-  3. Include extensive dialogue.
-  OUTPUT FORMAT (JSON ONLY):
-  { "story": "...", "vocabulary": { "FinnishWord": "English translation" } }
-  (Select 15-20 B1/B2-level words)
+  1. LENGTH: STRICTLY 250-300 WORDS. Do not exceed 300 words.
+  2. LANGUAGE: Natural, conversational B1 Finnish. Use everyday sentence structures. Avoid overly complex grammar.
+  3. NATURALNESS: Write like a real Finnish person would speak or think. Use common B1 phrases, common verbs, and relatable situations.
+  4. DIALOGUE: Include 2-3 short dialogue lines to make it feel alive.
+  5. Do NOT start with "Olipa kerran". Start with action or a situation.
+  6. PARAGRAPHS: Use 3-4 short paragraphs with line breaks (\\n\\n).
+
+  VOCABULARY SELECTION:
+  - Select 12-16 B1-level Finnish words or phrases from the story.
+  - For each word, provide: English translation AND a color category based on word type:
+    - "verb" → verbs (doing words)
+    - "noun" → nouns (things/places/people)
+    - "adjective" → descriptive words
+    - "phrase" → useful phrases/expressions
+    - "adverb" → manner/time words
+
+  OUTPUT FORMAT (JSON ONLY, no markdown):
+  {
+    "story": "Story text here with \\n\\n between paragraphs...",
+    "vocabulary": {
+      "FinnishWord": { "translation": "English meaning", "type": "verb" },
+      "toinen sana": { "translation": "English meaning", "type": "noun" }
+    }
+  }
   `;
 
   try {

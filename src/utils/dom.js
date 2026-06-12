@@ -114,6 +114,28 @@ function speakText(text) {
 // Vocabulary Cache
 let currentVocabulary = {};
 
+// Word type → CSS class mapping for colorful B1 words
+const WORD_TYPE_CLASSES = {
+  verb: 'word word-verb',
+  noun: 'word word-noun',
+  adjective: 'word word-adj',
+  phrase: 'word word-phrase',
+  adverb: 'word word-adv',
+};
+
+// Normalize vocabulary: supports both old {"word": "translation"} and new {"word": {"translation": "...", "type": "verb"}}
+function normalizeVocab(vocab) {
+  const normalized = {};
+  for (const [key, val] of Object.entries(vocab || {})) {
+    if (typeof val === 'string') {
+      normalized[key.toLowerCase()] = { translation: val, type: 'noun' };
+    } else if (val && typeof val === 'object') {
+      normalized[key.toLowerCase()] = { translation: val.translation || val.en || '', type: val.type || 'noun' };
+    }
+  }
+  return normalized;
+}
+
 export function writeStory(text, targetElement = storyArea, vocabulary = {}, topic = '') {
   // Clear previous content
   targetElement.innerHTML = '';
@@ -121,18 +143,16 @@ export function writeStory(text, targetElement = storyArea, vocabulary = {}, top
   // Store text on the element for toggling later
   targetElement.dataset.fullText = text;
 
-  // Store vocabulary
-  currentVocabulary = vocabulary || {};
+  // Store vocabulary (normalized)
+  currentVocabulary = normalizeVocab(vocabulary);
   console.log("Hybrid Model: Loaded vocabulary:", currentVocabulary);
 
   // Render Sticky Header if topic exists
   if (topic) {
     const header = document.createElement('div');
-    header.className = 'story-header sticky-section-header';
-    header.style.marginBottom = '20px'; // Add some spacing
-    // Capitalize topic
+    header.className = 'story-header';
     const displayTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
-    header.innerHTML = `<h3 style="margin:0; font-size: 1.2rem; color: var(--color-primary);">📄 ${displayTopic}</h3>`;
+    header.innerHTML = `<h3 class="story-topic-title">📖 ${displayTopic}</h3>`;
     targetElement.appendChild(header);
   }
 
@@ -145,53 +165,74 @@ export function writeStory(text, targetElement = storyArea, vocabulary = {}, top
   renderParagraphMode(text, contentContainer);
 }
 
+function buildWordSpan(word, onDblClick) {
+  const span = document.createElement('span');
+  const cleanWord = word.replace(/[.,!?;:()"'-]/g, '').toLowerCase();
+  const vocabEntry = currentVocabulary[cleanWord];
+  span.className = vocabEntry ? (WORD_TYPE_CLASSES[vocabEntry.type] || 'word') : 'word';
+  span.textContent = word;
+  span.addEventListener('dblclick', (e) => { e.stopPropagation(); onDblClick(word.trim()); });
+  return span;
+}
+
 function renderParagraphMode(text, targetElement) {
   targetElement.innerHTML = '';
 
-  // Create container for paragraph text
-  const paragraphContainer = document.createElement('div');
-  paragraphContainer.className = 'story-text-container';
+  const storyBody = document.createElement('div');
+  storyBody.className = 'story-body';
 
-  // Existing paragraph rendering logic
-  const parts = text.split(/(\s+|[.,!?;:()"'-])/).filter(p => p !== '');
+  // Split on double newlines → real paragraphs
+  const paragraphs = text.split(/\n{2,}/).map(p => p.trim()).filter(p => p.length > 0);
 
-  parts.forEach(part => {
-    if (/^\s+$|[.,!?;:()"'-]/.test(part)) {
-      if (part.includes('\n')) {
-        paragraphContainer.appendChild(document.createElement('br'));
-        if (part.split('\n').length > 2) paragraphContainer.appendChild(document.createElement('br'));
-      } else {
-        paragraphContainer.appendChild(document.createTextNode(part));
-      }
-    } else {
-      const span = document.createElement('span');
-      span.className = 'word';
-      span.textContent = part;
+  paragraphs.forEach(paragraphText => {
+    const p = document.createElement('p');
+    p.className = 'story-paragraph';
 
-      // Context menu logic (will be attached globally or here)
-      // Note: addWordEvents handles the clicks later, but dblclick is specific
-      span.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
-        speakText(part.trim());
+    // Handle single newlines within a paragraph as line breaks
+    const lines = paragraphText.split(/\n/);
+    lines.forEach((line, lineIdx) => {
+      const parts = line.split(/([\s]+|[.,!?;:()'"\-])/).filter(p => p !== '');
+      parts.forEach(part => {
+        if (/^[\s]+$/.test(part)) {
+          p.appendChild(document.createTextNode(' '));
+        } else if (/^[.,!?;:()'"\-]+$/.test(part)) {
+          p.appendChild(document.createTextNode(part));
+        } else {
+          p.appendChild(buildWordSpan(part, speakText));
+        }
       });
+      if (lineIdx < lines.length - 1) p.appendChild(document.createElement('br'));
+    });
 
-      paragraphContainer.appendChild(span);
-    }
+    storyBody.appendChild(p);
   });
 
-  targetElement.appendChild(paragraphContainer);
+  targetElement.appendChild(storyBody);
 
-  // Add Toggle Button
+  // Vocab legend
+  if (Object.keys(currentVocabulary).length > 0) {
+    const legend = document.createElement('div');
+    legend.className = 'vocab-legend';
+    legend.innerHTML = `
+      <div class="vocab-legend-title">🎨 Tap colored words for translation</div>
+      <div class="vocab-legend-chips">
+        <span class="chip chip-verb">Verb</span>
+        <span class="chip chip-noun">Noun</span>
+        <span class="chip chip-adj">Adjective</span>
+        <span class="chip chip-phrase">Phrase</span>
+        <span class="chip chip-adv">Adverb</span>
+      </div>
+    `;
+    targetElement.appendChild(legend);
+  }
+
+  // Practice Button
   const toggleContainer = document.createElement('div');
   toggleContainer.className = 'practice-mode-toggle';
-
   const toggleBtn = document.createElement('button');
   toggleBtn.className = 'btn-practice-toggle';
   toggleBtn.innerHTML = '🎙️ Start Speaking Practice';
-  toggleBtn.onclick = () => {
-    renderSentenceMode(text, targetElement);
-  };
-
+  toggleBtn.onclick = () => { renderSentenceMode(text, targetElement); };
   toggleContainer.appendChild(toggleBtn);
   targetElement.appendChild(toggleContainer);
 
@@ -343,18 +384,13 @@ export function addWordEvents(targetLang = 'en') {
       let translation = null;
       let isInstant = false;
 
-      // 1. Check Cache
-      if (currentVocabulary && currentVocabulary[cleanWord]) {
-        translation = currentVocabulary[cleanWord];
+      // 1. Check Cache (supports both old string format and new {translation, type} format)
+      const vocabEntry = currentVocabulary[cleanWord] ||
+        currentVocabulary[Object.keys(currentVocabulary).find(k => k.toLowerCase() === cleanWord) || ''];
+      if (vocabEntry) {
+        translation = typeof vocabEntry === 'string' ? vocabEntry : vocabEntry.translation;
         isInstant = true;
         console.log(`Hybrid Model: Instant hit for '${cleanWord}' -> '${translation}'`);
-      } else if (currentVocabulary) {
-        // Try finding case-insensitive key
-        const key = Object.keys(currentVocabulary).find(k => k.toLowerCase() === cleanWord);
-        if (key) {
-          translation = currentVocabulary[key];
-          isInstant = true;
-        }
       }
 
       // 2. Show UI (Loading or Instant)
