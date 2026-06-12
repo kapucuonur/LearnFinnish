@@ -30,6 +30,8 @@
 @import url('./components/daily-quiz.css');
 @import url('./components/sample-stories.css');
 @import url('./components/sentence-reader.css');
+@import url('./components/story-display.css');
+@import url('./components/story-controls.css');
 @import url('./components/phrases.css');
 @import url('./components/puzzle.css');
 @import url('./components/game.css');

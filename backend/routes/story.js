@@ -48,6 +48,21 @@ const TONES = [
   "Awkward but heartwarming",
 ];
 
+// Hard truncate story to max N words, cutting at the last complete sentence
+function truncateToWords(text, maxWords = 320) {
+  const words = text.split(/\s+/);
+  if (words.length <= maxWords) return text;
+
+  const truncated = words.slice(0, maxWords).join(' ');
+  const lastSentenceEnd = Math.max(
+    truncated.lastIndexOf('.'),
+    truncated.lastIndexOf('!'),
+    truncated.lastIndexOf('?')
+  );
+
+  return lastSentenceEnd > 0 ? truncated.slice(0, lastSentenceEnd + 1) : truncated;
+}
+
 router.post('/', async (req, res) => {
   const { topic } = req.body;
 
@@ -58,8 +73,10 @@ router.post('/', async (req, res) => {
   const baseTopic = topic?.trim() || "a turning point in someone's life";
 
   const prompt = `
-  You are an expert Finnish language teacher and a natural storyteller.
-  TASK: Write a short, engaging story in Finnish at B1 level (CEFR).
+  You are a Finnish language teacher writing a SHORT story for B1 learners.
+
+  ⚠️ CRITICAL RULE: The story MUST be between 250 and 300 words. STOP writing at 300 words.
+  ⚠️ DO NOT write more than 300 words. Count your words as you write.
 
   STORY PARAMETERS:
   - Topic: ${baseTopic}
@@ -68,26 +85,24 @@ router.post('/', async (req, res) => {
   - Protagonist: ${character}
   - Tone: ${tone}
 
-  CONTENT REQUIREMENTS:
-  1. LENGTH: STRICTLY 250-300 WORDS. Do not exceed 300 words.
-  2. LANGUAGE: Natural, conversational B1 Finnish. Use everyday sentence structures. Avoid overly complex grammar.
-  3. NATURALNESS: Write like a real Finnish person would speak or think. Use common B1 phrases, common verbs, and relatable situations.
-  4. DIALOGUE: Include 2-3 short dialogue lines to make it feel alive.
-  5. Do NOT start with "Olipa kerran". Start with action or a situation.
-  6. PARAGRAPHS: Use 3-4 short paragraphs with line breaks (\\n\\n).
+  STORY WRITING RULES:
+  1. ⛔ MAXIMUM 300 WORDS — count carefully and stop.
+  2. Write in natural, everyday B1 Finnish. Short sentences. Common words.
+  3. Include 2 short dialogue lines (e.g. "Hei!", hän sanoi.).
+  4. Do NOT start with "Olipa kerran".
+  5. Structure: exactly 3 paragraphs separated by \\n\\n.
+  6. First paragraph: set the scene (2-3 sentences).
+  7. Second paragraph: the main event with dialogue (3-4 sentences).
+  8. Third paragraph: brief resolution (2-3 sentences). STOP HERE.
 
   VOCABULARY SELECTION:
-  - Select 12-16 B1-level Finnish words or phrases from the story.
-  - For each word, provide: English translation AND a color category based on word type:
-    - "verb" → verbs (doing words)
-    - "noun" → nouns (things/places/people)
-    - "adjective" → descriptive words
-    - "phrase" → useful phrases/expressions
-    - "adverb" → manner/time words
+  - Pick 12-14 key B1 words/phrases from the story text.
+  - For each, give English translation and word type.
+  - Word types: "verb", "noun", "adjective", "phrase", "adverb"
 
-  OUTPUT FORMAT (JSON ONLY, no markdown):
+  OUTPUT FORMAT (JSON ONLY, no markdown, no code blocks):
   {
-    "story": "Story text here with \\n\\n between paragraphs...",
+    "story": "paragraph1\\n\\nparagraph2\\n\\nparagraph3",
     "vocabulary": {
       "FinnishWord": { "translation": "English meaning", "type": "verb" },
       "toinen sana": { "translation": "English meaning", "type": "noun" }
@@ -102,12 +117,23 @@ router.post('/', async (req, res) => {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
-      generationConfig: { responseMimeType: 'application/json', temperature: 0.85 },
+      generationConfig: {
+        responseMimeType: 'application/json',
+        temperature: 0.5,
+        maxOutputTokens: 1200,
+      },
     });
 
     const result = await model.generateContent(prompt);
     const text = result.response.text().replace(/```json|```/g, '').trim();
-    res.status(200).json(JSON.parse(text));
+    const parsed = JSON.parse(text);
+
+    // Server-side safety net: hard truncate if AI ignored the word limit
+    if (parsed.story) {
+      parsed.story = truncateToWords(parsed.story, 320);
+    }
+
+    res.status(200).json(parsed);
   } catch (error) {
     console.error('Story Generation Error:', error);
     res.status(500).json({ error: 'Failed to generate story' });
