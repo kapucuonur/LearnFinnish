@@ -143,7 +143,7 @@ router.post('/', async (req, res) => {
           required: ['story', 'vocabulary']
         },
         temperature: 0.5,
-        maxOutputTokens: 1200,
+        maxOutputTokens: 2048,
       },
     });
 
