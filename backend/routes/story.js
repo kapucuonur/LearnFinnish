@@ -4,39 +4,39 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const router = Router();
 
 const GENRES = [
-  "Modern Slice of Life: Realistic daily situations in urban Finland.",
-  "Nordic Noir / Light Mystery: A missing item, a strange coded message, or a gentle neighborhood mystery.",
-  "Cultural Immersion: Experiencing Finnish traditions (sauna, juhannus, crayfish parties) for the first time.",
-  "Workplace Drama: Professional challenges, office dynamics, or starting a new business.",
-  "Nature & Solitude: A reflective journey in the Finnish wilderness, archipelago, or Lapland.",
-  "Romantic Comedy: An awkward date, a misunderstanding, or a meet-cute in a cafe.",
-  "Sci-Fi / Future: A glimpse into a high-tech Helsinki of the future.",
-  "Historical Fiction: A scene from 1950s Helsinki or rural life in the past.",
-  "Social Satire: A funny look at Finnish stereotypes (e.g., personal space, coffee consumption).",
+  "Finnish Culture & Life Rules: Daily life, unwritten rules, and social norms in Finland.",
+  "Nature & Environment: Protecting the environment, recycling, and appreciating Finnish nature.",
+  "Seasons & Festivities: Experiencing Christmas (Joulu), Midsummer (Juhannus), or the changing seasons.",
+  "Everyday Tasks: Going to the second-hand shop (kirpputori), sorting trash, or using online marketplaces.",
+  "Professional Life: Job hunting, preparing for a job interview, or writing an application in Finland.",
+  "Self-Improvement: Visiting the library, reading books, and personal growth.",
+  "Social Connections: Making new friends, building relationships, and shared activities.",
+  "Winter Sports & Sauna: Cross-country skiing (hiihtoa) in the forest followed by a traditional sauna.",
+  "Cottage Life (Mökki): Escaping to a cabin, chopping wood, and relaxing by the lake.",
 ];
 
 const SETTINGS = [
-  "A bustling market square (Kauppatori) in Helsinki during summer.",
+  "A vibrant second-hand shop (kirpputori) filled with hidden treasures.",
   "A quiet, snow-covered cabin (mökki) by a frozen lake.",
-  "A modern open-plan office in Keilaniemi.",
-  "A crowded tram (ratikka) during rush hour.",
-  "A university library or campus cafe.",
-  "A late-night train journey from Helsinki to Rovaniemi.",
-  "A heavy metal concert venue or rock club.",
-  "A peaceful forest path during the 'ruska' (autumn foliage) season.",
-  "A busy shopping mall (Kauppakeskus) on a Saturday.",
-  "A traditional public sauna.",
+  "A modern, peaceful public library like Oodi in Helsinki.",
+  "A bustling recycling center (kierrätyskeskus) where people drop off items.",
+  "A traditional public sauna filled with steam and friendly chatter.",
+  "A snow-covered forest path perfect for cross-country skiing (hiihtolatu).",
+  "A cozy living room decorated for Christmas (Joulu).",
+  "A bright summer night by a bonfire during Midsummer (Juhannus).",
+  "An office or cafe where someone is preparing for a job interview.",
+  "A local park where friends meet to enjoy the changing seasons.",
 ];
 
 const CHARACTERS = [
-  "A determined software developer moving to Finland for work.",
-  "An elderly pensioner who knows all the neighborhood secrets.",
-  "A stressed university student preparing for an important exam.",
-  "A tourist who accidentally gets lost in the city.",
-  "A helpful bus driver who loves to talk (unusually for a Finn).",
-  "A young artist seeking inspiration from nature.",
-  "A strict but fair teacher.",
-  "An entrepreneur trying to sell a strange new invention.",
+  "An immigrant preparing for their first job interview in Finland.",
+  "A student who loves finding vintage clothes at the kirpputori.",
+  "A nature enthusiast who is strict about recycling and the environment.",
+  "A person experiencing their very first traditional Finnish Christmas.",
+  "A beginner learning how to cross-country ski (hiihtää).",
+  "A passionate reader who spends hours at the local library.",
+  "A friend organizing a Midsummer (Juhannus) trip to the mökki.",
+  "A helpful neighbor teaching someone how to properly sort their trash.",
 ];
 
 const TONES = [
