@@ -149,7 +149,13 @@ router.post('/', async (req, res) => {
 
     const result = await model.generateContent(prompt);
     const text = result.response.text().trim();
-    const parsed = JSON.parse(text);
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch (parseError) {
+      console.error('Failed to parse JSON response from Gemini. Raw text was:', text);
+      throw parseError;
+    }
 
     // Convert structured vocabulary array to dictionary expected by frontend
     const vocabularyObj = {};
